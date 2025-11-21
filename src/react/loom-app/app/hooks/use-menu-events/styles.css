@@ -1,0 +1,12 @@
+.dataloom-table-container--locked {
+	overflow: hidden;
+}
+
+.dataloom-table-container--unlocked {
+	overflow: auto;
+}
+
+.dataloom-menu--hidden {
+	display: none;
+}
+

@@ -15,6 +15,7 @@ import {
 import DataLoomView, { DATA_LOOM_VIEW } from "src/obsidian/dataloom-view";
 import { handleLinkClick } from "src/shared/render/embed";
 import { renderEmbed } from "./render-embed";
+import "src/shared/render/styles.css";
 
 export const renderMarkdown = async (
 	app: App,
@@ -22,8 +23,7 @@ export const renderMarkdown = async (
 	markdown: string
 ) => {
 	const div = document.createElement("div");
-	div.style.height = "100%";
-	div.style.width = "100%";
+	div.classList.add("dataloom-markdown-container");
 
 	//We need to attach this class so that the `is-unresolved` link renders properly by Obsidian
 	const view = leaf.view;

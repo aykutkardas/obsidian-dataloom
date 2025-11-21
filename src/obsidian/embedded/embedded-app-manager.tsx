@@ -19,6 +19,7 @@ import DeserializationError from "src/data/deserialization-error";
 import { serializeFrontmatter } from "src/data/serialize-frontmatter";
 import EventManager from "src/shared/event/event-manager";
 import LastSavedManager from "src/shared/last-saved-manager";
+import "./styles.css";
 
 interface EmbeddedApp {
 	id: string;
@@ -229,13 +230,12 @@ const handleSave = async (
  * This container has padding so that text doesn't touch the edges of the embed
  * @param linkEl - The link element that contains the embedded loom
  */
+import "./styles.css";
+
 const renderContainerEl = (linkEl: HTMLElement) => {
 	const containerEl = linkEl.createDiv({
 		cls: "dataloom-embedded-container",
 	});
-	containerEl.style.height = "100%";
-	containerEl.style.width = "100%";
-	containerEl.style.padding = "10px 0px";
 
 	//Stop propagation of the click event. We do this so that the embed link
 	//doesn't navigate to the linked file when clicked
@@ -255,10 +255,7 @@ const resetLinkStyles = (linkEl: HTMLElement) => {
 	linkEl.empty();
 
 	//Reset styles
-	linkEl.style.backgroundColor = "var(--color-primary)";
-	linkEl.style.cursor = "unset";
-	linkEl.style.margin = "0px";
-	linkEl.style.padding = "0px";
+	linkEl.addClass("dataloom-embedded-link");
 };
 
 /**
@@ -277,6 +274,15 @@ const setLinkSize = (linkEl: HTMLElement) => {
 	const width = getLinkWidth(linkEl, defaultEmbedWidth);
 	const height = getLinkHeight(linkEl, defaultEmbedHeight);
 
-	linkEl.style.width = width;
-	linkEl.style.height = height;
+	// Use CSS custom properties for dynamic width/height values
+	if (linkEl.setCssProps) {
+		linkEl.setCssProps({
+			"--dataloom-embed-width": width,
+			"--dataloom-embed-height": height,
+		});
+	} else {
+		// Fallback for environments where setCssProps is not available
+		linkEl.style.setProperty("--dataloom-embed-width", width);
+		linkEl.style.setProperty("--dataloom-embed-height", height);
+	}
 };

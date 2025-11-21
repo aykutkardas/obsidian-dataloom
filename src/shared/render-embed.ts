@@ -1,10 +1,10 @@
 import { App, MarkdownRenderer, MarkdownView, WorkspaceLeaf } from "obsidian";
 import DataLoomView from "src/obsidian/dataloom-view";
+import "src/shared/render/styles.css";
 
 const renderText = async (app: App, leaf: WorkspaceLeaf, value: string) => {
 	const div = document.createElement("div");
-	div.style.width = "100%";
-	div.style.height = "100%";
+	div.classList.add("dataloom-markdown-container");
 
 	try {
 		const view = leaf.view;

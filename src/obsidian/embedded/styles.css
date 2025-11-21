@@ -1,0 +1,15 @@
+.dataloom-embedded-container {
+	height: 100%;
+	width: 100%;
+	padding: 10px 0px;
+}
+
+.dataloom-embedded-link {
+	background-color: var(--color-primary);
+	cursor: unset;
+	margin: 0px;
+	padding: 0px;
+	width: var(--dataloom-embed-width, 100%);
+	height: var(--dataloom-embed-height, 340px);
+}
+

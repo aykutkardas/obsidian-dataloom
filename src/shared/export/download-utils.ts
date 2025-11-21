@@ -38,6 +38,8 @@ export const downloadFile = (
 	const el = document.createElement("a");
 	el.setAttribute("href", url);
 	el.setAttribute("download", fileName);
+	// Using inline style for temporary element that's immediately removed
+	// This is acceptable for programmatic download links
 	el.style.display = "none";
 
 	//Add the link element to the DOM

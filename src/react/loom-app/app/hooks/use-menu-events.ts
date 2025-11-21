@@ -5,6 +5,7 @@ import _ from "lodash";
 import { useMenuOperations } from "src/react/shared/menu-provider/hooks";
 import EventManager from "src/shared/event/event-manager";
 import Logger from "js-logger";
+import "./styles.css";
 
 export const useMenuEvents = () => {
 	useCloseOnOutsideClick();
@@ -35,13 +36,15 @@ const useLockTableScroll = () => {
 			if (!parentComponentId?.includes("cell")) return;
 
 			Logger.debug("useLockTableScroll cell menu opened. locking table scroll");
-			tableContainerEl.style.overflow = "hidden";
+			tableContainerEl.classList.remove("dataloom-table-container--unlocked");
+			tableContainerEl.classList.add("dataloom-table-container--locked");
 		} else {
 			hasLockRef.current = false;
 			Logger.debug(
 				"useLockTableScroll cell menu closed. unlocking table scroll"
 			);
-			tableContainerEl.style.overflow = "auto";
+			tableContainerEl.classList.remove("dataloom-table-container--locked");
+			tableContainerEl.classList.add("dataloom-table-container--unlocked");
 		}
 	}, [topMenu, reactAppId]);
 };
@@ -70,7 +73,7 @@ const useCloseOnMarkdownViewScroll = () => {
 			//Since it takes a noticable amount of time for React to update the DOM, we set
 			//the display to none and then wait for React to clean up the DOM
 			for (const menu of openMenus) {
-				(menu as HTMLElement).style.display = "none";
+				(menu as HTMLElement).classList.add("dataloom-menu--hidden");
 			}
 
 			onCloseAll();
