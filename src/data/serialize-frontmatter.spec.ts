@@ -21,8 +21,8 @@ import { serializeFrontmatter } from "./serialize-frontmatter";
 import { App, TFile } from "obsidian";
 
 describe("serializeFrontmatter", () => {
-	let frontmatterTest1 = {};
-	let frontmatterTest2 = {};
+	let frontmatterTest1: Record<string, unknown> = {};
+	let frontmatterTest2: Record<string, unknown> = {};
 
 	const app = {
 		vault: {
@@ -35,7 +35,7 @@ describe("serializeFrontmatter", () => {
 		fileManager: {
 			processFrontMatter: async (
 				file: TFile,
-				callback: (frontmatter: any) => void
+				callback: (frontmatter: Record<string, unknown>) => void
 			) => {
 				if (file.path === "test1.md") {
 					callback(frontmatterTest1);

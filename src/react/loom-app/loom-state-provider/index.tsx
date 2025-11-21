@@ -78,14 +78,6 @@ export default function LoomStateProvider({
 
 	const [error, setError] = React.useState<unknown>(null);
 
-	// React.useEffect(() => {
-	// 	const jsonSizeInBytes = new TextEncoder().encode(
-	// 		JSON.stringify(history)
-	// 	).length;
-	// 	console.log(`Size of data: ${jsonSizeInBytes / 1024} kb`);
-	// 	console.log(`Size of data: ${jsonSizeInBytes / (1024 * 1024)} mb`);
-	// }, [history]);
-
 	//Whenever the table state is updated save it to disk
 	const isMountedRef = React.useRef(false);
 	React.useEffect(() => {

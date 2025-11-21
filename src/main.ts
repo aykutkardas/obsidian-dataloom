@@ -78,9 +78,9 @@ export default class DataLoomPlugin extends Plugin {
 
 		Logger.setHandler(function (messages) {
 			const { message, data } = formatMessageForLogger(...messages);
-			console.log(message);
+			console.warn(message);
 			if (data) {
-				console.log(data);
+				console.warn(data);
 			}
 		});
 
@@ -112,7 +112,11 @@ export default class DataLoomPlugin extends Plugin {
 
 		this.app.workspace.onLayoutReady(async () => {
 			Logger.trace(FILE_NAME, "onLayoutReady", "called");
-			Logger.debug(FILE_NAME, "onLayoutReady", "workspace layout is ready");
+			Logger.debug(
+				FILE_NAME,
+				"onLayoutReady",
+				"workspace layout is ready"
+			);
 
 			const isDark = hasDarkTheme();
 			store.dispatch(setDarkMode(isDark));
@@ -130,7 +134,11 @@ export default class DataLoomPlugin extends Plugin {
 			this.registerEvent(
 				this.app.vault.on("create", (file: TAbstractFile) => {
 					if (file instanceof TFile) {
-						Logger.trace(FILE_NAME, "registerEvent", "vault.create event called");
+						Logger.trace(
+							FILE_NAME,
+							"registerEvent",
+							"vault.create event called"
+						);
 						EventManager.getInstance().emit("file-create");
 					}
 				})
@@ -236,7 +244,11 @@ export default class DataLoomPlugin extends Plugin {
 	private registerEvents() {
 		this.registerEvent(
 			this.app.workspace.on("css-change", () => {
-				Logger.trace(FILE_NAME, "registerEvent", "css-change event called");
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"css-change event called"
+				);
 				const isDark = hasDarkTheme();
 				store.dispatch(setDarkMode(isDark));
 			})
@@ -246,7 +258,11 @@ export default class DataLoomPlugin extends Plugin {
 		//or the user switches between editing and preview mode
 		this.registerEvent(
 			this.app.workspace.on("layout-change", () => {
-				Logger.trace("main.ts", "registerEvent", "layout-change event called");
+				Logger.trace(
+					"main.ts",
+					"registerEvent",
+					"layout-change event called"
+				);
 				const leaves = this.app.workspace.getLeavesOfType("markdown");
 				purgeEmbeddedLoomApps(leaves);
 
@@ -265,7 +281,11 @@ export default class DataLoomPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.workspace.on("file-menu", (menu, file) => {
-				Logger.trace(FILE_NAME, "registerEvent", "file-menu event called");
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"file-menu event called"
+				);
 				if (file instanceof TFolder) {
 					menu.addItem((item) => {
 						item.setTitle("New loom")
@@ -280,7 +300,11 @@ export default class DataLoomPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.workspace.on("file-open", async (file: TFile | null) => {
-				Logger.trace(FILE_NAME, "registerEvent", "file-open event called");
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"file-open event called"
+				);
 				if (!file) return;
 				if (!this.displayModalsOnLoomOpen) return;
 
@@ -307,7 +331,11 @@ export default class DataLoomPlugin extends Plugin {
 			this.app.vault.on(
 				"rename",
 				async (file: TAbstractFile, oldPath: string) => {
-					Logger.trace(FILE_NAME, "registerEvent", "rename event called");
+					Logger.trace(
+						FILE_NAME,
+						"registerEvent",
+						"rename event called"
+					);
 					if (file instanceof TFile) {
 						handleFileRename(
 							this.app,
@@ -322,19 +350,34 @@ export default class DataLoomPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.vault.on("modify", async (file: TAbstractFile) => {
-				Logger.trace(FILE_NAME, "registerEvent", "vault.modify event called", file);
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"vault.modify event called",
+					file
+				);
 				if (file instanceof TFile) {
 					if (file.extension === LOOM_EXTENSION) {
-						const lastSavedFile = LastSavedManager.getInstance().getLastSavedFile();
+						const lastSavedFile =
+							LastSavedManager.getInstance().getLastSavedFile();
 						if (lastSavedFile === file.path) {
 							const now = Date.now();
-							const lastTime = LastSavedManager.getInstance().getLastSavedTime();
+							const lastTime =
+								LastSavedManager.getInstance().getLastSavedTime();
 							if (now - lastTime < 5000) {
-								Logger.debug(FILE_NAME, "registerEvent", "vault.modify event ignored because it file was saved less than 5 seconds ago");
+								Logger.debug(
+									FILE_NAME,
+									"registerEvent",
+									"vault.modify event ignored because it file was saved less than 5 seconds ago"
+								);
 								return;
 							}
 						}
-						EventManager.getInstance().emit("app-refresh-by-file", file, this.manifest.version);
+						EventManager.getInstance().emit(
+							"app-refresh-by-file",
+							file,
+							this.manifest.version
+						);
 					}
 				}
 			})
@@ -349,7 +392,11 @@ export default class DataLoomPlugin extends Plugin {
 	private registerSourceEvents() {
 		this.registerEvent(
 			this.app.vault.on("rename", (file: TAbstractFile) => {
-				Logger.trace(FILE_NAME, "registerEvent", "vault.rename event called");
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"vault.rename event called"
+				);
 				if (file instanceof TFile) {
 					EventManager.getInstance().emit("file-rename");
 				} else {
@@ -360,7 +407,11 @@ export default class DataLoomPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.vault.on("delete", (file: TAbstractFile) => {
-				Logger.trace(FILE_NAME, "registerEvent", "vault.delete event called");
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"vault.delete event called"
+				);
 				if (file instanceof TFile) {
 					EventManager.getInstance().emit("file-delete");
 				} else {
@@ -374,7 +425,11 @@ export default class DataLoomPlugin extends Plugin {
 			(this.app as any).metadataTypeManager.on(
 				"changed",
 				async (propertyName: string) => {
-					Logger.trace(FILE_NAME, "registerEvent", "metadataTypeManager.changed event called");
+					Logger.trace(
+						FILE_NAME,
+						"registerEvent",
+						"metadataTypeManager.changed event called"
+					);
 					const updatedType = getAssignedPropertyType(
 						this.app,
 						propertyName
@@ -393,7 +448,11 @@ export default class DataLoomPlugin extends Plugin {
 				"changed",
 				async (file: TAbstractFile) => {
 					if (file instanceof TFile) {
-						Logger.trace(FILE_NAME, "registerEvent", "metadataCache.changed event called");
+						Logger.trace(
+							FILE_NAME,
+							"registerEvent",
+							"metadataCache.changed event called"
+						);
 						//Wait until metadataTypeManager has the updated properties
 						//This is a bug. Bug #1
 						//TODO tell the Obsidian team
@@ -577,7 +636,5 @@ export default class DataLoomPlugin extends Plugin {
 	 * Called on plugin unload.
 	 * This can be when the plugin is disabled or Obsidian is closed.
 	 */
-	async onunload() {
-		this.app.workspace.detachLeavesOfType(DATA_LOOM_VIEW);
-	}
+	onunload() {}
 }

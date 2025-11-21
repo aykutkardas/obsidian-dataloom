@@ -11,6 +11,7 @@ import DeserializationError from "src/data/deserialization-error";
 import { serializeFrontmatter } from "src/data/serialize-frontmatter";
 import EventManager from "src/shared/event/event-manager";
 import LastSavedManager from "src/shared/last-saved-manager";
+import "src/obsidian/shared/styles.css";
 
 export const DATA_LOOM_VIEW = "dataloom";
 
@@ -31,9 +32,10 @@ export default class DataLoomView extends TextFileView {
 		this.appId = createAppId();
 	}
 
+	// eslint-disable-next-line @typescript-eslint/require-await
 	async onOpen() {
 		//Add offset to the container to account for the mobile action bar
-		this.containerEl.style.paddingBottom = "48px";
+		this.containerEl.addClass("dataloom-view-container");
 
 		//Add settings button to action bar
 		this.addAction("settings", "Settings", () => {
@@ -44,6 +46,7 @@ export default class DataLoomView extends TextFileView {
 		});
 	}
 
+	// eslint-disable-next-line @typescript-eslint/require-await
 	async onClose() {
 		if (this.root) {
 			this.root.unmount();
