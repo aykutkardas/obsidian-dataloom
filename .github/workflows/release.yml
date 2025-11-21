@@ -23,7 +23,7 @@ jobs:
               if: startsWith(github.ref, 'refs/tags/')
               with:
                   name: ${{ github.ref_name }}
-                  tag_name: ${{ github.ref }}
+                  tag_name: ${{ github.ref_name }}
                   files: |
                       dist/main.js
                       dist/manifest.json
