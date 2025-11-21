@@ -1,11 +1,11 @@
 {
-	"id": "notion-like-tables",
+	"id": "obisidian-dataloom",
 	"name": "DataLoom",
 	"minAppVersion": "1.4.0",
 	"description": "Weave together data from diverse sources into different views. Inspired by Excel Spreadsheets and Notion.so.",
-	"author": "DecafDev",
-	"authorUrl": "https://github.com/decaf-dev",
+	"author": "Aykut Kardaş",
+	"authorUrl": "https://github.com/aykutkardas",
 	"isDesktopOnly": false,
-	"fundingUrl": "https://ko-fi.com/decaf_dev",
-	"version": "8.16.1"
+	"fundingUrl": "https://buymeacoffee.com/aykutkardas",
+	"version": "1.0.0"
 }
