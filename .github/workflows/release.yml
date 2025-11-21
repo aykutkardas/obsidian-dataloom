@@ -7,24 +7,23 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js
-              uses: actions/setup-node@v1
+            - uses: actions/checkout@v4
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v1
               with:
-                  node-version: "16.x"
+                  bun-version: latest
+            - name: Install dependencies
+              run: bun install
             - name: Build
-              id: build
-              run: |
-                  npm install
-                  npm run build
-            # Create the release on github
-            - name: Release
+              run: bun run build
+            - name: Create Release
               uses: softprops/action-gh-release@v1
               if: startsWith(github.ref, 'refs/tags/')
               with:
-                  name: ${{  github.ref_name }}
+                  name: ${{ github.ref_name }}
                   tag_name: ${{ github.ref }}
                   files: |
                       dist/main.js
                       dist/manifest.json
                       dist/styles.css
+                  generate_release_notes: true
