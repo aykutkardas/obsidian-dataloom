@@ -23,7 +23,6 @@ export default class ColumnDeleteCommand extends LoomStateCommand {
 		let id = this.columnId;
 		if (this.last) id = columns[columns.length - 1].id;
 
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const result = columnDeleteExecute(columns, rows, filters, id!);
 		if (result === null) {
 			return prevState;

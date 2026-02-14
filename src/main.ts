@@ -74,7 +74,6 @@ export default class DataLoomPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		// eslint-disable-next-line react-hooks/rules-of-hooks
 		Logger.useDefaults();
 
 		Logger.setHandler(function (messages) {
