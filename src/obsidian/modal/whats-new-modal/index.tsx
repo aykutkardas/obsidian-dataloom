@@ -36,12 +36,13 @@ export default class WhatsNewModal extends Modal {
 				cls: "dataloom-whats-new-modal__content",
 			});
 			const replacedText = this.replaceIssueNumbersWithLinks(body);
+			const component = new Component();
 			MarkdownRenderer.render(
 				this.app,
 				replacedText,
 				bodyEl,
 				"",
-				new Component()
+				component
 			);
 			bodyEl.querySelectorAll("a").forEach((a) => {
 				const issueNumber = this.extractIssueNumberFromURL(a.getText());

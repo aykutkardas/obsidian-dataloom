@@ -3,7 +3,9 @@ import DataLoomView from "src/obsidian/dataloom-view";
 
 const renderText = async (app: App, leaf: WorkspaceLeaf, value: string) => {
 	const div = document.createElement("div");
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	div.style.width = "100%";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	div.style.height = "100%";
 
 	try {

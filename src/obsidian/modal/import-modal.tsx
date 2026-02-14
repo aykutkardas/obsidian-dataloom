@@ -64,7 +64,7 @@ export default class ImportModal extends Modal {
 			"", //No app id. Target all views of this file
 			state
 		);
-		new Notice("Success! DataLoom import completed.");
+		new Notice("Import completed successfully.");
 		this.close();
 	};
 

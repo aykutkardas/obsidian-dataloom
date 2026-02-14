@@ -18,4 +18,5 @@ export type DataLoomEvent =
 	| "property-type-change"
 	| "clear-menu-trigger-focus";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type EventCallback = (...data: any[]) => void;

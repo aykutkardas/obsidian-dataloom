@@ -11,6 +11,7 @@ export const updateObsidianPropertyType = (
 	name: string,
 	type: ObsidianPropertyType
 ): Promise<void> => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	return (app as any).metadataTypeManager.setType(name, type);
 };
 
@@ -20,6 +21,7 @@ export const updateObsidianPropertyType = (
  * NOTE: This is an undocumented API function and may break in future versions of Obsidian
  */
 export const getAllObsidianProperties = (app: App) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	return (app as any).metadataTypeManager.getAllProperties();
 };
 
@@ -32,5 +34,6 @@ export const getAssignedPropertyType = (
 	app: App,
 	name: string
 ): ObsidianPropertyType | null => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	return (app as any).metadataTypeManager.getAssignedType(name);
 };

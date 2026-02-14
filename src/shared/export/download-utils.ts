@@ -38,6 +38,7 @@ export const downloadFile = (
 	const el = document.createElement("a");
 	el.setAttribute("href", url);
 	el.setAttribute("download", fileName);
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	el.style.display = "none";
 
 	//Add the link element to the DOM

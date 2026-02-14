@@ -41,6 +41,7 @@ export default class EventManager {
 	}
 
 	// Method to trigger all callbacks associated with an event
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public emit(eventName: DataLoomEvent, ...data: any[]): void {
 		Logger.trace(CLASS_NAME, "emit", `emiting ${eventName} event`, data);
 		if (!this.eventListeners[eventName]) {
