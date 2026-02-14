@@ -194,24 +194,27 @@ export default function HeaderMenu({
 	}
 
 	function handleNumberOptionChange(value: string) {
-		submenu === SubmenuType.TEXT_INPUT_NUMBER_PREFIX &&
+		if (submenu === SubmenuType.TEXT_INPUT_NUMBER_PREFIX) {
 			onColumnChange(
 				columnId,
 				{ numberPrefix: value },
 				{ shouldSortRows: true }
 			);
-		submenu === SubmenuType.TEXT_INPUT_NUMBER_SUFFIX &&
+		}
+		if (submenu === SubmenuType.TEXT_INPUT_NUMBER_SUFFIX) {
 			onColumnChange(
 				columnId,
 				{ numberSuffix: value },
 				{ shouldSortRows: true }
 			);
-		submenu === SubmenuType.TEXT_INPUT_NUMBER_SEPARATOR &&
+		}
+		if (submenu === SubmenuType.TEXT_INPUT_NUMBER_SEPARATOR) {
 			onColumnChange(
 				columnId,
 				{ numberSeparator: value },
 				{ shouldSortRows: true }
 			);
+		}
 		setSubmenu(null);
 	}
 
