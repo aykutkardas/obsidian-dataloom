@@ -422,6 +422,7 @@ export default class DataLoomPlugin extends Plugin {
 
 		//This runs whenever a property changes types
 		this.registerEvent(
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(this.app as any).metadataTypeManager.on(
 				"changed",
 				async (propertyName: string) => {
@@ -485,6 +486,7 @@ export default class DataLoomPlugin extends Plugin {
 				const filePath = await this.newLoomFile(null, true);
 				if (!filePath) return;
 
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const useMarkdownLinks = (this.app.vault as any).getConfig(
 					"useMarkdownLinks"
 				);

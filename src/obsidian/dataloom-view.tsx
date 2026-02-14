@@ -39,8 +39,10 @@ export default class DataLoomView extends TextFileView {
 		//Add settings button to action bar
 		this.addAction("settings", "Settings", () => {
 			//Open settings tab
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(this.app as any).setting.open();
 			//Navigate to plugin settings
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(this.app as any).setting.openTabById(this.pluginId);
 		});
 	}
