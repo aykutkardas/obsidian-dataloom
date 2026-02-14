@@ -22,7 +22,9 @@ export const renderMarkdown = async (
 	markdown: string
 ) => {
 	const div = document.createElement("div");
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	div.style.height = "100%";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	div.style.width = "100%";
 
 	//We need to attach this class so that the `is-unresolved` link renders properly by Obsidian

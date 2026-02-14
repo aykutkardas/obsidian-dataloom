@@ -233,8 +233,11 @@ const renderContainerEl = (linkEl: HTMLElement) => {
 	const containerEl = linkEl.createDiv({
 		cls: "dataloom-embedded-container",
 	});
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	containerEl.style.height = "100%";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	containerEl.style.width = "100%";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	containerEl.style.padding = "10px 0px";
 
 	//Stop propagation of the click event. We do this so that the embed link
@@ -255,9 +258,13 @@ const resetLinkStyles = (linkEl: HTMLElement) => {
 	linkEl.empty();
 
 	//Reset styles
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	linkEl.style.backgroundColor = "var(--color-primary)";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	linkEl.style.cursor = "unset";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	linkEl.style.margin = "0px";
+	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 	linkEl.style.padding = "0px";
 };
 

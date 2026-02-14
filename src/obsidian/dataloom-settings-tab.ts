@@ -2,7 +2,14 @@ import { PluginSettingTab, App } from "obsidian";
 import { Setting } from "obsidian";
 import DataLoomPlugin from "../main";
 import Logger from "js-logger";
-import { LOG_LEVEL_DEBUG, LOG_LEVEL_ERROR, LOG_LEVEL_INFO, LOG_LEVEL_OFF, LOG_LEVEL_TRACE, LOG_LEVEL_WARN } from "src/shared/logger/constants";
+import {
+	LOG_LEVEL_DEBUG,
+	LOG_LEVEL_ERROR,
+	LOG_LEVEL_INFO,
+	LOG_LEVEL_OFF,
+	LOG_LEVEL_TRACE,
+	LOG_LEVEL_WARN,
+} from "src/shared/logger/constants";
 import { stringToLogLevel } from "src/shared/logger";
 
 export default class DataLoomSettingsTab extends PluginSettingTab {
@@ -117,7 +124,7 @@ export default class DataLoomSettingsTab extends PluginSettingTab {
 
 		new Setting(containerEl).setName("Export").setHeading();
 		new Setting(containerEl)
-			.setName("Remove markdown")
+			.setName("Remove Markdown")
 			.setDesc(removeMarkdownOnExportDesc)
 			.addToggle((cb) => {
 				cb.setValue(
@@ -189,8 +196,8 @@ export default class DataLoomSettingsTab extends PluginSettingTab {
 					[LOG_LEVEL_WARN]: "Warn",
 					[LOG_LEVEL_INFO]: "Info",
 					[LOG_LEVEL_DEBUG]: "Debug",
-					[LOG_LEVEL_TRACE]: "Trace"
-				})
+					[LOG_LEVEL_TRACE]: "Trace",
+				});
 				cb.setValue(this.plugin.settings.logLevel).onChange(
 					async (value) => {
 						this.plugin.settings.logLevel = value;
