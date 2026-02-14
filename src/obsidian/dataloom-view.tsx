@@ -32,7 +32,6 @@ export default class DataLoomView extends TextFileView {
 		this.appId = createAppId();
 	}
 
-	// eslint-disable-next-line @typescript-eslint/require-await
 	async onOpen() {
 		//Add offset to the container to account for the mobile action bar
 		this.containerEl.addClass("dataloom-view-container");
@@ -46,7 +45,6 @@ export default class DataLoomView extends TextFileView {
 		});
 	}
 
-	// eslint-disable-next-line @typescript-eslint/require-await
 	async onClose() {
 		if (this.root) {
 			this.root.unmount();

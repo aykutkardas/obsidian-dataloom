@@ -1,8 +1,7 @@
 export default class LastSavedManager {
 	private static instance: LastSavedManager;
-	private lastSavedFile: string = "";
-	private lastSavedTime: number = 0;
-
+	private lastSavedFile = "";
+	private lastSavedTime = 0;
 
 	// Ensures only one instance is created
 	public static getInstance(): LastSavedManager {
@@ -28,6 +27,4 @@ export default class LastSavedManager {
 	public clearLastSavedFile(): void {
 		this.lastSavedFile = "";
 	}
-
-
 }
