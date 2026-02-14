@@ -56,7 +56,7 @@
 		"typescript": "^5.1.3"
 	},
 	"dependencies": {
-		"@codemirror/view": "^6.38.8",
+		"@codemirror/view": "6.38.6",
 		"@reduxjs/toolkit": "^1.8.5",
 		"codemirror": "^6.0.1",
 		"dayjs": "^1.11.10",
