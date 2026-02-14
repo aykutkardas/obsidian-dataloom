@@ -190,7 +190,7 @@ export default class DataLoomPlugin extends Plugin {
 				);
 				try {
 					await this.app.vault.rename(file, newFilePath);
-				} catch (err) {
+				} catch {
 					new Notice(
 						`Failed renaming ${file.path} to ${newFilePath}`
 					);

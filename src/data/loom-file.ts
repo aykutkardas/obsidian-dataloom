@@ -1,4 +1,4 @@
-import { App, Notice, normalizePath } from "obsidian";
+import { App, Notice, normalizePath, TFile } from "obsidian";
 import { createFile, createFolder } from "./file-operations";
 import { createLoomState } from "../shared/loom-state/loom-state-factory";
 import { serializeState } from "./serialize-state";
@@ -70,11 +70,16 @@ const getFolderForNewLoomFile = async (
 		folderPath = contextMenuFolderPath;
 	} else if (createAtAttachmentsFolder) {
 		const openFile = app.workspace.getActiveFile();
-		folderPath = await (app.vault as any).getAvailablePathForAttachments(
-			"",
-			"",
-			openFile
-		);
+		// getAvailablePathForAttachments is not in Obsidian types but exists in the API
+		folderPath = await (
+			app.vault as unknown as {
+				getAvailablePathForAttachments: (
+					fileName: string,
+					extension: string,
+					file: TFile | null
+				) => Promise<string>;
+			}
+		).getAvailablePathForAttachments("", "", openFile);
 	} else {
 		folderPath = customFolderForNewFiles;
 	}
