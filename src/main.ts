@@ -473,7 +473,6 @@ export default class DataLoomPlugin extends Plugin {
 		this.addCommand({
 			id: "create",
 			name: "Create loom",
-			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "=" }],
 			callback: async () => {
 				await this.newLoomFile(null);
 			},
@@ -482,7 +481,6 @@ export default class DataLoomPlugin extends Plugin {
 		this.addCommand({
 			id: "create-and-embed",
 			name: "Create loom and embed it into current file",
-			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "+" }],
 			editorCallback: async (editor) => {
 				const filePath = await this.newLoomFile(null, true);
 				if (!filePath) return;
@@ -508,7 +506,6 @@ export default class DataLoomPlugin extends Plugin {
 		this.addCommand({
 			id: "add-column",
 			name: "Add column",
-			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "\\" }],
 			checkCallback: (checking: boolean) => {
 				const loomView =
 					this.app.workspace.getActiveViewOfType(DataLoomView);
@@ -527,7 +524,6 @@ export default class DataLoomPlugin extends Plugin {
 		this.addCommand({
 			id: "delete-column",
 			name: "Delete column",
-			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "Backspace" }],
 			checkCallback: (checking: boolean) => {
 				const loomView =
 					this.app.workspace.getActiveViewOfType(DataLoomView);
@@ -546,7 +542,6 @@ export default class DataLoomPlugin extends Plugin {
 		this.addCommand({
 			id: "add-row",
 			name: "Add row",
-			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "Enter" }],
 			checkCallback: (checking: boolean) => {
 				const loomView =
 					this.app.workspace.getActiveViewOfType(DataLoomView);
@@ -563,7 +558,6 @@ export default class DataLoomPlugin extends Plugin {
 		this.addCommand({
 			id: "delete-row",
 			name: "Delete row",
-			hotkeys: [{ modifiers: ["Alt", "Shift"], key: "Backspace" }],
 			checkCallback: (checking: boolean) => {
 				const loomView =
 					this.app.workspace.getActiveViewOfType(DataLoomView);
@@ -581,7 +575,7 @@ export default class DataLoomPlugin extends Plugin {
 
 		this.addCommand({
 			id: "export-markdown",
-			name: "Export as markdown",
+			name: "Export as Markdown",
 			checkCallback: (checking: boolean) => {
 				const loomView =
 					this.app.workspace.getActiveViewOfType(DataLoomView);
