@@ -33,7 +33,7 @@ describe("serializeFrontmatter", () => {
 			},
 		},
 		fileManager: {
-			processFrontMatter: async (
+			processFrontMatter: (
 				file: TFile,
 				callback: (frontmatter: Record<string, unknown>) => void
 			) => {

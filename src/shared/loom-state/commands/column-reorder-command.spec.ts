@@ -2,7 +2,7 @@ import ColumnReorderCommand from "./column-reorder-command";
 import { createLoomState } from "../loom-state-factory";
 
 describe("column-update-command", () => {
-	it("moves the last column to the first column index when execute() is called", async () => {
+	it("moves the last column to the first column index when execute() is called", () => {
 		//Arrange
 		const prevState = createLoomState(3, 1);
 		const firstColumn = prevState.model.columns[0].id;

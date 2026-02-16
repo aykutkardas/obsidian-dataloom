@@ -4,7 +4,7 @@ import { createLoomState } from "../loom-state-factory";
 import { TextCell } from "../types/loom-state";
 
 describe("cell-update-command", () => {
-	it("should update a cell property when execute() is called", async () => {
+	it("should update a cell property when execute() is called", () => {
 		//Arrange
 		const prevState = createLoomState(1, 1);
 		const command = new CellBodyUpdateCommand(

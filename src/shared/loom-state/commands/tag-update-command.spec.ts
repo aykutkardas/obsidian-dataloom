@@ -35,7 +35,7 @@ describe("tag-update-command", () => {
 		return { prevState, tags };
 	};
 
-	it("should update a tag property when execute() is called", async () => {
+	it("should update a tag property when execute() is called", () => {
 		//Arrange
 		const { prevState, tags } = createTestState();
 

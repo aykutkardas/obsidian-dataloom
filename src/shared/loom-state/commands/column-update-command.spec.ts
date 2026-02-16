@@ -2,7 +2,7 @@ import ColumnUpdateCommand from "./column-update-command";
 import { createLoomState } from "../loom-state-factory";
 
 describe("column-update-command", () => {
-	it("should update a column property when execute() is called", async () => {
+	it("should update a column property when execute() is called", () => {
 		//Arrange
 		const prevState = createLoomState(1, 1);
 		const command = new ColumnUpdateCommand(prevState.model.columns[0].id, {

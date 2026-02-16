@@ -143,7 +143,7 @@ describe("column-type-update-command", () => {
 		return state;
 	};
 
-	it("should handle multi-tag -> text when execute() is called", async () => {
+	it("should handle multi-tag -> text when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithMultiTagColumn();
 
@@ -167,7 +167,7 @@ describe("column-type-update-command", () => {
 		).toEqual("test1,test2");
 	});
 
-	it("should handle tag -> text when execute() is called", async () => {
+	it("should handle tag -> text when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithTagColumn();
 
@@ -191,7 +191,7 @@ describe("column-type-update-command", () => {
 		).toEqual("test1");
 	});
 
-	it("should handle text -> tag when execute() is called", async () => {
+	it("should handle text -> tag when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithTextColumn();
 
@@ -215,7 +215,7 @@ describe("column-type-update-command", () => {
 		).not.toBeNull();
 	});
 
-	it("should handle text -> multi-tag when execute() is called", async () => {
+	it("should handle text -> multi-tag when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithTextColumn();
 
@@ -239,7 +239,7 @@ describe("column-type-update-command", () => {
 		expect(executeState.model.columns[0].tags).toHaveLength(2);
 	});
 
-	it("should handle multi-tag -> tag when execute() is called", async () => {
+	it("should handle multi-tag -> tag when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithMultiTagColumn();
 
@@ -260,7 +260,7 @@ describe("column-type-update-command", () => {
 		).not.toBeNull();
 	});
 
-	it("should handle text -> checkbox when execute() is called", async () => {
+	it("should handle text -> checkbox when execute() is called", () => {
 		//Arrange
 		const prevState = createLoomState(1, 1);
 
@@ -280,7 +280,7 @@ describe("column-type-update-command", () => {
 		).toEqual(false);
 	});
 
-	it("should handle date -> text when execute() is called", async () => {
+	it("should handle date -> text when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithDateColumn();
 
@@ -300,7 +300,7 @@ describe("column-type-update-command", () => {
 		).toEqual("12-31-2019");
 	});
 
-	it("should delete referenced filters when execute() is called", async () => {
+	it("should delete referenced filters when execute() is called", () => {
 		//Arrange
 		const prevState = generateStateWithTextColumnAndFilters();
 

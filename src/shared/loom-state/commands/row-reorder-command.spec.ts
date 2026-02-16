@@ -2,7 +2,7 @@ import RowReorderCommand from "./row-reorder-command";
 import { createLoomState } from "../loom-state-factory";
 
 describe("row-reorder-command", () => {
-	it("moves the last row to the first row index when execute() is called", async () => {
+	it("moves the last row to the first row index when execute() is called", () => {
 		//Arrange
 		const prevState = createLoomState(1, 3);
 		const firstRow = prevState.model.rows[0].id;

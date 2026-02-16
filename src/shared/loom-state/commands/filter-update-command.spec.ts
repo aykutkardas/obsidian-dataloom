@@ -7,7 +7,7 @@ import FilterUpdateCommand from "./filter-update-command";
 import { TextFilter } from "../types/loom-state";
 
 describe("filter-update-command", () => {
-	it("should partially update the filter", async () => {
+	it("should partially update the filter", () => {
 		//Arrange
 		const prevState = createLoomState(1, 1);
 
