@@ -80,8 +80,8 @@ export const deserializeState = (
 	let failedMigration: string | null = null;
 
 	try {
-		const parsedState = JSON.parse(data);
-		const untypedVersion: unknown = parsedState["pluginVersion"];
+	const parsedState = JSON.parse(data) as Record<string, unknown>;
+	const untypedVersion: unknown = parsedState["pluginVersion"];
 
 		if (typeof untypedVersion === "number") {
 			//This is needed for 6.10.0 and less
