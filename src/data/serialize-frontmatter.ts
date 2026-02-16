@@ -107,15 +107,18 @@ export const serializeFrontmatter = async (app: App, state: LoomState) => {
 				}
 			}
 
-			await app.fileManager.processFrontMatter(file, (frontmatter) => {
-				if (!frontmatter[frontmatterKey]) {
-					//If the content is empty, skip
-					//because we don't want to create an empty frontmatter key
-					if (!saveValue) return;
-				}
+			await app.fileManager.processFrontMatter(
+				file,
+				(frontmatter: Record<string, unknown>) => {
+					if (!frontmatter[frontmatterKey]) {
+						//If the content is empty, skip
+						//because we don't want to create an empty frontmatter key
+						if (!saveValue) return;
+					}
 
-				frontmatter[frontmatterKey] = saveValue;
-			});
+					frontmatter[frontmatterKey] = saveValue;
+				}
+			);
 
 			//Consider the situation where you have a date property and you have a date time column
 			//If you save a datetime value, the date property will need to be converted to a date time value
