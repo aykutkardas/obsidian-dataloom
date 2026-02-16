@@ -238,7 +238,7 @@ export default function LoomStateProvider({
 	);
 
 	if (error) {
-		throw error;
+		throw new Error(String(error));
 	}
 
 	return (
