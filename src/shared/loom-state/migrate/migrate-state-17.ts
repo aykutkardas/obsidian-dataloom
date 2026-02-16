@@ -60,16 +60,17 @@ export default class MigrateState17 implements MigrateState {
 			};
 		});
 
-		const nextFilters: Filter17[] = filters.map((filter) => {
-			const { type } = filter;
+		const nextFilters = filters.map((filter) => {
+			const type = filter.type as CellType17;
 			if (
 				type === CellType17.DATE ||
 				type === CellType17.LAST_EDITED_TIME ||
 				type === CellType17.CREATION_TIME
 			) {
+				const { dateTime } = filter as unknown as { dateTime: number | null };
 				let nextDateTime = null;
-				if (filter.dateTime !== null) {
-					nextDateTime = getDateTimeFromUnixTime(filter.dateTime);
+				if (dateTime !== null) {
+					nextDateTime = getDateTimeFromUnixTime(dateTime);
 				}
 				return {
 					...filter,
@@ -77,7 +78,7 @@ export default class MigrateState17 implements MigrateState {
 				};
 			}
 			return filter;
-		});
+		}) as Filter17[];
 
 		return {
 			...prevState,
