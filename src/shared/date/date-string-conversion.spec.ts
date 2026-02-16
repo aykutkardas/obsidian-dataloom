@@ -89,7 +89,7 @@ describe("dateStringToDateTime", () => {
 			//Act and Assert
 			expect(() =>
 				dateStringToDateTime(dateString, format, separator)
-			).toThrowError();
+			).toThrow();
 		});
 
 		it("returns invalid time string for DD/MM/YYYY format with incorrect time string", () => {
@@ -102,7 +102,7 @@ describe("dateStringToDateTime", () => {
 			//Act and Assert
 			expect(() =>
 				dateStringToDateTime(dateString, format, separator, options)
-			).toThrowError();
+			).toThrow();
 		});
 	});
 

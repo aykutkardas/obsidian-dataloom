@@ -1,3 +1,4 @@
+import type React from "react";
 import Stack from "../stack";
 
 interface Props {

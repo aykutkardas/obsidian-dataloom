@@ -18,7 +18,7 @@ describe("validateMarkdownTable", () => {
 		const tokens = parseMarkdownTableIntoTokens(table);
 
 		//Assert
-		expect(() => validateMarkdownTable(tokens)).not.toThrowError();
+		expect(() => validateMarkdownTable(tokens)).not.toThrow();
 	});
 
 	it("throws an error for a table with no headers", () => {
@@ -32,7 +32,7 @@ describe("validateMarkdownTable", () => {
 		const tokens = parseMarkdownTableIntoTokens(markdown);
 
 		//Assert
-		expect(() => validateMarkdownTable(tokens)).toThrowError();
+		expect(() => validateMarkdownTable(tokens)).toThrow();
 	});
 
 	it("throws an error for a table with no rows", () => {
@@ -46,7 +46,7 @@ describe("validateMarkdownTable", () => {
 		const tokens = parseMarkdownTableIntoTokens(markdown);
 
 		//Assert
-		expect(() => validateMarkdownTable(tokens)).toThrowError();
+		expect(() => validateMarkdownTable(tokens)).toThrow();
 	});
 
 	it("throws an error for multiple tables", () => {
@@ -67,7 +67,7 @@ describe("validateMarkdownTable", () => {
 		const tokens = parseMarkdownTableIntoTokens(markdown);
 
 		//Assert
-		expect(() => validateMarkdownTable(tokens)).toThrowError();
+		expect(() => validateMarkdownTable(tokens)).toThrow();
 	});
 });
 

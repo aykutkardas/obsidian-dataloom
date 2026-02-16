@@ -1,31 +1,39 @@
-import tsparser from "@typescript-eslint/parser";
-import obsidianmd from "eslint-plugin-obsidianmd";
 import tseslint from "typescript-eslint";
+import obsidianmd from "eslint-plugin-obsidianmd";
+import globals from "globals";
+import { globalIgnores } from "eslint/config";
 
-const plugin = obsidianmd.default || obsidianmd;
-// Extract rules from recommended config (it's an iterable that yields configs with extends)
-// We'll use the rules object directly instead
-const obsidianRules = {};
-for (const [key, value] of Object.entries(plugin.configs?.recommended || {})) {
-	if (!key.startsWith('Symbol.')) {
-		obsidianRules[key] = value;
-	}
-}
-
-export default [
-	...tseslint.configs.recommended,
+export default tseslint.config(
 	{
-		files: ["**/*.ts", "**/*.tsx"],
 		languageOptions: {
-			parser: tsparser,
-			parserOptions: { project: "./tsconfig.json" },
-		},
-		plugins: {
-			obsidianmd: plugin,
-		},
-		rules: {
-			...obsidianRules,
-			// You can add your own configuration to override or add rules
+			globals: {
+				...globals.browser,
+			},
+			parserOptions: {
+				project: "./tsconfig.eslint.json",
+				tsconfigRootDir: import.meta.dirname,
+			},
 		},
 	},
-];
+
+	...obsidianmd.configs.recommended,
+
+	// ✅ TEST FILES: expect/describe/it vb. globals
+	{
+		files: [
+			"**/*.test.{js,cjs,mjs,ts,tsx}",
+			"**/*.spec.{js,cjs,mjs,ts,tsx}",
+			"test/**/*.{js,ts,tsx}",
+			"tests/**/*.{js,ts,tsx}",
+			"__tests__/**/*.{js,ts,tsx}",
+		],
+		languageOptions: {
+			globals: {
+				...globals.jest,
+				...globals.vitest,
+			},
+		},
+	},
+
+	globalIgnores(["node_modules", "dist", "main.js"])
+);
