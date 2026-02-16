@@ -1,3 +1,4 @@
+import type React from "react";
 import Menu from "src/react/shared/menu";
 import Padding from "src/react/shared/padding";
 import Stack from "src/react/shared/stack";
@@ -9,12 +10,7 @@ import ColumnNotFoundError from "src/shared/error/column-not-found-error";
 import {
 	CellType,
 	FilterCondition,
-	TextFilter,
-	CheckboxFilter,
-	TagFilter,
-	MultiTagFilter,
 	Filter,
-	FileFilter,
 	FilterOperator,
 	TextFilterCondition,
 	NumberFilterCondition,
@@ -29,13 +25,8 @@ import {
 	EmbedCondition,
 	LastEditedTimeCondition,
 	CreationTimeCondition,
-	NumberFilter,
-	DateFilter,
-	CreationTimeFilter,
-	LastEditedTimeFilter,
 	DateFilterOption,
 	Column,
-	SourceFileFilter,
 	SourceFileCondition,
 } from "src/shared/loom-state/types/loom-state";
 import { isSmallScreenSize } from "src/shared/render/utils";
@@ -365,7 +356,7 @@ export default function FilterMenu({
 							let conditionOptions: FilterCondition[] = [];
 							switch (type) {
 								case CellType.TEXT: {
-									const { text } = filter as TextFilter;
+									const { text } = filter;
 									inputNode = (
 										<Input
 											value={text}
@@ -387,7 +378,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.FILE: {
-									const { text } = filter as FileFilter;
+									const { text } = filter;
 									inputNode = (
 										<Input
 											value={text}
@@ -409,7 +400,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.SOURCE_FILE: {
-									const { text } = filter as SourceFileFilter;
+									const { text } = filter;
 									inputNode = (
 										<Input
 											value={text}
@@ -431,7 +422,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.CHECKBOX: {
-									const { value } = filter as CheckboxFilter;
+									const { value } = filter;
 									inputNode = (
 										<CheckboxFilterSelect
 											value={value}
@@ -447,7 +438,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.TAG: {
-									const { tagId } = filter as TagFilter;
+									const { tagId } = filter;
 									inputNode = (
 										<Select
 											value={tagId}
@@ -477,7 +468,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.MULTI_TAG: {
-									const { tagIds } = filter as MultiTagFilter;
+									const { tagIds } = filter;
 									inputNode = (
 										<MultiSelect
 											id={id}
@@ -514,7 +505,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.NUMBER: {
-									const { text } = filter as NumberFilter;
+									const { text } = filter;
 									inputNode = (
 										<Input
 											isNumeric
@@ -537,7 +528,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.DATE: {
-									const { option } = filter as DateFilter;
+									const { option } = filter;
 									inputNode = (
 										<DateFilterSelect
 											value={option}
@@ -559,8 +550,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.CREATION_TIME: {
-									const { option } =
-										filter as CreationTimeFilter;
+								const { option } = filter;
 									inputNode = (
 										<DateFilterSelect
 											value={option}
@@ -580,8 +570,7 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.LAST_EDITED_TIME: {
-									const { option } =
-										filter as LastEditedTimeFilter;
+								const { option } = filter;
 									inputNode = (
 										<DateFilterSelect
 											value={option}
