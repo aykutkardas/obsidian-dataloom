@@ -121,7 +121,10 @@ export default function LoomStateProvider({
 	}, [reactAppId, loomFile, app]);
 
 	React.useEffect(() => {
-		async function handleRefreshEvent(file: TFile, pluginVersion: string) {
+		async function handleRefreshEventAsync(
+			file: TFile,
+			pluginVersion: string
+		) {
 			if (file.path === loomFile.path) {
 				const fileData = await app.vault.read(loomFile);
 
@@ -137,6 +140,10 @@ export default function LoomStateProvider({
 					setError(err);
 				}
 			}
+		}
+
+		function handleRefreshEvent(file: TFile, pluginVersion: string) {
+			void handleRefreshEventAsync(file, pluginVersion);
 		}
 
 		EventManager.getInstance().on(

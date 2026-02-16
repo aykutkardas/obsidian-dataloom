@@ -358,7 +358,7 @@ const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 							horizontalPadding,
 							aspectRatio,
 							frontmatterKey,
-							multiTagSortDir
+							multiTagSortDir,
 						} = column;
 
 						const cell = row.cells.find(
@@ -569,7 +569,9 @@ const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 							}
 							default:
 								throw new Error(
-									`Cell type ${type} not implemented`
+									`Cell type ${
+										type as string
+									} not implemented`
 								);
 						}
 					}
