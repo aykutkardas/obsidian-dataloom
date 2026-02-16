@@ -1,3 +1,4 @@
+import type React from "react";
 import { getSpacing } from "src/shared/spacing";
 import { SpacingSize } from "src/shared/spacing/types";
 

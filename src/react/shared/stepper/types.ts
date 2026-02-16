@@ -1,3 +1,4 @@
+import type React from "react";
 export type Step = {
 	title: string;
 	description?: string;

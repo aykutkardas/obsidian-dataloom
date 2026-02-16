@@ -1,3 +1,4 @@
+import type React from "react";
 import { useAppSelector } from "src/redux/hooks";
 import "./styles.css";
 

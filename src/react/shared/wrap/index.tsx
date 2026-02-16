@@ -1,3 +1,4 @@
+import type React from "react";
 import { AlignItems, JustifyContent } from "src/shared/render/types";
 import { getDynamicSize } from "src/shared/render/utils";
 import { getSpacing } from "src/shared/spacing";

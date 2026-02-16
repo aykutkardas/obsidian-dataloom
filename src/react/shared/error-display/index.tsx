@@ -1,3 +1,4 @@
+import type React from "react";
 import { Notice } from "obsidian";
 import Divider from "../divider";
 import Padding from "../padding";

@@ -1,3 +1,4 @@
+import type React from "react";
 import Button from "src/react/shared/button";
 import Divider from "src/react/shared/divider";
 import Icon from "src/react/shared/icon";

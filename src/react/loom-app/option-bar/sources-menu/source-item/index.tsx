@@ -1,3 +1,4 @@
+import type React from "react";
 import "./styles.css";
 
 interface Props {

@@ -1,3 +1,4 @@
+import type React from "react";
 import { useRef } from "react";
 import { useLoomState } from "src/react/loom-app/loom-state-provider";
 

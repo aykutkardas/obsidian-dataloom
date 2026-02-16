@@ -1,3 +1,4 @@
+import type React from "react";
 import { LoomMenu } from "src/react/shared/menu-provider/types";
 import { findMenuTriggerEl } from "src/react/shared/menu-provider/utils";
 

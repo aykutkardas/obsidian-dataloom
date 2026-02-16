@@ -1,3 +1,4 @@
+import type React from "react";
 import { useLoomState } from "src/react/loom-app/loom-state-provider";
 import { useDragContext } from "src/shared/dragging/drag-context";
 import { getRowId } from "src/shared/dragging/utils";

@@ -1,3 +1,4 @@
+import type React from "react";
 import Icon from "src/react/shared/icon";
 import Button from "src/react/shared/button";
 import Switch from "src/react/shared/switch";

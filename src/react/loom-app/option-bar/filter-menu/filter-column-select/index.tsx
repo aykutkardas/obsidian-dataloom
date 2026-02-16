@@ -1,3 +1,4 @@
+import type React from "react";
 import Select from "src/react/shared/select";
 import { CellType, Column } from "src/shared/loom-state/types/loom-state";
 

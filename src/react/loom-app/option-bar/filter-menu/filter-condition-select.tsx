@@ -1,3 +1,4 @@
+import type React from "react";
 import Select from "src/react/shared/select";
 import { getDisplayNameForFilterCondition } from "src/shared/loom-state/type-display-names";
 import { FilterCondition } from "src/shared/loom-state/types/loom-state";
