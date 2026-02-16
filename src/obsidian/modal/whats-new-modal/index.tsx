@@ -13,57 +13,51 @@ export default class WhatsNewModal extends Modal {
 	async onOpen() {
 		const { containerEl } = this;
 		const data = await getLastestGithubRelease();
+		if (!data) return;
+
 		const { body, tag_name } = data;
 		setModalTitle(containerEl, `DataLoom ${tag_name}`);
 
 		const { contentEl } = this;
 		this.renderDescription(contentEl);
 		renderDivider(contentEl);
-		this.renderContent(contentEl, body);
+		await this.renderContent(contentEl, body);
 	}
 
-	async renderDescription(containerEl: HTMLElement) {
+	renderDescription(containerEl: HTMLElement) {
 		containerEl.createDiv({
 			text: "Thank you for using DataLoom! Here are the latest updates:",
 		});
 	}
 
 	async renderContent(contentEl: HTMLElement, body: string) {
-		const data = await getLastestGithubRelease();
+		const bodyEl = contentEl.createDiv({
+			cls: "dataloom-whats-new-modal__content",
+		});
+		const replacedText = this.replaceIssueNumbersWithLinks(body);
+		const component = new Component();
+		await MarkdownRenderer.render(
+			this.app,
+			replacedText,
+			bodyEl,
+			"",
+			component
+		);
+		bodyEl.querySelectorAll("a").forEach((a) => {
+			const issueNumber = this.extractIssueNumberFromURL(a.getText());
+			if (issueNumber) {
+				a.setText(issueNumber);
+			}
+		});
 
-		if (data) {
-			const bodyEl = contentEl.createDiv({
-				cls: "dataloom-whats-new-modal__content",
-			});
-			const replacedText = this.replaceIssueNumbersWithLinks(body);
-			const component = new Component();
-			MarkdownRenderer.render(
-				this.app,
-				replacedText,
-				bodyEl,
-				"",
-				component
-			);
-			bodyEl.querySelectorAll("a").forEach((a) => {
-				const issueNumber = this.extractIssueNumberFromURL(a.getText());
-				if (issueNumber) {
-					a.setText(issueNumber);
-				}
-			});
+		contentEl.createDiv({
+			cls: "dataloom-whats-new-modal__spacer",
+		});
 
-			contentEl.createDiv({
-				cls: "dataloom-whats-new-modal__spacer",
-			});
-
-			contentEl.createEl("a", {
-				text: "View all releases",
-				href: "https://github.com/decaf-dev/obsidian-dataloom/releases",
-			});
-		} else {
-			contentEl.createDiv({
-				text: "Couldn't fetch latest release from GitHub.",
-			});
-		}
+		contentEl.createEl("a", {
+			text: "View all releases",
+			href: "https://github.com/decaf-dev/obsidian-dataloom/releases",
+		});
 	}
 
 	private replaceIssueNumbersWithLinks(text: string) {
