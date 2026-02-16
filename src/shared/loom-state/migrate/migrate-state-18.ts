@@ -43,7 +43,7 @@ export default class MigrateState18 implements MigrateState {
 					throw new ColumnNotFoundError({ id: columnId });
 				}
 
-				const { type } = column;
+				const type = column.type as CellType;
 
 				if (type === CellType.TEXT) {
 					const newCell: TextCell = {
@@ -158,17 +158,17 @@ export default class MigrateState18 implements MigrateState {
 			};
 		});
 
-		const nextFilters: Filter[] = filters.map((filter) => {
-			const { type } = filter;
+		const nextFilters = filters.map((filter) => {
+			const type = filter.type as CellType;
 			if (type === CellType.CHECKBOX) {
-				const { text } = filter;
+				const { text } = filter as unknown as { text: string };
 				return {
 					...filter,
 					value: isCheckboxChecked(text) ? true : false,
 				};
 			}
 			return filter;
-		});
+		}) as Filter[];
 
 		return {
 			...prevState,
