@@ -8,7 +8,8 @@ export const confirmSortOrderChange = (state: LoomState) => {
 	const { columns } = state.model;
 	const isSorted = columns.find((column) => column.sortDir !== SortDir.NONE);
 	if (isSorted) {
-		return window.confirm(
+		const confirmDialog = window.confirm.bind(window);
+		return confirmDialog(
 			"This will set the default row sorting as the current sort order. Do you wish to continue?" +
 				"\n\n" +
 				"If not, please remove the sort filter before preforming this operation."
