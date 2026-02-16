@@ -118,11 +118,11 @@ export interface DateCell extends BaseCell {
 	dateTime: string | null;
 }
 
-export type CreationTimeCell = BaseCell;
+export interface CreationTimeCell extends BaseCell {}
 
-export type LastEditedTimeCell = BaseCell;
+export interface LastEditedTimeCell extends BaseCell {}
 
-export type SourceCell = BaseCell;
+export interface SourceCell extends BaseCell {}
 
 export interface SourceFileCell extends BaseCell {
 	path: string;

@@ -105,11 +105,11 @@ interface DateCell extends BaseCell {
 	dateTime: string | null;
 }
 
-type CreationTimeCell = BaseCell;
+interface CreationTimeCell extends BaseCell {}
 
-type LastEditedTimeCell = BaseCell;
+interface LastEditedTimeCell extends BaseCell {}
 
-type SourceCell = BaseCell;
+interface SourceCell extends BaseCell {}
 
 interface SourceFileCell extends BaseCell {
 	path: string;
