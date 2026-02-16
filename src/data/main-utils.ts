@@ -62,7 +62,8 @@ export const handleFileRename = async (
 	}
 	if (totalLinksUpdated > 0) {
 		new Notice(
-			`Updated ${totalLinksUpdated} link${totalLinksUpdated > 1 ? "s" : ""
+			`Updated ${totalLinksUpdated} link${
+				totalLinksUpdated > 1 ? "s" : ""
 			} in ${numFilesUpdated} loom file${numFilesUpdated > 1 ? "s" : ""}.`
 		);
 	}
@@ -221,7 +222,7 @@ const replaceWikiLinks = (
 
 	const replacedString = str.replace(
 		WIKI_LINK_REGEX,
-		(_match, path, _, alias) => {
+		(_match: string, path: string, _: string, alias: string) => {
 			replacementCount++;
 			return replaceFunction(path, alias || null);
 		}
