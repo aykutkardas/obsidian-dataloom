@@ -28,7 +28,7 @@ export default class ExportModal extends Modal {
 		this.renderApp(appContainerEl);
 	}
 
-	private async renderApp(contentEl: HTMLElement) {
+	private renderApp(contentEl: HTMLElement) {
 		this.root = createRoot(contentEl);
 		this.root.render(
 			<Provider store={store}>
