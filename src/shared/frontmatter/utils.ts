@@ -28,6 +28,6 @@ export const getAcceptedFrontmatterTypes = (
 		case CellType.SOURCE_FILE:
 			return [];
 		default:
-			throw new Error(`Cell type ${type} not handled`);
+			throw new Error(`Cell type ${type as string} not handled`);
 	}
 };

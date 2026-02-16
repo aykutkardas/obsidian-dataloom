@@ -56,7 +56,7 @@ export default function updateStateFromSources(
 				sourceFiles = findRowsFromFrontmatterSource(app, source);
 				break;
 			default:
-				throw new Error(`Source type not handled: ${type}`);
+				throw new Error(`Source type not handled: ${type as string}`);
 		}
 		sourceFiles.forEach((file) => {
 			sourceFileMap.set(file, id);
