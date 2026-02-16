@@ -35,7 +35,7 @@ export default class ImportModal extends Modal {
 	}
 
 	private async renderApp(contentEl: HTMLElement) {
-		const modalEl = contentEl.closest(".modal") as HTMLElement | null;
+		const modalEl = contentEl.closest(".modal");
 		if (!modalEl) throw new Error("Modal element not found.");
 
 		this.root = createRoot(contentEl);

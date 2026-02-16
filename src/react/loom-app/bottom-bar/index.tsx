@@ -40,9 +40,7 @@ export default function BottomBar({
 		const appEl = el.closest(".dataloom-app");
 		if (!appEl) return;
 
-		const tableEl = appEl.querySelector(
-			".dataloom-table"
-		) as HTMLElement | null;
+		const tableEl = appEl.querySelector(".dataloom-table");
 		if (!tableEl) return;
 
 		const tableContainerEl = tableEl.parentElement;
@@ -67,7 +65,10 @@ export default function BottomBar({
 		);
 
 		const observer = new ResizeObserver(() => {
-			throttleUpdate(tableEl, tableContainerEl);
+			throttleUpdate(
+				tableEl as HTMLElement,
+				tableContainerEl as HTMLElement
+			);
 		});
 
 		observer.observe(tableEl);

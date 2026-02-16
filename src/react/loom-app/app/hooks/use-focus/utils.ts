@@ -22,7 +22,7 @@ export const getFocusLayerEl = (
 	return appEl;
 };
 
-export const getFocusableEls = (layerEl: HTMLElement) => {
+export const getFocusableEls = (layerEl: Element) => {
 	const focusableEls = layerEl.querySelectorAll(".dataloom-focusable");
 	const arr = Array.from(focusableEls);
 
@@ -65,17 +65,13 @@ export const focusNextElement = (
 };
 
 export const getNumOptionBarFocusableEls = (appEl: HTMLElement) => {
-	const el = appEl.querySelector(
-		".dataloom-option-bar"
-	) as HTMLElement | null;
+	const el = appEl.querySelector(".dataloom-option-bar");
 	if (!el) throw Error("No option bar found");
 	return getFocusableEls(el).length;
 };
 
 export const getNumBottomBarFocusableEl = (appEl: HTMLElement) => {
-	const el = appEl.querySelector(
-		".dataloom-bottom-bar"
-	) as HTMLElement | null;
+	const el = appEl.querySelector(".dataloom-bottom-bar");
 	if (!el) throw Error("No bottom bar found");
 	return getFocusableEls(el).length;
 };
@@ -95,6 +91,6 @@ export const isArrowKeyPressed = (
 	);
 };
 
-const isMenuEl = (el: HTMLElement) => {
+const isMenuEl = (el: Element) => {
 	return el.classList.contains("dataloom-menu");
 };

@@ -47,7 +47,7 @@ export default function HeaderCell({
 		onColumnReorder(dragData.id, targetRowId);
 	}
 
-	function addDragHover(thEl: HTMLElement) {
+	function addDragHover(thEl: Element) {
 		const child: HTMLElement | undefined = thEl.firstChild as HTMLElement;
 		if (!child) return;
 
@@ -62,7 +62,7 @@ export default function HeaderCell({
 	}
 
 	//We throw an error if the system
-	function getColumnId(columnEl: HTMLElement) {
+	function getColumnId(columnEl: Element) {
 		const id = columnEl.getAttribute("data-column-id");
 		if (!id) return null;
 		return id;
@@ -114,9 +114,7 @@ export default function HeaderCell({
 		const elementUnderneath = document.elementFromPoint(clientX, clientY);
 		if (!elementUnderneath) return;
 
-		const thEl = elementUnderneath.closest(
-			".dataloom-cell--header"
-		) as HTMLElement | null;
+		const thEl = elementUnderneath.closest(".dataloom-cell--header");
 		if (!thEl) return;
 
 		const targetId = getColumnId(thEl);

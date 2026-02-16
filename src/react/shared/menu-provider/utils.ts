@@ -4,7 +4,5 @@ export const getPositionFromEl = (el: HTMLElement) => {
 };
 
 export const findMenuTriggerEl = (menuId: string) => {
-	return document.querySelector(
-		`[data-menu-id="${menuId}"]`
-	) as HTMLElement | null;
+	return document.querySelector(`[data-menu-id="${menuId}"]`);
 };

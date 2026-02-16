@@ -24,7 +24,7 @@ const useLockTableScroll = () => {
 
 		const tableContainerEl = appEl.querySelector(
 			'[data-virtuoso-scroller="true"]'
-		) as HTMLElement | null;
+		);
 		if (!tableContainerEl) return;
 
 		if (topMenu) {
@@ -38,14 +38,14 @@ const useLockTableScroll = () => {
 				"useLockTableScroll cell menu opened. locking table scroll"
 			);
 			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-			tableContainerEl.style.overflow = "hidden";
+			(tableContainerEl as HTMLElement).style.overflow = "hidden";
 		} else {
 			hasLockRef.current = false;
 			Logger.debug(
 				"useLockTableScroll cell menu closed. unlocking table scroll"
 			);
 			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-			tableContainerEl.style.overflow = "auto";
+			(tableContainerEl as HTMLElement).style.overflow = "auto";
 		}
 	}, [topMenu, reactAppId]);
 };

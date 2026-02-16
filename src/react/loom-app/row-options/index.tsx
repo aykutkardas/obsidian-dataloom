@@ -76,8 +76,8 @@ export default function RowOptions({
 
 		//The target will be the td element
 		//The current target will be the parent tr element
-		const targetEl = e.currentTarget as HTMLElement;
-		const rowEl = targetEl.closest(".dataloom-row") as HTMLElement | null;
+		const targetEl = e.currentTarget;
+		const rowEl = targetEl.closest(".dataloom-row");
 		if (!rowEl) throw new Error("Row not found");
 
 		const rowId = getRowId(rowEl);
@@ -101,9 +101,7 @@ export default function RowOptions({
 
 		if (!elementUnderneath) return;
 
-		const rowEl = elementUnderneath.closest(
-			".dataloom-row"
-		) as HTMLElement | null;
+		const rowEl = elementUnderneath.closest(".dataloom-row");
 		if (!rowEl) return;
 
 		const targetId = getRowId(rowEl);
@@ -162,7 +160,7 @@ export default function RowOptions({
 		removeDragHover();
 	}
 
-	function addDragHover(rowEl: HTMLElement) {
+	function addDragHover(rowEl: Element) {
 		//Add dragging over class to all the children
 		const children = rowEl.querySelectorAll(".dataloom-cell");
 

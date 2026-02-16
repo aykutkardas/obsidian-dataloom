@@ -4,7 +4,7 @@ import React from "react";
 
 interface ContextProps {
 	obsidianApp: App;
-	modalEl: HTMLElement;
+	modalEl: Element;
 }
 
 const MountContext = React.createContext<ContextProps | null>(null);
