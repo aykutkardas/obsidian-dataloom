@@ -45,7 +45,9 @@ export default class ImportModal extends Modal {
 					<MenuProvider>
 						<ImportApp
 							state={this.loomState}
-							onStateChange={this.handleStateChange}
+							onStateChange={(state) => {
+								void this.handleStateChange(state);
+							}}
 						/>
 					</MenuProvider>
 				</ModalMountProvider>

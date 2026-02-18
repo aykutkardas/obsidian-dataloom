@@ -82,7 +82,9 @@ export function ExportApp({ app, loomState, loomFilePath }: Props) {
 							</button>
 							<button
 								className="dataloom-copy-button"
-								onClick={() => handleCopyClick(content)}
+								onClick={() => {
+									void handleCopyClick(content);
+								}}
 							>
 								Copy to clipboard
 							</button>
