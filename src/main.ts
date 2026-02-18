@@ -337,7 +337,7 @@ export default class DataLoomPlugin extends Plugin {
 						"rename event called"
 					);
 					if (file instanceof TFile) {
-						handleFileRename(
+						await handleFileRename(
 							this.app,
 							file,
 							oldPath,
@@ -349,7 +349,7 @@ export default class DataLoomPlugin extends Plugin {
 		);
 
 		this.registerEvent(
-			this.app.vault.on("modify", async (file: TAbstractFile) => {
+			this.app.vault.on("modify", (file: TAbstractFile) => {
 				Logger.trace(
 					FILE_NAME,
 					"registerEvent",
@@ -425,7 +425,7 @@ export default class DataLoomPlugin extends Plugin {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(this.app as any).metadataTypeManager.on(
 				"changed",
-				async (propertyName: string) => {
+				(propertyName: string) => {
 					Logger.trace(
 						FILE_NAME,
 						"registerEvent",

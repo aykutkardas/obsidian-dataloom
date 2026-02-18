@@ -38,7 +38,7 @@ export default function NewFrontmatterKeySubmenu({
 		null
 	);
 
-	const handleCreateClick = React.useCallback(async () => {
+	const handleCreateClick = React.useCallback(() => {
 		// if (keyType === null) {
 		// 	return;
 		// }
