@@ -178,15 +178,15 @@ const renderApp = (
 			mountLeaf={leaf}
 			store={store}
 			loomState={state}
-			onSaveState={(appId, state, shouldSaveFrontmatter) =>
-				throttleHandleSave(
+			onSaveState={(appId, state, shouldSaveFrontmatter) => {
+				void throttleHandleSave(
 					app,
 					file,
 					appId,
 					state,
 					shouldSaveFrontmatter
-				)
-			}
+				);
+			}}
 		/>
 	);
 };
