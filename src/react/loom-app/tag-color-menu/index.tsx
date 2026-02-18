@@ -22,7 +22,7 @@ interface Props {
 	isOpen: boolean;
 	content: string;
 	position: LoomMenuPosition;
-	selectedColor: string;
+	selectedColor: Color;
 	closeRequest: LoomMenuCloseRequest | null;
 	onColorClick: (color: Color) => void;
 	onDeleteClick: () => void;

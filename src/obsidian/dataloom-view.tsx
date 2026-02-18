@@ -52,6 +52,8 @@ export default class DataLoomView extends TextFileView {
 				this.pluginId
 			);
 		});
+
+		return await Promise.resolve();
 	}
 
 	async onClose() {
@@ -59,6 +61,8 @@ export default class DataLoomView extends TextFileView {
 			this.root.unmount();
 			this.root = null;
 		}
+
+		return await Promise.resolve();
 	}
 
 	setViewData(data: string, clear: boolean): void {
