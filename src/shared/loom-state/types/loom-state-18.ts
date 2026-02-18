@@ -102,11 +102,7 @@ interface DateCell extends BaseCell {
 	dateTime: string | null;
 }
 
-interface CreationTimeCell extends BaseCell {}
-
-interface LastEditedTimeCell extends BaseCell {}
-
-interface SourceCell extends BaseCell {}
+type CreationTimeCell = BaseCell;
 
 interface SourceFileCell extends BaseCell {
 	path: string;
@@ -122,8 +118,6 @@ type Cell =
 	| NumberCell
 	| DateCell
 	| CreationTimeCell
-	| LastEditedTimeCell
-	| SourceCell
 	| SourceFileCell;
 
 interface Tag {

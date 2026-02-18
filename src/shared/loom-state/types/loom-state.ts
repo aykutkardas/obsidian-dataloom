@@ -118,11 +118,11 @@ export interface DateCell extends BaseCell {
 	dateTime: string | null;
 }
 
-export interface CreationTimeCell extends BaseCell {}
+export type CreationTimeCell = BaseCell;
 
-export interface LastEditedTimeCell extends BaseCell {}
+export type LastEditedTimeCell = BaseCell;
 
-export interface SourceCell extends BaseCell {}
+export type SourceCell = BaseCell;
 
 export interface SourceFileCell extends BaseCell {
 	path: string;
@@ -138,8 +138,6 @@ export type Cell =
 	| NumberCell
 	| DateCell
 	| CreationTimeCell
-	| LastEditedTimeCell
-	| SourceCell
 	| SourceFileCell;
 
 export interface Tag {
@@ -472,10 +470,10 @@ export interface ObsidianFrontmatterSource extends BaseSource {
 	propertyType: ObsidianPropertyType;
 	propertyKey: string;
 	filterCondition:
-	| TextFilterCondition
-	| NumberFilterCondition
-	| DateFilterCondition
-	| null;
+		| TextFilterCondition
+		| NumberFilterCondition
+		| DateFilterCondition
+		| null;
 	filterText: string;
 }
 

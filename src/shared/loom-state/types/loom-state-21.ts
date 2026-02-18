@@ -105,11 +105,7 @@ interface DateCell extends BaseCell {
 	dateTime: string | null;
 }
 
-interface CreationTimeCell extends BaseCell {}
-
-interface LastEditedTimeCell extends BaseCell {}
-
-interface SourceCell extends BaseCell {}
+type CreationTimeCell = BaseCell;
 
 interface SourceFileCell extends BaseCell {
 	path: string;
@@ -125,8 +121,6 @@ type Cell =
 	| NumberCell
 	| DateCell
 	| CreationTimeCell
-	| LastEditedTimeCell
-	| SourceCell
 	| SourceFileCell;
 
 interface Tag {
@@ -324,9 +318,7 @@ interface FileFilter extends BaseFilter {
 }
 
 /* Checkbox filter */
-type CheckboxCondition =
-	| TextFilterCondition.IS
-	| TextFilterCondition.IS_NOT;
+type CheckboxCondition = TextFilterCondition.IS | TextFilterCondition.IS_NOT;
 
 interface CheckboxFilter extends BaseFilter {
 	type: CellType.CHECKBOX;
@@ -454,10 +446,10 @@ interface ObsidianFrontmatterSource extends BaseSource {
 	propertyType: ObsidianPropertyType;
 	propertyKey: string;
 	filterCondition:
-	| TextFilterCondition
-	| NumberFilterCondition
-	| DateFilterCondition
-	| null;
+		| TextFilterCondition
+		| NumberFilterCondition
+		| DateFilterCondition
+		| null;
 	filterText: string;
 }
 
