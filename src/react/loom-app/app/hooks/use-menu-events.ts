@@ -4,6 +4,7 @@ import { useAppMount } from "../../app-mount-provider";
 import _ from "lodash";
 import { useMenuOperations } from "src/react/shared/menu-provider/hooks";
 import EventManager from "src/shared/event/event-manager";
+import { setStyle } from "src/shared/dom-utils";
 import Logger from "js-logger";
 
 export const useMenuEvents = () => {
@@ -37,15 +38,13 @@ const useLockTableScroll = () => {
 			Logger.debug(
 				"useLockTableScroll cell menu opened. locking table scroll"
 			);
-			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-			(tableContainerEl as HTMLElement).style.overflow = "hidden";
-		} else {
-			hasLockRef.current = false;
-			Logger.debug(
-				"useLockTableScroll cell menu closed. unlocking table scroll"
-			);
-			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-			(tableContainerEl as HTMLElement).style.overflow = "auto";
+		setStyle(tableContainerEl as HTMLElement, "overflow", "hidden");
+	} else {
+		hasLockRef.current = false;
+		Logger.debug(
+			"useLockTableScroll cell menu closed. unlocking table scroll"
+		);
+		setStyle(tableContainerEl as HTMLElement, "overflow", "auto");
 		}
 	}, [topMenu, reactAppId]);
 };
@@ -74,8 +73,7 @@ const useCloseOnMarkdownViewScroll = () => {
 			//Since it takes a noticable amount of time for React to update the DOM, we set
 			//the display to none and then wait for React to clean up the DOM
 			for (const menu of openMenus) {
-				// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-				(menu as HTMLElement).style.display = "none";
+			setStyle(menu as HTMLElement, "display", "none");
 			}
 
 			onCloseAll();

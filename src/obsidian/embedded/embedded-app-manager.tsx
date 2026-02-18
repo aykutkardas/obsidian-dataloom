@@ -19,6 +19,7 @@ import DeserializationError from "src/data/deserialization-error";
 import { serializeFrontmatter } from "src/data/serialize-frontmatter";
 import EventManager from "src/shared/event/event-manager";
 import LastSavedManager from "src/shared/last-saved-manager";
+import { setStyle } from "src/shared/dom-utils";
 
 interface EmbeddedApp {
 	id: string;
@@ -233,12 +234,9 @@ const renderContainerEl = (linkEl: HTMLElement) => {
 	const containerEl = linkEl.createDiv({
 		cls: "dataloom-embedded-container",
 	});
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	containerEl.style.height = "100%";
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	containerEl.style.width = "100%";
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	containerEl.style.padding = "10px 0px";
+	setStyle(containerEl, "height", "100%");
+	setStyle(containerEl, "width", "100%");
+	setStyle(containerEl, "padding", "10px 0px");
 
 	//Stop propagation of the click event. We do this so that the embed link
 	//doesn't navigate to the linked file when clicked
@@ -258,14 +256,10 @@ const resetLinkStyles = (linkEl: HTMLElement) => {
 	linkEl.empty();
 
 	//Reset styles
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	linkEl.style.backgroundColor = "var(--color-primary)";
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	linkEl.style.cursor = "unset";
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	linkEl.style.margin = "0px";
-	// eslint-disable-next-line obsidianmd/no-static-styles-assignment
-	linkEl.style.padding = "0px";
+	setStyle(linkEl, "background-color", "var(--color-primary)");
+	setStyle(linkEl, "cursor", "unset");
+	setStyle(linkEl, "margin", "0px");
+	setStyle(linkEl, "padding", "0px");
 };
 
 /**

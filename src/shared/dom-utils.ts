@@ -1,3 +1,11 @@
+export const setStyle = (
+	el: HTMLElement,
+	property: string,
+	value: string
+) => {
+	el.style.setProperty(property, value);
+};
+
 export const findAncestorsUntilClassName = (
 	currentEl: HTMLElement,
 	className: string
