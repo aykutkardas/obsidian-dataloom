@@ -75,9 +75,9 @@ export const loadEmbeddedLoomApps = (
 ) => {
 	const view = markdownLeaf.view as MarkdownView;
 	const linkEls = getEmbeddedLoomLinkEls(view, mode);
-	linkEls.forEach((linkEl) =>
-		processLinkEl(app, pluginVersion, markdownLeaf, linkEl, mode)
-	);
+	for (const linkEl of linkEls) {
+		void processLinkEl(app, pluginVersion, markdownLeaf, linkEl, mode);
+	}
 };
 
 /**
