@@ -1,6 +1,13 @@
-import { TextFileView, WorkspaceLeaf } from "obsidian";
+import { App, TextFileView, WorkspaceLeaf } from "obsidian";
 
 import { createRoot, Root } from "react-dom/client";
+
+interface AppWithSettings extends App {
+	setting: {
+		open: () => void;
+		openTabById: (id: string) => void;
+	};
+}
 import { store } from "src/redux/store";
 import { LoomState } from "src/shared/loom-state/types/loom-state";
 import { deserializeState, serializeState } from "src/data/serialize-state";
@@ -39,11 +46,11 @@ export default class DataLoomView extends TextFileView {
 		//Add settings button to action bar
 		this.addAction("settings", "Settings", () => {
 			//Open settings tab
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			(this.app as any).setting.open();
+			(this.app as unknown as AppWithSettings).setting.open();
 			//Navigate to plugin settings
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			(this.app as any).setting.openTabById(this.pluginId);
+			(this.app as unknown as AppWithSettings).setting.openTabById(
+				this.pluginId
+			);
 		});
 	}
 

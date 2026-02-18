@@ -1,11 +1,15 @@
-import { App } from "obsidian";
+import { App, EventRef } from "obsidian";
 import { ObsidianPropertyType } from "./types";
 
-interface AppWithMetadataTypeManager extends App {
+export interface AppWithMetadataTypeManager extends App {
 	metadataTypeManager: {
 		setType: (name: string, type: ObsidianPropertyType) => Promise<void>;
 		getAllProperties: () => Record<string, ObsidianPropertyType>;
 		getAssignedType: (name: string) => ObsidianPropertyType | null;
+		on: (
+			name: "changed",
+			callback: (propertyName: string) => void
+		) => EventRef;
 	};
 }
 

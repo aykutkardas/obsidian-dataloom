@@ -1,4 +1,5 @@
 import {
+	EventRef,
 	MarkdownView,
 	Notice,
 	Plugin,
@@ -27,13 +28,20 @@ import {
 } from "./obsidian/embedded/embedded-app-manager";
 import FrontmatterCache from "./shared/frontmatter/frontmatter-cache";
 import EventManager from "./shared/event/event-manager";
-import { getAssignedPropertyType } from "./shared/frontmatter/obsidian-utils";
+import {
+	AppWithMetadataTypeManager,
+	getAssignedPropertyType,
+} from "./shared/frontmatter/obsidian-utils";
 import { handleFileRename } from "./data/main-utils";
 import { getBasename } from "./shared/link-and-path/file-path-utils";
 import Logger from "js-logger";
 import { formatMessageForLogger, stringToLogLevel } from "./shared/logger";
 import { LOG_LEVEL_OFF } from "./shared/logger/constants";
 import LastSavedManager from "./shared/last-saved-manager";
+
+interface VaultWithConfig {
+	getConfig: (key: string) => unknown;
+}
 
 export interface DataLoomSettings {
 	logLevel: string;
@@ -421,28 +429,28 @@ export default class DataLoomPlugin extends Plugin {
 		);
 
 		//This runs whenever a property changes types
-		this.registerEvent(
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			(this.app as any).metadataTypeManager.on(
-				"changed",
-				(propertyName: string) => {
-					Logger.trace(
-						FILE_NAME,
-						"registerEvent",
-						"metadataTypeManager.changed event called"
-					);
-					const updatedType = getAssignedPropertyType(
-						this.app,
-						propertyName
-					);
-					FrontmatterCache.getInstance().setPropertyType(
-						propertyName,
-						updatedType
-					);
-					EventManager.getInstance().emit("property-type-change");
-				}
-			)
+		const metadataTypeManager = (this.app as AppWithMetadataTypeManager)
+			.metadataTypeManager;
+		const metadataTypeChangeRef: EventRef = metadataTypeManager.on(
+			"changed",
+			(propertyName: string) => {
+				Logger.trace(
+					FILE_NAME,
+					"registerEvent",
+					"metadataTypeManager.changed event called"
+				);
+				const updatedType = getAssignedPropertyType(
+					this.app,
+					propertyName
+				);
+				FrontmatterCache.getInstance().setPropertyType(
+					propertyName,
+					updatedType
+				);
+				EventManager.getInstance().emit("property-type-change");
+			}
 		);
+		this.registerEvent(metadataTypeChangeRef);
 
 		this.registerEvent(
 			this.app.metadataCache.on(
@@ -486,10 +494,9 @@ export default class DataLoomPlugin extends Plugin {
 				const filePath = await this.newLoomFile(null, true);
 				if (!filePath) return;
 
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const useMarkdownLinks = (this.app.vault as any).getConfig(
-					"useMarkdownLinks"
-				);
+				const useMarkdownLinks = (
+					this.app.vault as unknown as VaultWithConfig
+				).getConfig("useMarkdownLinks");
 
 				// Use basename rather than whole name when using Markdownlink like ![abcd](abcd.loom) instead of ![abcd.loom](abcd.loom)
 				// It will replace `.loom` to "" in abcd.loom
