@@ -368,14 +368,14 @@ export default function BodyCellContainer(props: Props) {
 
 	switch (type) {
 		case CellType.TEXT: {
-			const { content } = props as TextCellProps;
+			const { content } = props;
 
 			handleMenuTriggerBackspaceDown = () => {
 				onCellChange(id, { content: "" });
 			};
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			contentNode = <TextCell value={content} />;
@@ -392,7 +392,7 @@ export default function BodyCellContainer(props: Props) {
 			break;
 		}
 		case CellType.NUMBER: {
-			const { value } = props as NumberCellProps;
+			const { value } = props;
 
 			const content = getNumberCellContent(numberFormat, value, {
 				currency: currencyType,
@@ -406,7 +406,7 @@ export default function BodyCellContainer(props: Props) {
 			};
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			contentNode = <NumberCell content={content} />;
@@ -429,11 +429,11 @@ export default function BodyCellContainer(props: Props) {
 				onTagCellAdd,
 				onTagDeleteClick,
 				onTagCellMultipleRemove,
-			} = props as TagCellProps | MultiTagCellProps;
+			} = props;
 
 			let cellTags: Tag[] = [];
 			if (type === CellType.TAG) {
-				const { tagId } = props as TagCellProps;
+				const { tagId } = props;
 				cellTags = columnTags.filter((tag) => tag.id === tagId);
 
 				handleMenuTriggerBackspaceDown = () => {
@@ -442,7 +442,7 @@ export default function BodyCellContainer(props: Props) {
 					}
 				};
 			} else {
-				const { tagIds, multiTagSortDir } = props as MultiTagCellProps;
+				const { tagIds, multiTagSortDir } = props;
 
 				cellTags = columnTags.filter((tag) => tagIds.includes(tag.id));
 				cellTags.sort((a, b) =>
@@ -456,7 +456,7 @@ export default function BodyCellContainer(props: Props) {
 
 			handleCellContextClick = () => {
 				const content = cellTags.map((tag) => tag.content).join(",");
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			const handleTagAdd = (markdown: string, color: Color) => {
@@ -515,7 +515,7 @@ export default function BodyCellContainer(props: Props) {
 			break;
 		}
 		case CellType.DATE: {
-			const { dateTime, onColumnChange } = props as DateCellProps;
+			const { dateTime, onColumnChange } = props;
 
 			const content = getDateCellContent(
 				dateTime,
@@ -530,7 +530,7 @@ export default function BodyCellContainer(props: Props) {
 			};
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			const handleDateFormatChange = (value: DateFormat) => {
@@ -591,14 +591,14 @@ export default function BodyCellContainer(props: Props) {
 			break;
 		}
 		case CellType.CHECKBOX: {
-			const { value } = props as CheckboxCellProps;
+			const { value } = props;
 
 			handleMenuTriggerBackspaceDown = () => {
 				onCellChange(id, { value: false });
 			};
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(value ? "true" : "false");
+				void copyTextToClipboard(value ? "true" : "false");
 			};
 
 			const handleCheckboxChange = (value: boolean) => {
@@ -633,7 +633,7 @@ export default function BodyCellContainer(props: Props) {
 			);
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			contentNode = <CreationTimeCell value={content} />;
@@ -648,7 +648,7 @@ export default function BodyCellContainer(props: Props) {
 			);
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			contentNode = <LastEditedTimeCell value={content} />;
@@ -658,7 +658,7 @@ export default function BodyCellContainer(props: Props) {
 			const content = getSourceCellContent(source);
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			let propertyType = undefined;
@@ -676,21 +676,21 @@ export default function BodyCellContainer(props: Props) {
 			break;
 		}
 		case CellType.SOURCE_FILE: {
-			const { path } = props as SourceFileCellProps;
+			const { path } = props;
 			const content = getSourceFileContent(path);
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			contentNode = <SourceFileCell content={content} />;
 			break;
 		}
 		case CellType.EMBED: {
-			const { pathOrUrl, isExternal } = props as EmbedCellProps;
+			const { pathOrUrl, isExternal } = props;
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(pathOrUrl);
+				void copyTextToClipboard(pathOrUrl);
 			};
 
 			handleMenuTriggerBackspaceDown = () => {
@@ -723,7 +723,7 @@ export default function BodyCellContainer(props: Props) {
 			break;
 		}
 		case CellType.FILE: {
-			const { path } = props as FileCellProps;
+			const { path } = props;
 			const content = getFileCellContent(path, false);
 
 			handleMenuTriggerBackspaceDown = () => {
@@ -731,7 +731,7 @@ export default function BodyCellContainer(props: Props) {
 			};
 
 			handleCellContextClick = () => {
-				copyTextToClipboard(content);
+				void copyTextToClipboard(content);
 			};
 
 			contentNode = <FileCell content={content} />;
