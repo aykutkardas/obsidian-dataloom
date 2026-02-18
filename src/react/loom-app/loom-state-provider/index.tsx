@@ -239,7 +239,7 @@ export default function LoomStateProvider({
 	);
 
 	if (error) {
-		throw new Error(String(error));
+		throw new Error(JSON.stringify(error));
 	}
 
 	return (
