@@ -46,10 +46,7 @@ export default function updateStateFromSources(
 		let sourceFiles = [];
 		switch (type) {
 			case SourceType.FOLDER: {
-				sourceFiles = findRowsFromFolderSource(
-					app,
-					source as ObsidianFolderSource
-				);
+				sourceFiles = findRowsFromFolderSource(app, source);
 				break;
 			}
 			case SourceType.FRONTMATTER:
@@ -148,7 +145,11 @@ const findRowsFromFrontmatterSource = (
 		const frontmatter = fileMetadata.frontmatter;
 		if (!frontmatter) return false;
 
-		const propertyValue = frontmatter[propertyKey];
+		const propertyValue = frontmatter[propertyKey] as
+			| string
+			| boolean
+			| number
+			| string[];
 		if (propertyValue === undefined || propertyValue === null) return false;
 
 		if (filterCondition === null) return false;

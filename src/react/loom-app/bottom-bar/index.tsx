@@ -65,10 +65,7 @@ export default function BottomBar({
 		);
 
 		const observer = new ResizeObserver(() => {
-			throttleUpdate(
-				tableEl as HTMLElement,
-				tableContainerEl as HTMLElement
-			);
+			throttleUpdate(tableEl as HTMLElement, tableContainerEl);
 		});
 
 		observer.observe(tableEl);
