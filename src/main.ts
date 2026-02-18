@@ -38,6 +38,7 @@ import Logger from "js-logger";
 import { formatMessageForLogger, stringToLogLevel } from "./shared/logger";
 import { LOG_LEVEL_OFF } from "./shared/logger/constants";
 import LastSavedManager from "./shared/last-saved-manager";
+import { LoomState } from "./shared/loom-state/types";
 
 interface VaultWithConfig {
 	getConfig: (key: string) => unknown;
@@ -84,7 +85,7 @@ export default class DataLoomPlugin extends Plugin {
 
 		Logger.useDefaults();
 
-		Logger.setHandler(function (messages) {
+		Logger.setHandler(function (messages: string[]) {
 			const { message, data } = formatMessageForLogger(...messages);
 			console.warn(message);
 			if (data) {
@@ -189,7 +190,7 @@ export default class DataLoomPlugin extends Plugin {
 			for (let i = 0; i < loomFiles.length; i++) {
 				const file = loomFiles[i];
 				const data = await this.app.vault.read(file);
-				const parsedState = JSON.parse(data);
+				const parsedState = JSON.parse(data) as LoomState;
 				if (!parsedState.model) return;
 
 				const newFilePath = file.path.replace(
@@ -624,7 +625,7 @@ export default class DataLoomPlugin extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData()
+			(await this.loadData()) as DataLoomSettings
 		);
 		store.dispatch(setSettings({ ...this.settings }));
 	}
