@@ -147,7 +147,9 @@ export default class DataLoomView extends TextFileView {
 					isMarkdownView={false}
 					store={store}
 					loomState={state}
-					onSaveState={this.handleSaveLoomState}
+					onSaveState={(...args) => {
+						void this.handleSaveLoomState(...args);
+					}}
 				/>
 			);
 		}
