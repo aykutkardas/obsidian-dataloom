@@ -34,7 +34,7 @@ export default function ModalMenu({
 	const ref = React.useRef<HTMLDivElement>(null);
 	const { modalEl } = useModalMount();
 
-	useShiftMenu(true, modalEl, ref, position, isOpen, {
+	useShiftMenu(true, modalEl as HTMLElement, ref, position, isOpen, {
 		openDirection,
 	});
 

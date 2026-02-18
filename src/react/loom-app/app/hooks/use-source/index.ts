@@ -18,7 +18,9 @@ export const useSource = () => {
 
 	const { sources, columns } = loomState.model;
 
-	const frontmatterKeyHash = JSON.stringify(columns.map((column) => column.frontmatterKey));
+	const frontmatterKeyHash = JSON.stringify(
+		columns.map((column) => column.frontmatterKey)
+	);
 	const sourcesHash = JSON.stringify(sources);
 
 	const updateRowsFromSources = React.useCallback(
@@ -27,7 +29,11 @@ export const useSource = () => {
 			setLoomState((prevState) => {
 				if (fromObsidianEvent) {
 					if (Date.now() - prevState.time < 1000) {
-						Logger.trace(HOOK_NAME, "updateRowsFromSource", "event ignored because it was called in the last 1000ms.")
+						Logger.trace(
+							HOOK_NAME,
+							"updateRowsFromSource",
+							"event ignored because it was called in the last 1000ms."
+						);
 						return prevState;
 					}
 				}
@@ -67,49 +73,24 @@ export const useSource = () => {
 	}, [sourcesHash, frontmatterKeyHash, updateRowsFromSources]);
 
 	React.useEffect(() => {
-		EventManager.getInstance().on("file-create", updateRowsFromSources);
-		EventManager.getInstance().on(
-			"file-frontmatter-change",
-			updateRowsFromSources
-		);
-		EventManager.getInstance().on(
-			"property-type-change",
-			updateRowsFromSources
-		);
-		EventManager.getInstance().on("file-delete", updateRowsFromSources);
-		EventManager.getInstance().on("folder-delete", updateRowsFromSources);
-		EventManager.getInstance().on("folder-rename", updateRowsFromSources);
-		EventManager.getInstance().on("file-rename", updateRowsFromSources);
+		const handler = () => updateRowsFromSources();
+
+		EventManager.getInstance().on("file-create", handler);
+		EventManager.getInstance().on("file-frontmatter-change", handler);
+		EventManager.getInstance().on("property-type-change", handler);
+		EventManager.getInstance().on("file-delete", handler);
+		EventManager.getInstance().on("folder-delete", handler);
+		EventManager.getInstance().on("folder-rename", handler);
+		EventManager.getInstance().on("file-rename", handler);
 
 		return () => {
-			EventManager.getInstance().off(
-				"file-create",
-				updateRowsFromSources
-			);
-			EventManager.getInstance().off(
-				"file-frontmatter-change",
-				updateRowsFromSources
-			);
-			EventManager.getInstance().off(
-				"property-type-change",
-				updateRowsFromSources
-			);
-			EventManager.getInstance().off(
-				"folder-rename",
-				updateRowsFromSources
-			);
-			EventManager.getInstance().off(
-				"file-rename",
-				updateRowsFromSources
-			);
-			EventManager.getInstance().off(
-				"file-delete",
-				updateRowsFromSources
-			);
-			EventManager.getInstance().off(
-				"folder-delete",
-				updateRowsFromSources
-			);
+			EventManager.getInstance().off("file-create", handler);
+			EventManager.getInstance().off("file-frontmatter-change", handler);
+			EventManager.getInstance().off("property-type-change", handler);
+			EventManager.getInstance().off("folder-rename", handler);
+			EventManager.getInstance().off("file-rename", handler);
+			EventManager.getInstance().off("file-delete", handler);
+			EventManager.getInstance().off("folder-delete", handler);
 		};
 	}, [updateRowsFromSources, app]);
 

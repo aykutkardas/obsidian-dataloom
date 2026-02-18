@@ -15,7 +15,7 @@ export default class FrontmatterCache {
 
 		const properties = getAllObsidianProperties(app);
 		Object.values(properties).forEach((value) => {
-			const { name, type } = value as {
+			const { name, type } = value as unknown as {
 				name: string;
 				type: ObsidianPropertyType;
 			};

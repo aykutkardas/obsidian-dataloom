@@ -8,6 +8,7 @@ import EventManager from "src/shared/event/event-manager";
 import { TFile } from "obsidian";
 import { deserializeState } from "src/data/serialize-state";
 import Logger from "js-logger";
+import { EventCallback } from "src/shared/event/types";
 
 interface Props {
 	initialState: LoomState;
@@ -111,12 +112,12 @@ export default function LoomStateProvider({
 
 		EventManager.getInstance().on(
 			"app-refresh-by-state",
-			handleRefreshEvent
+			handleRefreshEvent as EventCallback
 		);
 		return () =>
 			EventManager.getInstance().off(
 				"app-refresh-by-state",
-				handleRefreshEvent
+				handleRefreshEvent as EventCallback
 			);
 	}, [reactAppId, loomFile, app]);
 
@@ -148,12 +149,12 @@ export default function LoomStateProvider({
 
 		EventManager.getInstance().on(
 			"app-refresh-by-file",
-			handleRefreshEvent
+			handleRefreshEvent as EventCallback
 		);
 		return () =>
 			EventManager.getInstance().off(
 				"app-refresh-by-file",
-				handleRefreshEvent
+				handleRefreshEvent as EventCallback
 			);
 	}, [loomFile, app]);
 
