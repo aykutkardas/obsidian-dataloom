@@ -27,7 +27,7 @@ export default function ErrorDisplay({
 	helpURL,
 }: Props) {
 	function handleCopyClick() {
-		navigator.clipboard.writeText(copyErrorMessage);
+		void navigator.clipboard.writeText(copyErrorMessage);
 		new Notice("Copied error to clipboard");
 	}
 

@@ -15,6 +15,6 @@ export const handleLinkClick = (app: App, event: MouseEvent) => {
 		const href = closestAnchor.getAttr("href");
 		const newLeaf = event.ctrlKey || event.metaKey;
 
-		if (href) app.workspace.openLinkText(href, "", newLeaf);
+		if (href) void app.workspace.openLinkText(href, "", newLeaf);
 	}
 };

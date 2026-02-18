@@ -112,7 +112,7 @@ export const useRenderMarkdown = (
 			}
 		}
 
-		updateContainerRef();
+		void updateContainerRef();
 	}, [app, markdown, mountLeaf, isExternalLink, isEmbed]);
 
 	return {

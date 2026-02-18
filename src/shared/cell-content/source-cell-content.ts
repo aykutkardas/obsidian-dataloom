@@ -1,8 +1,4 @@
-import {
-	ObsidianFolderSource,
-	Source,
-	SourceType,
-} from "../loom-state/types/loom-state";
+import { Source, SourceType } from "../loom-state/types/loom-state";
 
 export const getSourceCellContent = (source: Source | null) => {
 	if (source === null) return "Internal";
@@ -10,7 +6,7 @@ export const getSourceCellContent = (source: Source | null) => {
 	const { type } = source;
 	switch (type) {
 		case SourceType.FOLDER: {
-			const { path } = source as ObsidianFolderSource;
+			const { path } = source;
 			return path;
 		}
 		case SourceType.FRONTMATTER: {
