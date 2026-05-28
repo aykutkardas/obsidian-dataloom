@@ -1,6 +1,6 @@
 import React from "react";
 
-import _ from "lodash";
+import { throttle } from "es-toolkit";
 
 import { getPositionFromEl } from "../menu-provider/utils";
 import { PositionUpdateHandler } from "../menu-provider/types";
@@ -28,7 +28,7 @@ const useBasePosition = (
 		const positionEl = ref.current;
 
 		const THROTTLE_TIME_MILLIS = 50;
-		const throttleUpdatePosition = _.throttle(
+		const throttleUpdatePosition = throttle(
 			updatePosition,
 			THROTTLE_TIME_MILLIS
 		);

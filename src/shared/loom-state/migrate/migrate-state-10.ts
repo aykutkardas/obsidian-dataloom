@@ -5,7 +5,7 @@ import {
 	Column as Column11,
 	BodyCell as BodyCell11,
 } from "../types/loom-state-11";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 
 /**
  * Migrates to 6.19.0

@@ -1,6 +1,6 @@
 ![](/readme/cover.png)
 
-> **Note:** This is a fork of [decaf-dev/obsidian-dataloom](https://github.com/decaf-dev/obsidian-dataloom). The original plugin is no longer maintained. This fork continues development and maintenance.
+> **Note:** This is a fork of `decaf-dev/obsidian-dataloom`. The original plugin is no longer maintained. This fork continues development and maintenance.
 
 DataLoom is an [Obsidian.md](https://obsidian.md/) plugin for desktop and mobile. It allows you to create databases similar to [Notion.so](https://notion.so).
 
@@ -8,13 +8,13 @@ With DataLoom, you can weave together data from diverse sources and display them
 
 ## About
 
--   [Screenshots](#screenshots)
--   [Features](#features)
--   [Issues](#issues)
--   [Contributing](#contributing)
--   [Network Usage](#network-usage)
--   [License](#license)
--   [Disclaimer](#disclaimer)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Issues](#issues)
+- [Contributing](#contributing)
+- [Network Usage](#network-usage)
+- [License](#license)
+- [Disclaimer](#disclaimer)
 
 ## Screenshots
 
@@ -22,78 +22,70 @@ With DataLoom, you can weave together data from diverse sources and display them
 
 ## Features
 
--   View types
+- View types
+    - [x] Table
 
-    -   [x] Table
+- Cell types
+    - [x] Text
+    - [x] Number
+        - [x] Currency
+    - [x] Checkbox
+    - [x] Embed
+    - [x] File
+    - [x] Date
+    - [x] Tag
+    - [x] Multi-tag
+    - [x] Last edited time
+    - [x] Creation time
+    - [x] Source
+    - [x] Source file
 
--   Cell types
+- Columns
+    - [x] Toggle visibility
+    - [x] Change name
+    - [x] Change type
+    - [x] Sort ascending or descending
+    - [x] Reorder columns
+    - [ ] Insert left
+    - [ ] Insert right
 
-    -   [x] Text
-    -   [x] Number
-        -   [x] Currency
-    -   [x] Checkbox
-    -   [x] Embed
-    -   [x] File
-    -   [x] Date
-    -   [x] Tag
-    -   [x] Multi-tag
-    -   [x] Last edited time
-    -   [x] Creation time
-    -   [x] Source
-    -   [x] Source file
+- Rows
+    - [x] Filter by conditions
+    - [x] Search by text
+    - [x] Insert above
+    - [x] Insert below
+    - [x] Reorder rows
 
--   Columns
+- Import
+    - [x] CSV
+    - [x] Markdown
 
-    -   [x] Toggle visibility
-    -   [x] Change name
-    -   [x] Change type
-    -   [x] Sort ascending or descending
-    -   [x] Reorder columns
-    -   [ ] Insert left
-    -   [ ] Insert right
+- Export
+    - [x] CSV
+    - [x] Markdown
+    - [ ] PDF
 
--   Rows
+- Color scheme
+    - [x] Light
+    - [x] Dark
 
-    -   [x] Filter by conditions
-    -   [x] Search by text
-    -   [x] Insert above
-    -   [x] Insert below
-    -   [x] Reorder rows
+- Sources
+    - [x] Folder
+    - [x] Frontmatter
 
--   Import
+- [x] Undo/redo
 
-    -   [x] CSV
-    -   [x] Markdown
+- [x] Embed loom files into an Obsidian note
 
--   Export
-
-    -   [x] CSV
-    -   [x] Markdown
-    -   [ ] PDF
-
--   Color scheme
-
-    -   [x] Light
-    -   [x] Dark
-
--   Sources
-
-    -   [x] Folder
-    -   [x] Frontmatter
-
--   [x] Undo/redo
-
--   [x] Embed loom files into an Obsidian note
-
--   [x] Mobile support
+- [x] Mobile support
 
 ## Roadmap
 
 See our [project roadmap](https://github.com/users/aykutkardas/projects) for details on
 
--   What is currently in progress
--   What will be worked on next
--   What is waiting to be released
+- What is currently in progress
+- What will be worked on next
+- What is waiting to be released
 
 ## Issues
 

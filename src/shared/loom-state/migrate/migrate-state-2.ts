@@ -6,7 +6,7 @@ import {
 	Column as Column3,
 	Cell as Cell3,
 } from "../types/loom-state-3";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 
 /**
  * Migrates to 6.3.0

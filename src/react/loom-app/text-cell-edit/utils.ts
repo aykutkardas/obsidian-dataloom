@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 import { DOUBLE_BRACKET_REGEX } from "./constants";
 /**
  * Checks if the current position of the input cursor is surrounded by double brackets

@@ -30,7 +30,7 @@ import {
 import { dateTimeToDateString } from "src/shared/date/date-time-conversion";
 import { isNumber } from "src/shared/match";
 import { parseDateTime } from "src/shared/date/date-validation";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 
 export default class ColumnTypeUpdateCommand extends LoomStateCommand {
 	private targetColumnId: string;

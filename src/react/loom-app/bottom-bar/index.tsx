@@ -1,6 +1,6 @@
 import React from "react";
 
-import _ from "lodash";
+import { throttle } from "es-toolkit";
 
 import NewRowButton from "../new-row-button";
 import Stack from "src/react/shared/stack";
@@ -59,7 +59,7 @@ export default function BottomBar({
 		}
 
 		const THROTTLE_TIME_MILLIS = 50;
-		const throttleUpdate = _.throttle(
+		const throttleUpdate = throttle(
 			updateBottomBar,
 			THROTTLE_TIME_MILLIS
 		);
