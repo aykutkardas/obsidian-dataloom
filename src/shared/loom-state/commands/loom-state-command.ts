@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 import { LoomState } from "../types/loom-state";
 import CommandRedoError from "./error/command-redo-error";
 import CommandUndoError from "./error/command-undo-error";

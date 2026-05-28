@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useAppMount } from "../../app-mount-provider";
-import _ from "lodash";
+import { throttle } from "es-toolkit";
 import { useMenuOperations } from "src/react/shared/menu-provider/hooks";
 import EventManager from "src/shared/event/event-manager";
 import { setStyle } from "src/shared/dom-utils";
@@ -60,7 +60,7 @@ const useCloseOnMarkdownViewScroll = () => {
 		let pageScrollerEl: HTMLElement | null;
 
 		const THROTTLE_TIME_MILLIS = 100;
-		const throttleHandleScroll = _.throttle(
+		const throttleHandleScroll = throttle(
 			handleScroll,
 			THROTTLE_TIME_MILLIS
 		);

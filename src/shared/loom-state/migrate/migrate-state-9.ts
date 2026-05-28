@@ -6,7 +6,7 @@ import {
 	BodyRow as BodyRow10,
 } from "../types/loom-state-10";
 import { LoomState9 } from "../types/loom-state-9";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 
 /**
  * Migrates to 6.18.6

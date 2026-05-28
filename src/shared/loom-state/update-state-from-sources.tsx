@@ -19,7 +19,7 @@ import {
 } from "./types/loom-state";
 
 import { deserializeFrontmatterForCell } from "../frontmatter";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 import { getDateTimeFromUnixTime } from "../date/utils";
 import { ObsidianPropertyType } from "../frontmatter/types";
 import {

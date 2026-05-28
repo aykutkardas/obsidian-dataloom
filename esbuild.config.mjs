@@ -1,6 +1,6 @@
 import esbuild from "esbuild";
 import process from "process";
-import builtins from "builtin-modules";
+import { builtinModules } from "module";
 import fs from "fs";
 import path from "path";
 
@@ -56,7 +56,7 @@ const context = await esbuild.context({
 		"@codemirror/text",
 		"@codemirror/tooltip",
 		"@codemirror/view",
-		...builtins,
+		...builtinModules,
 	],
 	format: "cjs",
 	target: "es2018",

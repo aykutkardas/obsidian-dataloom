@@ -5,7 +5,7 @@ import {
 	Column as Column8,
 	FooterCell as FooterCell8,
 } from "../types/loom-state-8";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 
 /**
  * Migrates to 6.12.3

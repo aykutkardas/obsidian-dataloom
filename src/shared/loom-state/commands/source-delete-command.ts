@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "es-toolkit";
 import { LoomState } from "../types";
 import { CellType, Column, Filter, Row, Source } from "../types/loom-state";
 import LoomStateCommand from "./loom-state-command";

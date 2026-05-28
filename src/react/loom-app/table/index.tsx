@@ -1,7 +1,7 @@
 import React from "react";
 
 import { TableComponents, TableVirtuoso, VirtuosoHandle } from "react-virtuoso";
-import _ from "lodash";
+import { isEqual } from "es-toolkit";
 
 import FooterCellContainer from "../footer-cell-container";
 import HeaderCellContainer from "../header-cell-container";
@@ -635,7 +635,7 @@ const Components: TableComponents = {
 };
 
 const areEqual = (prevProps: Readonly<Props>, nextProps: Readonly<Props>) => {
-	return _.isEqual(prevProps, nextProps);
+	return isEqual(prevProps, nextProps);
 };
 
 export default React.memo(Table, areEqual);

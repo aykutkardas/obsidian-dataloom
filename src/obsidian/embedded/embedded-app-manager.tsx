@@ -11,7 +11,7 @@ import { Root, createRoot } from "react-dom/client";
 import { store } from "src/redux/store";
 import { deserializeState, serializeState } from "src/data/serialize-state";
 import { LoomState } from "src/shared/loom-state/types/loom-state";
-import _ from "lodash";
+import { throttle } from "es-toolkit";
 import LoomAppWrapper from "src/react/loom-app";
 import { createAppId } from "../utils";
 import ErrorApp from "src/react/error-app";
@@ -167,7 +167,7 @@ const renderApp = (
 ) => {
 	//Throttle the save function so we don't save too often
 	const THROTTLE_TIME_MILLIS = 2000;
-	const throttleHandleSave = _.throttle(handleSave, THROTTLE_TIME_MILLIS);
+	const throttleHandleSave = throttle(handleSave, THROTTLE_TIME_MILLIS);
 
 	root.render(
 		<LoomAppWrapper
