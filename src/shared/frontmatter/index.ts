@@ -35,8 +35,12 @@ export const deserializeFrontmatterForCell = (
 	const frontmatter = fileMetadata.frontmatter;
 	if (!frontmatter) return null;
 
-	const frontmatterValue: string | number | boolean | string[] | undefined =
-		frontmatter[frontmatterKey];
+	const frontmatterValue = frontmatter[frontmatterKey] as
+		| string
+		| number
+		| boolean
+		| string[]
+		| undefined;
 	if (!frontmatterValue) return null;
 
 	const assignedType =
