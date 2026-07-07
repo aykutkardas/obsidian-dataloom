@@ -43,7 +43,7 @@ export default class MigrateState18 implements MigrateState {
 					throw new ColumnNotFoundError({ id: columnId });
 				}
 
-				const type = column.type as CellType;
+				const type = column.type;
 
 				if (type === CellType.TEXT) {
 					const newCell: TextCell = {

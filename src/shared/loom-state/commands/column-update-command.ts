@@ -36,8 +36,7 @@ export default class ColumnUpdateCommand extends LoomStateCommand {
 		const nextColumns = columns.map((column) => {
 			if (column.id === this.columnId) {
 				let newColumn: Column = this.data as Column;
-				if (this.isPartial)
-					newColumn = { ...column, ...this.data } as Column;
+				if (this.isPartial) newColumn = { ...column, ...this.data };
 				return newColumn;
 			}
 			return column;

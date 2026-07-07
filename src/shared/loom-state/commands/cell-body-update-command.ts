@@ -29,8 +29,7 @@ export default class CellBodyUpdateCommand extends LoomStateCommand {
 			const nextCells: Cell[] = cells.map((cell) => {
 				if (cell.id === this.id) {
 					let newCell: Cell = this.data as Cell;
-					if (this.isPartial)
-						newCell = { ...cell, ...this.data } as Cell;
+					if (this.isPartial) newCell = { ...cell, ...this.data };
 					return newCell;
 				}
 				return cell;

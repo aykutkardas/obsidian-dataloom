@@ -28,8 +28,7 @@ export default class TagUpdateCommand extends LoomStateCommand {
 				const nextTags: Tag[] = tags.map((tag) => {
 					if (tag.id === this.tagId) {
 						let newTag: Tag = this.data as Tag;
-						if (this.isPartial)
-							newTag = { ...tag, ...this.data } as Tag;
+						if (this.isPartial) newTag = { ...tag, ...this.data };
 						return newTag;
 					}
 					return tag;
