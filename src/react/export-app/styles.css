@@ -4,10 +4,10 @@
     resize: vertical;
 }
 
-.dataloom-export-app select {
-    background-color: var(--background-secondary-alt) !important;
+.dataloom-export-app.dataloom-export-app select {
+    background-color: var(--background-secondary-alt);
 }
 
-.dataloom-copy-button {
-    background-color: var(--background-secondary-alt) !important;
+.dataloom-copy-button.dataloom-copy-button {
+    background-color: var(--background-secondary-alt);
 }

@@ -22,11 +22,3 @@
 .dataloom-column-resize__handle--dragging {
     background-color: var(--interactive-accent);
 }
-
-.dataloom-auto-width {
-	width: auto !important;
-}
-
-.dataloom-nowrap {
-	white-space: nowrap !important;
-}

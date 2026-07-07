@@ -1,43 +1,41 @@
-.dataloom-input {
+.dataloom-input.dataloom-input {
     width: 100%;
-    height: 100% !important; /* Override Obsidian mobile style */
-    transition: none !important;
-    font-size: var(--text-normal) !important; /* Reset to default Obsidian style */
-    box-shadow: none !important;
+    height: 100%; /* Override Obsidian mobile style */
+    transition: none;
+    font-size: var(--text-normal); /* Reset to default Obsidian style */
+    box-shadow: none;
 }
 
-.dataloom-input--transparent {
-    background-color: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    padding: var(--dataloom-spacing--sm) var(--dataloom-spacing--lg) !important;
+.dataloom-input.dataloom-input--transparent {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: var(--dataloom-spacing--sm) var(--dataloom-spacing--lg);
 }
 
-.dataloom-input--border {
-    border: 1px solid var(--table-border-color) !important;
-    background-color: var(--background-secondary) !important;
+.dataloom-input.dataloom-input--border {
+    border: 1px solid var(--table-border-color);
+    background-color: var(--background-secondary);
 }
 
 .dataloom-input--numeric {
-    /* border: 0 !important;
-    border-radius: 0 !important; */
     text-align: right;
 }
 
-.dataloom-input--error {
-    outline: 2px solid var(--background-modifier-error) !important;
+.dataloom-input.dataloom-focusable.dataloom-input--error {
+    outline: 2px solid var(--background-modifier-error);
     outline-offset: -2px;
 }
 
-.dataloom-input--error:focus {
-    outline: 2px solid var(--background-modifier-error) !important;
+.dataloom-input.dataloom-focusable.dataloom-input--error:focus {
+    outline: 2px solid var(--background-modifier-error);
 }
 
-.dataloom-input__focus-outline--default {
-    outline: 2px solid var(--background-modifier-border-focus) !important;
+.dataloom-input.dataloom-focusable.dataloom-input__focus-outline--default {
+    outline: 2px solid var(--background-modifier-border-focus);
     outline-offset: -2px;
 }
 
-.dataloom-input__focus-outline--none {
-    outline: none !important;
+.dataloom-input.dataloom-focusable.dataloom-input__focus-outline--none {
+    outline: none;
 }

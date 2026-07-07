@@ -1,8 +1,8 @@
 /** This sizes down the original Obsidian switch by 0.75 **/
-.dataloom-switch {
+.dataloom-switch.dataloom-switch {
     width: calc(var(--toggle-width) * 0.75);
     height: calc((var(--toggle-thumb-height) * 0.75) + (var(--toggle-border-width) * 2 * 0.75));
-    transition: none !important;
+    transition: none;
 }
 
 .dataloom-switch:after {

@@ -41,7 +41,7 @@ export default function ColumnResize({
 		onWidthChange(columnId, numToPx(width));
 	}
 
-	function toggleAutoWidthClass(
+	function toggleAutoWidth(
 		selectors: NodeListOf<Element>,
 		shouldAdd: boolean
 	) {
@@ -53,11 +53,16 @@ export default function ColumnResize({
 			const containerEl = container as HTMLElement;
 
 			if (shouldAdd) {
-				containerEl.classList.add("dataloom-auto-width");
-				containerEl.classList.add("dataloom-nowrap");
+				//Temporarily override the inline width set by React so the
+				//cell can be measured at its natural size
+				containerEl.dataset.originalWidth = containerEl.style.width;
+				containerEl.style.width = "auto";
+				containerEl.style.whiteSpace = "nowrap";
 			} else {
-				containerEl.classList.remove("dataloom-auto-width");
-				containerEl.classList.remove("dataloom-nowrap");
+				containerEl.style.width =
+					containerEl.dataset.originalWidth ?? "";
+				delete containerEl.dataset.originalWidth;
+				containerEl.style.whiteSpace = "";
 			}
 		});
 	}
@@ -87,12 +92,12 @@ export default function ColumnResize({
 							`.dataloom-cell:nth-child(${columnIndex + 1})`
 						);
 						//Add auto width
-						toggleAutoWidthClass(selectors, true);
+						toggleAutoWidth(selectors, true);
 						//Update the width
 						updateColumnWidth();
 						//Remove auto width
 						setTimeout(() => {
-							toggleAutoWidthClass(selectors, false);
+							toggleAutoWidth(selectors, false);
 						}, 0);
 					}
 				}}

@@ -2,7 +2,7 @@
     box-shadow: none;
 }
 
-.dataloom-select--error {
-    outline: 2px solid var(--background-modifier-error) !important;
+.dataloom-select--error.dataloom-select--error {
+    outline: 2px solid var(--background-modifier-error);
     outline-offset: -2px;
 }

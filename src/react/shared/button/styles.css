@@ -1,7 +1,7 @@
-.dataloom-button {
+.dataloom-button.dataloom-button {
     display: flex;
     align-items: center;
-    width: max-content !important;
+    width: max-content;
     height: max-content;
     white-space: nowrap;
     color: var(--text-normal);
@@ -10,53 +10,52 @@
     cursor: pointer;
 }
 
-.dataloom-button:focus-visible {
-    box-shadow: none !important;
+.dataloom-button.dataloom-button:focus-visible {
+    box-shadow: none;
 }
 
-.dataloom-button--link {
+.dataloom-button.dataloom-button--link {
     color: var(--link-color);
-    text-decoration-line: var(--link-decoration);
+    text-decoration: var(--link-decoration);
     cursor: var(--cursor-link);
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
 }
 
-.dataloom-button--link:hover{
-    box-shadow: var(--input-shadow) !important;
+.dataloom-button.dataloom-button--link:hover {
+    box-shadow: var(--input-shadow);
 }
 
-.dataloom-button--sm {
-    padding: 2px !important;
+.dataloom-button.dataloom-button--sm {
+    padding: 2px;
 }
 
-.dataloom-button--md {
-	padding: 6px !important;
+.dataloom-button.dataloom-button--md {
+	padding: 6px;
 }
 
-.dataloom-button--lg {
-	padding: 10px !important;
+.dataloom-button.dataloom-button--lg {
+	padding: 10px;
 }
 
-.dataloom-button--full-width {
+.dataloom-button.dataloom-button--full-width {
     display: flex;
     justify-content: flex-start;
-    width: 100% !important;
+    width: 100%;
     border-radius: 0px;
 }
 
-.dataloom-button--text {
-    background-color: transparent !important;
-    box-shadow: none !important;
+.dataloom-button.dataloom-button--text {
+    background-color: transparent;
+    box-shadow: none;
 }
 
-.dataloom-button--text:hover {
-    background-color: var(--background-modifier-hover) !important;
+.dataloom-button.dataloom-button--text:hover {
+    background-color: var(--background-modifier-hover);
 }
 
 .dataloom-button:disabled {
     cursor: not-allowed;
     opacity: 0.5;
 }
-
