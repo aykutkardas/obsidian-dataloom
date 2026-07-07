@@ -2,9 +2,9 @@
 
 ## Issues
 
-Issues are prioritized in the [project roadmap](https://github.com/users/decaf-dev/projects/2). However, you are welcome to work on whatever issue you would like.
+Issues are prioritized in the [project roadmap](https://github.com/users/aykutkardas/projects/2). However, you are welcome to work on whatever issue you would like.
 
-If the code you wish to contribute is related to an existing issue, please make a comment on the related issue and tag @decaf-dev.
+If the code you wish to contribute is related to an existing issue, please make a comment on the related issue and tag @aykutkardas.
 
 ## Diagrams
 
@@ -15,7 +15,7 @@ State machines and flowcharts can be found can be found in the `diagrams` folder
 Start by cloning the repository
 
 ```shell
-git clone https://github.com/decaf-dev/obsidian-dataloom.git
+git clone https://github.com/aykutkardas/obsidian-dataloom.git
 ```
 
 We use [Bun](https://bun.sh/) for dependency management instead of npm. Please make sure that you have installed Bun.
