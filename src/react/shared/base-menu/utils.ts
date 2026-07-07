@@ -104,8 +104,8 @@ const getViewportPosition = (viewportEl: HTMLElement, isModalMenu: boolean) => {
  * not its absolute position in the document.
  */
 const getPositionRelativeToDocument = (rect: DOMRect): LoomMenuPosition => {
-	const left = rect.left + window.scrollX - document.body.clientLeft;
-	const top = rect.top + window.scrollY - document.body.clientTop;
+	const left = rect.left + window.scrollX - activeDocument.body.clientLeft;
+	const top = rect.top + window.scrollY - activeDocument.body.clientTop;
 	return {
 		top,
 		left,

@@ -26,8 +26,8 @@ export const useColumnResize = (
 	}
 
 	function handleMouseUp() {
-		document.removeEventListener("mousemove", handleMouseMove);
-		document.removeEventListener("mouseup", handleMouseUp);
+		activeDocument.removeEventListener("mousemove", handleMouseMove);
+		activeDocument.removeEventListener("mouseup", handleMouseUp);
 
 		//Prevents the column menu from opening when the user releases the mouse
 		setTimeout(() => {
@@ -36,8 +36,8 @@ export const useColumnResize = (
 	}
 
 	function handleTouchEnd() {
-		document.removeEventListener("touchmove", handleTouchMove);
-		document.removeEventListener("touchend", handleTouchEnd);
+		activeDocument.removeEventListener("touchmove", handleTouchMove);
+		activeDocument.removeEventListener("touchend", handleTouchEnd);
 
 		//Prevents the column menu from opening when the user releases the mouse
 		setTimeout(() => {
@@ -50,8 +50,8 @@ export const useColumnResize = (
 		if (e.detail >= 2) return;
 
 		//Add event listeners
-		document.addEventListener("touchmove", handleTouchMove);
-		document.addEventListener("touchend", handleTouchEnd);
+		activeDocument.addEventListener("touchmove", handleTouchMove);
+		activeDocument.addEventListener("touchend", handleTouchEnd);
 
 		//Set the current mouse position, this will be used to calculate the distance
 		//the touch has moved
@@ -67,8 +67,8 @@ export const useColumnResize = (
 		e.preventDefault();
 
 		//Add event listeners
-		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("mouseup", handleMouseUp);
+		activeDocument.addEventListener("mousemove", handleMouseMove);
+		activeDocument.addEventListener("mouseup", handleMouseUp);
 
 		//Set the current mouse position, this will be used to calculate the distance
 		//the mouse has moved

@@ -57,7 +57,7 @@ export default function HeaderCell({
 
 	function removeDragHover() {
 		//Add dragging over class to all the children
-		const el = document.querySelector(".dataloom-th--drag-over");
+		const el = activeDocument.querySelector(".dataloom-th--drag-over");
 		if (el) el.classList.remove("dataloom-th--drag-over");
 	}
 
@@ -111,7 +111,7 @@ export default function HeaderCell({
 		const { clientX, clientY } = e.touches[0];
 
 		// Get the element underneath the dragging element at the current position
-		const elementUnderneath = document.elementFromPoint(clientX, clientY);
+		const elementUnderneath = activeDocument.elementFromPoint(clientX, clientY);
 		if (!elementUnderneath) return;
 
 		const thEl = elementUnderneath.closest(".dataloom-cell--header");

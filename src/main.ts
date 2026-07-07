@@ -236,7 +236,7 @@ export default class DataLoomPlugin extends Plugin {
 
 	private registerDOMEvents() {
 		//This event is guaranteed to fire after our React synthetic event handlers
-		this.registerDomEvent(document, "click", () => {
+		this.registerDomEvent(activeDocument, "click", () => {
 			Logger.trace(FILE_NAME, "registerDomEvent", "click event called");
 
 			EventManager.getInstance().emit("clear-menu-trigger-focus");
@@ -244,7 +244,7 @@ export default class DataLoomPlugin extends Plugin {
 		});
 
 		//This event is guaranteed to fire after our React synthetic event handlers
-		this.registerDomEvent(document, "keydown", (e) => {
+		this.registerDomEvent(activeDocument, "keydown", (e) => {
 			Logger.trace(FILE_NAME, "registerDomEvent", "keydown event called");
 			EventManager.getInstance().emit("global-keydown", e);
 		});

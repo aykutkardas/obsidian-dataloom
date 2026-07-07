@@ -40,7 +40,7 @@ export default function Icon({
 				ref.current = node;
 
 				//Create an empty div
-				const div = document.createElement("div");
+				const div = activeDocument.createElement("div");
 
 				if (color) {
 					div.style.color = color;

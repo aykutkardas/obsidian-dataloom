@@ -93,7 +93,7 @@ const BaseMenu = React.forwardRef<HTMLDivElement, Props>(
 			>
 				{children}
 			</div>,
-			document.body
+			activeDocument.body
 		);
 	}
 );

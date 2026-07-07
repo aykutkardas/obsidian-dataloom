@@ -97,7 +97,7 @@ export default function RowOptions({
 		const { clientX, clientY } = e.touches[0];
 
 		// Get the element underneath the dragging element at the current position
-		const elementUnderneath = document.elementFromPoint(clientX, clientY);
+		const elementUnderneath = activeDocument.elementFromPoint(clientX, clientY);
 
 		if (!elementUnderneath) return;
 
@@ -171,7 +171,7 @@ export default function RowOptions({
 
 	function removeDragHover() {
 		//Add dragging over class to all the children
-		const children = document.querySelectorAll(".dataloom-tr--drag-over");
+		const children = activeDocument.querySelectorAll(".dataloom-tr--drag-over");
 
 		for (let i = 0; i < children.length; i++) {
 			children[i].classList.remove("dataloom-tr--drag-over");

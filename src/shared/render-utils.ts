@@ -22,7 +22,7 @@ export const renderMarkdown = async (
 	leaf: WorkspaceLeaf,
 	markdown: string
 ) => {
-	const div = document.createElement("div");
+	const div = activeDocument.createElement("div");
 	setStyle(div, "height", "100%");
 	setStyle(div, "width", "100%");
 

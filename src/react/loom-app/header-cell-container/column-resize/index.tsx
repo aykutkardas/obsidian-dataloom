@@ -1,6 +1,7 @@
 import { numToPx, pxToNum } from "src/shared/conversion";
 import { useColumnResize } from "../use-column-resize";
 import { MIN_COLUMN_WIDTH } from "src/shared/constants";
+import { setStyle } from "src/shared/dom-utils";
 
 import "./styles.css";
 
@@ -33,7 +34,7 @@ export default function ColumnResize({
 	);
 
 	function updateColumnWidth() {
-		const columnEl = document.body.querySelector(
+		const columnEl = activeDocument.body.querySelector(
 			`.dataloom-cell[data-column-id="${columnId}"] .dataloom-cell--header__container`
 		);
 		if (!columnEl) throw new Error("Cannot find column element");
@@ -56,13 +57,16 @@ export default function ColumnResize({
 				//Temporarily override the inline width set by React so the
 				//cell can be measured at its natural size
 				containerEl.dataset.originalWidth = containerEl.style.width;
-				containerEl.style.width = "auto";
-				containerEl.style.whiteSpace = "nowrap";
+				setStyle(containerEl, "width", "auto");
+				setStyle(containerEl, "white-space", "nowrap");
 			} else {
-				containerEl.style.width =
-					containerEl.dataset.originalWidth ?? "";
+				setStyle(
+					containerEl,
+					"width",
+					containerEl.dataset.originalWidth ?? ""
+				);
 				delete containerEl.dataset.originalWidth;
-				containerEl.style.whiteSpace = "";
+				setStyle(containerEl, "white-space", "");
 			}
 		});
 	}
@@ -88,7 +92,7 @@ export default function ColumnResize({
 					//If the user is double clicking then set width to max
 					if (e.detail === 2) {
 						//Get the cells in the current column
-						const selectors = document.body.querySelectorAll(
+						const selectors = activeDocument.body.querySelectorAll(
 							`.dataloom-cell:nth-child(${columnIndex + 1})`
 						);
 						//Add auto width

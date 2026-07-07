@@ -54,6 +54,6 @@ export const isSmallScreenSize = () => {
 };
 
 export const hasDarkTheme = () => {
-	const el = document.querySelector("body");
+	const el = activeDocument.querySelector("body");
 	return el?.className.includes("theme-dark") ?? false;
 };

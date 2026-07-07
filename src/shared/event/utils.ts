@@ -4,7 +4,7 @@ export const isEventForThisApp = (
 	appId: string,
 	allowOutsideEvents = false
 ) => {
-	const activeEl = document.activeElement;
+	const activeEl = activeDocument.activeElement;
 	if (!activeEl) return false;
 
 	//If we have an active element that part of the app, then compare the id

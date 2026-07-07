@@ -12,12 +12,12 @@ export const getFocusLayerEl = (
 	appId: string
 ): HTMLElement => {
 	if (topMenu) {
-		const topMenuEl = document.getElementById(topMenu.id);
+		const topMenuEl = activeDocument.getElementById(topMenu.id);
 		if (!topMenuEl) throw Error("No top menu element found");
 		return topMenuEl;
 	}
 
-	const appEl = document.getElementById(appId);
+	const appEl = activeDocument.getElementById(appId);
 	if (!appEl) throw Error("No app element found");
 	return appEl;
 };
@@ -42,7 +42,7 @@ export const focusNextElement = (
 	layerEl: HTMLElement,
 	focusableEls: Element[]
 ) => {
-	const focusedEl = document.activeElement;
+	const focusedEl = activeDocument.activeElement;
 
 	//If there's an element that's focused, get the next element
 	if (focusedEl) {

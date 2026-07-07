@@ -20,7 +20,7 @@ const useLockTableScroll = () => {
 	const hasLockRef = React.useRef(false);
 
 	React.useEffect(() => {
-		const appEl = document.getElementById(reactAppId);
+		const appEl = activeDocument.getElementById(reactAppId);
 		if (!appEl) return;
 
 		const tableContainerEl = appEl.querySelector(
@@ -67,7 +67,7 @@ const useCloseOnMarkdownViewScroll = () => {
 
 		function handleScroll() {
 			//Find any open menus
-			const openMenus = document.querySelectorAll(".dataloom-menu");
+			const openMenus = activeDocument.querySelectorAll(".dataloom-menu");
 			if (openMenus.length === 0) return;
 
 			//Since it takes a noticable amount of time for React to update the DOM, we set
@@ -80,7 +80,7 @@ const useCloseOnMarkdownViewScroll = () => {
 		}
 
 		if (isMarkdownView) {
-			const appEl = document.getElementById(reactAppId);
+			const appEl = activeDocument.getElementById(reactAppId);
 			if (!appEl) return;
 
 			pageScrollerEl =
@@ -132,14 +132,14 @@ const useCloseOnObsidianModalOpen = () => {
 
 	React.useEffect(() => {
 		function hasOpenModal() {
-			return document.querySelector("body > .modal-container") !== null;
+			return activeDocument.querySelector("body > .modal-container") !== null;
 		}
 
 		const observer = new MutationObserver((entries) => {
 			if (hasCloseLock.current) return;
 
 			for (const entry of entries) {
-				if (entry.target === document.body) {
+				if (entry.target === activeDocument.body) {
 					if (hasOpenModal()) {
 						Logger.info("obsidian modal opened. closing all menus");
 						hasCloseLock.current = true;
@@ -151,7 +151,7 @@ const useCloseOnObsidianModalOpen = () => {
 		});
 
 		// Start observing the body element
-		observer.observe(document.body, { childList: true });
+		observer.observe(activeDocument.body, { childList: true });
 
 		return () => observer.disconnect();
 	}, [onCloseAll]);

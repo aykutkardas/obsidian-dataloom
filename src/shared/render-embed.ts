@@ -3,7 +3,7 @@ import DataLoomView from "src/obsidian/dataloom-view";
 import { setStyle } from "src/shared/dom-utils";
 
 const renderText = async (app: App, leaf: WorkspaceLeaf, value: string) => {
-	const div = document.createElement("div");
+	const div = activeDocument.createElement("div");
 	setStyle(div, "width", "100%");
 	setStyle(div, "height", "100%");
 

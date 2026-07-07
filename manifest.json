@@ -1,7 +1,7 @@
 {
 	"id": "obisidian-dataloom",
 	"name": "DataLoom",
-	"minAppVersion": "1.4.0",
+	"minAppVersion": "1.4.4",
 	"description": "Weave together data from diverse sources into different views. Inspired by Excel Spreadsheets and Notion.so.",
 	"author": "Aykut Kardaş",
 	"authorUrl": "https://github.com/aykutkardas",

@@ -36,15 +36,15 @@ export const downloadFile = (
 	const url = window.URL.createObjectURL(blob);
 
 	//Create a link element
-	const el = document.createElement("a");
+	const el = activeDocument.createElement("a");
 	el.setAttribute("href", url);
 	el.setAttribute("download", fileName);
 	setStyle(el, "display", "none");
 
 	//Add the link element to the DOM
-	document.body.appendChild(el);
+	activeDocument.body.appendChild(el);
 	el.click();
 
 	//Remove the link element from the DOM
-	document.body.removeChild(el);
+	activeDocument.body.removeChild(el);
 };

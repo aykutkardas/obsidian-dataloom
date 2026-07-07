@@ -50,7 +50,7 @@ export default function useFocus() {
 			//Prevent default scrolling of the table container
 			e.preventDefault();
 
-			const focusedEl = document.activeElement;
+			const focusedEl = activeDocument.activeElement;
 
 			let index = -1;
 			if (focusedEl) index = Array.from(focusableEls).indexOf(focusedEl);

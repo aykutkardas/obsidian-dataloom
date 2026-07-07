@@ -79,7 +79,7 @@ export function SuggestList({
 
 	function handleKeyDown() {
 		Logger.trace("SuggestMenuContent handleKeyDown");
-		const focusedEl = document.activeElement;
+		const focusedEl = activeDocument.activeElement;
 		if (!focusedEl) return;
 
 		if (focusedEl.classList.contains("dataloom-suggest-item")) {
