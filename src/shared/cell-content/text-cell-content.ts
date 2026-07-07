@@ -28,7 +28,7 @@ export const getTextCellContent = (
 	if (shouldRemoveMarkdown) {
 		const replaced = content.replace(
 			WIKI_LINK_REGEX,
-			(_match, path) => path
+			(_match: string, path: string) => path
 		);
 		const html = markdownToHTML(replaced);
 		const innerHTML = getInnerHTML(html);
