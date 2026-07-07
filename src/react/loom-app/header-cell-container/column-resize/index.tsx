@@ -100,7 +100,7 @@ export default function ColumnResize({
 						//Update the width
 						updateColumnWidth();
 						//Remove auto width
-						setTimeout(() => {
+						window.setTimeout(() => {
 							toggleAutoWidth(selectors, false);
 						}, 0);
 					}

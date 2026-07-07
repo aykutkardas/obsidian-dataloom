@@ -24,7 +24,7 @@ export const useExportEvents = (state: LoomState) => {
 		function handleDownloadCSV() {
 			if (isEventForThisApp(reactAppId)) {
 				//Set timeout to wait for the command window to disappear
-				setTimeout(() => {
+				window.setTimeout(() => {
 					const data = exportToCSV(
 						app,
 						state,
@@ -40,7 +40,7 @@ export const useExportEvents = (state: LoomState) => {
 		function handleDownloadMarkdown() {
 			if (isEventForThisApp(reactAppId)) {
 				//Set timeout to wait for the command window to disappear
-				setTimeout(() => {
+				window.setTimeout(() => {
 					const data = exportToMarkdown(
 						app,
 						state,

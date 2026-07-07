@@ -30,7 +30,7 @@ export const useColumnResize = (
 		activeDocument.removeEventListener("mouseup", handleMouseUp);
 
 		//Prevents the column menu from opening when the user releases the mouse
-		setTimeout(() => {
+		window.setTimeout(() => {
 			setResizingColumnId(null);
 		}, 100);
 	}
@@ -40,7 +40,7 @@ export const useColumnResize = (
 		activeDocument.removeEventListener("touchend", handleTouchEnd);
 
 		//Prevents the column menu from opening when the user releases the mouse
-		setTimeout(() => {
+		window.setTimeout(() => {
 			setResizingColumnId(null);
 		}, 100);
 	}

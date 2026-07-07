@@ -278,7 +278,7 @@ export default class DataLoomPlugin extends Plugin {
 				//TODO find a better way to do this
 				//Wait for the DOM to update before loading the preview mode apps
 				//2ms should be enough time
-				setTimeout(() => {
+				window.setTimeout(() => {
 					loadPreviewModeApps(
 						this.app,
 						leaves,
@@ -467,7 +467,7 @@ export default class DataLoomPlugin extends Plugin {
 						//This is a bug. Bug #1
 						//TODO tell the Obsidian team
 						await new Promise((resolve) =>
-							setTimeout(resolve, 100)
+							window.setTimeout(resolve, 100)
 						);
 						FrontmatterCache.getInstance().loadProperties(this.app);
 						EventManager.getInstance().emit(
