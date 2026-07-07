@@ -3,6 +3,11 @@
  * https://jestjs.io/docs/configuration
  */
 
+// Pin the timezone so date/time tests are deterministic regardless of the
+// machine or CI runner's local timezone. The date expectations are written
+// against UTC. Set before workers fork so they inherit it.
+process.env.TZ = "UTC";
+
 export default {
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,

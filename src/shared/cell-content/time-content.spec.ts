@@ -12,7 +12,7 @@ describe("getTimeCellContent", () => {
 			DateFormatSeparator.HYPHEN,
 			true
 		);
-		expect(result).toEqual("12-30-2020 5:00 PM");
+		expect(result).toEqual("12-31-2020 12:00 AM");
 	});
 
 	it("should return an empty string if time is null", () => {
