@@ -3,6 +3,8 @@ import { renderDivider, setModalTitle } from "src/obsidian/shared";
 
 import "./styles.css";
 
+const GITHUB_REPO_URL = "https://github.com/aykutkardas/obsidian-dataloom";
+
 export default class WelcomeModal extends Modal {
 	constructor(app: App) {
 		super(app);
@@ -20,7 +22,7 @@ export default class WelcomeModal extends Modal {
 		renderDivider(contentEl);
 
 		contentEl.createEl("h5", {
-			text: "Learn how to use",
+			text: "Resources",
 			cls: "dataloom-welcome-modal__title",
 		});
 
@@ -30,34 +32,26 @@ export default class WelcomeModal extends Modal {
 
 		this.renderCard(
 			cardContainerEl,
-			"Quick start",
-			"Learn the basics of creating a loom",
-			"https://dataloom.xyz/quick-start",
+			"Features",
+			"See everything DataLoom can do",
+			`${GITHUB_REPO_URL}#features`,
 			"table"
 		);
 
 		this.renderCard(
 			cardContainerEl,
-			"Import markdown tables and CSV data",
-			"Learn how to import data from markdown tables and CSV files",
-			"https://dataloom.xyz/basics/import",
-			"import"
+			"Screenshots",
+			"See DataLoom in action",
+			`${GITHUB_REPO_URL}#screenshots`,
+			"image"
 		);
 
 		this.renderCard(
 			cardContainerEl,
-			"Embedded looms",
-			"Learn how to embed a loom into a markdown note",
-			"https://dataloom.xyz/basics/embed-looms",
-			"sticky-note"
-		);
-
-		this.renderCard(
-			cardContainerEl,
-			"Keyboard navigation",
-			"Learn how to navigate looms with your keyboard",
-			"https://dataloom.xyz/basics/keyboard-navigation",
-			"list-plus"
+			"Report an issue",
+			"Report a bug or request a feature on GitHub",
+			`${GITHUB_REPO_URL}/issues`,
+			"bug"
 		);
 	}
 
