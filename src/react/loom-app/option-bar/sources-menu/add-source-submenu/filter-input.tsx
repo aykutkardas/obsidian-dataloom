@@ -46,7 +46,7 @@ export default function FilterInput({
 			{showDateInput && (
 				<DateFilterSelect
 					value={filterText as DateFilterOption}
-					onChange={(value) => onFilterTextChange(value as string)}
+					onChange={(value) => onFilterTextChange(value)}
 				/>
 			)}
 			{selectedPropertyType === ObsidianPropertyType.CHECKBOX && (

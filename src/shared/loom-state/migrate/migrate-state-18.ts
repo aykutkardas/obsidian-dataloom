@@ -43,7 +43,10 @@ export default class MigrateState18 implements MigrateState {
 					throw new ColumnNotFoundError({ id: columnId });
 				}
 
-				const type = column.type;
+				// column.type comes from the older LoomState17 CellType enum,
+				// which is nominally distinct from the current CellType. The
+				// assertion bridges them so the comparisons below stay same-enum.
+				const type = column.type as CellType;
 
 				if (type === CellType.TEXT) {
 					const newCell: TextCell = {
