@@ -176,10 +176,12 @@ export default {
 	// transform: undefined,
 
 	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-	// transformIgnorePatterns: [
-	//   "/node_modules/",
-	//   "\\.pnp\\.[^\\/]+$"
-	// ],
+	// jsondiffpatch (and its diff-match-patch dep) and uuid ship ESM only,
+	// so they must be transformed by babel instead of being ignored
+	transformIgnorePatterns: [
+		"/node_modules/(?!(jsondiffpatch|@dmsnell/diff-match-patch|uuid)/)",
+		"\\.pnp\\.[^\\/]+$",
+	],
 
 	// An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
 	// unmockedModulePathPatterns: undefined,

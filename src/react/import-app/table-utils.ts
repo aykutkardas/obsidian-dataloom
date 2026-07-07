@@ -1,4 +1,4 @@
-import Token from "markdown-it/lib/token";
+import type Token from "markdown-it/lib/token.mjs";
 import markdownIt from "markdown-it";
 
 export const parseMarkdownTableIntoTokens = (markdown: string) => {

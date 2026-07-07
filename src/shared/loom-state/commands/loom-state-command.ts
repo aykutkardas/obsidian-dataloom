@@ -2,7 +2,7 @@ import { cloneDeep } from "es-toolkit";
 import { LoomState } from "../types/loom-state";
 import CommandRedoError from "./error/command-redo-error";
 import CommandUndoError from "./error/command-undo-error";
-import jsondiffpatch from "jsondiffpatch";
+import { diff, patch, unpatch, type Delta } from "jsondiffpatch";
 
 abstract class LoomStateCommand {
 	hasExecuteBeenCalled = false;
@@ -12,7 +12,7 @@ abstract class LoomStateCommand {
 	 * Represents the difference between the original state and the state after execute() is called.
 	 * This is used to undo() and redo() the command
 	 */
-	statePatch: jsondiffpatch.Delta | undefined;
+	statePatch: Delta | undefined;
 
 	shouldSortRows: boolean;
 	shouldSaveFrontmatter: boolean;
@@ -36,8 +36,7 @@ abstract class LoomStateCommand {
 	finishExecute(prevState: LoomState, nextState: LoomState) {
 		this.hasExecuteBeenCalled = true;
 
-		const patch = jsondiffpatch.diff(prevState, nextState);
-		this.statePatch = patch;
+		this.statePatch = diff(prevState, nextState);
 	}
 
 	undo(executeState: LoomState): LoomState {
@@ -49,8 +48,7 @@ abstract class LoomStateCommand {
 		if (!this.statePatch) return executeState;
 
 		const stateCopy = cloneDeep(executeState);
-		jsondiffpatch.unpatch(stateCopy, this.statePatch);
-		return stateCopy;
+		return unpatch(stateCopy, this.statePatch) as LoomState;
 	}
 
 	redo(undoState: LoomState): LoomState {
@@ -62,8 +60,7 @@ abstract class LoomStateCommand {
 		if (!this.statePatch) return undoState;
 
 		const stateCopy = cloneDeep(undoState);
-		jsondiffpatch.patch(stateCopy, this.statePatch);
-		return stateCopy;
+		return patch(stateCopy, this.statePatch) as LoomState;
 	}
 
 	abstract execute(originalState: LoomState): LoomState;
