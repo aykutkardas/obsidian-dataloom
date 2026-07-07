@@ -1,4 +1,3 @@
-import { moment } from "obsidian";
 import { ExportType } from "./types";
 import { LOOM_EXTENSION } from "src/data/constants";
 import { setStyle } from "src/shared/dom-utils";
@@ -18,7 +17,13 @@ export const getExportFileName = (filePath: string) => {
 	const replaceExtension = filePath.replace(`.${LOOM_EXTENSION}`, "");
 	const replaceSlash = replaceExtension.replace(/\//g, "-");
 	const replaceSpaces = replaceSlash.replace(/ /g, "_");
-	const timestamp = moment().format("YYYY_MM_DD-HH_mm_ss");
+	const now = new Date();
+	const pad = (value: number) => String(value).padStart(2, "0");
+	const timestamp = `${now.getFullYear()}_${pad(now.getMonth() + 1)}_${pad(
+		now.getDate()
+	)}-${pad(now.getHours())}_${pad(now.getMinutes())}_${pad(
+		now.getSeconds()
+	)}`;
 	return replaceSpaces + "-" + timestamp;
 };
 
