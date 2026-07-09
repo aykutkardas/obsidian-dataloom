@@ -61,7 +61,7 @@ export default class MigrateState17 implements MigrateState {
 		});
 
 		const nextFilters = filters.map((filter) => {
-			const type = filter.type as CellType17;
+			const type: CellType17 = filter.type;
 			if (
 				type === CellType17.DATE ||
 				type === CellType17.LAST_EDITED_TIME ||

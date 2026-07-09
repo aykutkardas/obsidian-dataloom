@@ -43,10 +43,10 @@ export default class MigrateState18 implements MigrateState {
 					throw new ColumnNotFoundError({ id: columnId });
 				}
 
-				// column.type comes from the older LoomState17 CellType enum,
-				// which is nominally distinct from the current CellType. The
-				// assertion bridges them so the comparisons below stay same-enum.
-				const type = column.type as CellType;
+				// column.type comes from the older LoomState17 CellType enum.
+				// Annotate with the current CellType so the comparisons below
+				// stay same-enum (avoids no-unsafe-enum-comparison).
+				const type: CellType = column.type;
 
 				if (type === CellType.TEXT) {
 					const newCell: TextCell = {
@@ -162,7 +162,7 @@ export default class MigrateState18 implements MigrateState {
 		});
 
 		const nextFilters = filters.map((filter) => {
-			const type = filter.type as CellType;
+			const type: CellType = filter.type;
 			if (type === CellType.CHECKBOX) {
 				const { text } = filter as unknown as { text: string };
 				return {
