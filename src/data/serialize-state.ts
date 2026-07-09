@@ -328,6 +328,13 @@ export const deserializeState = (
 			failedMigration = null;
 		}
 
+		//Backfill fields added after the last state migration so that older
+		//loom files (which predate them) still pass validation.
+		const backfillState = currentState as Partial<LoomState>;
+		if (backfillState.model && backfillState.model.filterGroups === undefined) {
+			backfillState.model.filterGroups = [];
+		}
+
 		//TODO handle previous versions?
 		LoomStateObject.check(currentState);
 

@@ -14,9 +14,20 @@ export interface TableModel {
 	columns: Column[];
 	rows: Row[];
 	filters: Filter[];
+	filterGroups: FilterGroup[];
 	settings: TableSettings;
 	sources: Source[];
 	externalRowOrder: ExternalRowOrder[];
+}
+
+/**
+ * A named, reusable snapshot of a set of filters. Saved into the loom file so
+ * it persists with the table and can be re-applied later.
+ */
+export interface FilterGroup {
+	id: string;
+	name: string;
+	filters: Filter[];
 }
 
 export interface ExternalRowOrder {

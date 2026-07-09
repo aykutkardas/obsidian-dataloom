@@ -316,6 +316,12 @@ const Filter = Union(
 	SourceFileFilter
 );
 
+const FilterGroup = Record({
+	id: String,
+	name: String,
+	filters: Array(Filter),
+});
+
 const Tag = Record({
 	id: String,
 	content: String,
@@ -473,6 +479,7 @@ const TableModel = Record({
 	columns: Array(Column),
 	rows: Array(Row),
 	filters: Array(Filter),
+	filterGroups: Array(FilterGroup),
 	settings: TableSettings,
 	sources: Array(Source),
 	externalRowOrder: Array(SourceRowOrder),

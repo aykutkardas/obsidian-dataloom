@@ -41,6 +41,7 @@ import {
 	Source,
 	SourceType,
 	Filter,
+	FilterGroup,
 	SourceFileFilter,
 	ObsidianFolderSource,
 	ExternalRowOrder,
@@ -750,6 +751,7 @@ export const createGenericLoomState = (options?: {
 	rows?: Row[];
 	sources?: Source[];
 	filters?: Filter[];
+	filterGroups?: FilterGroup[];
 	pluginVersion?: string;
 	frozenColumnCount?: number;
 }): LoomState => {
@@ -757,6 +759,7 @@ export const createGenericLoomState = (options?: {
 		pluginVersion = "1.0.0",
 		frozenColumnCount = 1,
 		filters = [],
+		filterGroups = [],
 		sources = [],
 		columns = [],
 		rows = [],
@@ -766,6 +769,7 @@ export const createGenericLoomState = (options?: {
 			columns,
 			rows,
 			filters,
+			filterGroups,
 			sources,
 			settings: {
 				numFrozenColumns: frozenColumnCount,
@@ -774,5 +778,27 @@ export const createGenericLoomState = (options?: {
 			externalRowOrder: [],
 		},
 		pluginVersion,
+	};
+};
+
+export const createFilterGroup = (
+	name: string,
+	filters: Filter[]
+): FilterGroup => {
+	return {
+		id: generateUuid(),
+		name,
+		filters,
+	};
+};
+
+/**
+ * Returns a deep copy of a filter with freshly generated ids so it can be added
+ * to the active filter list as an independent filter.
+ */
+export const cloneFilterWithNewId = (filter: Filter): Filter => {
+	return {
+		...filter,
+		id: generateUuid(),
 	};
 };

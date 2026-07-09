@@ -22,6 +22,7 @@ export default class MigrateState22 implements MigrateState {
 			model: {
 				...prevState.model,
 				columns: nextColumns,
+				filterGroups: [],
 			},
 		};
 	}

@@ -55,8 +55,15 @@ export default function App() {
 	const { onFrozenColumnsChange, onCalculationRowToggle } =
 		useTableSettings();
 
-	const { onFilterAdd, onFilterUpdate, onFilterDelete, filterByFilters } =
-		useFilter();
+	const {
+		onFilterAdd,
+		onFilterUpdate,
+		onFilterDelete,
+		onFilterGroupSave,
+		onFilterGroupApply,
+		onFilterGroupDelete,
+		filterByFilters,
+	} = useFilter();
 
 	const {
 		onColumnDeleteClick,
@@ -85,7 +92,8 @@ export default function App() {
 		onTagChange,
 	} = useTag();
 
-	const { columns, filters, settings, sources } = loomState.model;
+	const { columns, filters, filterGroups, settings, sources } =
+		loomState.model;
 	const { numFrozenColumns, showCalculationRow } = settings;
 
 	function handleScrollToTopClick() {
@@ -136,11 +144,15 @@ export default function App() {
 				columns={columns}
 				sources={sources}
 				filters={filters}
+				filterGroups={filterGroups}
 				showCalculationRow={showCalculationRow}
 				onColumnChange={onColumnChange}
 				onFilterAddClick={onFilterAdd}
 				onFilterDeleteClick={onFilterDelete}
 				onFilterUpdate={onFilterUpdate}
+				onFilterGroupSave={onFilterGroupSave}
+				onFilterGroupApply={onFilterGroupApply}
+				onFilterGroupDelete={onFilterGroupDelete}
 				onCalculationRowToggle={onCalculationRowToggle}
 				onSourceAdd={onSourceAdd}
 				onSourceDelete={onSourceDelete}

@@ -1,0 +1,10 @@
+.dataloom-filter-menu__groups-title {
+	font-size: var(--font-ui-smaller);
+	font-weight: var(--font-semibold);
+	color: var(--text-muted);
+}
+
+.dataloom-filter-menu__groups-empty {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-faint);
+}

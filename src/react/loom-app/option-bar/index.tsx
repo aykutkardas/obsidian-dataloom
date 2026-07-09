@@ -13,6 +13,7 @@ import {
 	SortDir,
 	Column,
 	Filter,
+	FilterGroup,
 	Source,
 	FilterCondition,
 } from "src/shared/loom-state/types/loom-state";
@@ -27,6 +28,7 @@ import "./styles.css";
 interface Props {
 	columns: Column[];
 	filters: Filter[];
+	filterGroups: FilterGroup[];
 	sources: Source[];
 	showCalculationRow: boolean;
 	onFilterUpdate: (
@@ -36,6 +38,9 @@ interface Props {
 	) => void;
 	onFilterDeleteClick: (filterId: string) => void;
 	onFilterAddClick: () => void;
+	onFilterGroupSave: (name: string) => void;
+	onFilterGroupApply: (groupId: string) => void;
+	onFilterGroupDelete: (groupId: string) => void;
 	onCalculationRowToggle: (value: boolean) => void;
 	onSourceAdd: SourceAddHandler;
 	onSourceDelete: (id: string) => void;
@@ -47,9 +52,13 @@ export default function OptionBar({
 	filters,
 	sources,
 	showCalculationRow,
+	filterGroups,
 	onFilterUpdate,
 	onFilterDeleteClick,
 	onFilterAddClick,
+	onFilterGroupSave,
+	onFilterGroupApply,
+	onFilterGroupDelete,
 	onCalculationRowToggle,
 	onSourceAdd,
 	onSourceDelete,
@@ -239,9 +248,13 @@ export default function OptionBar({
 				}
 				columns={columns}
 				filters={filters}
+				filterGroups={filterGroups}
 				onUpdate={onFilterUpdate}
 				onDeleteClick={handleFilterDelete}
 				onAddClick={onFilterAddClick}
+				onGroupSave={onFilterGroupSave}
+				onGroupApply={onFilterGroupApply}
+				onGroupDelete={onFilterGroupDelete}
 			/>
 		</>
 	);

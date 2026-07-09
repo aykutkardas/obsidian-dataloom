@@ -1,4 +1,4 @@
-import type React from "react";
+import React from "react";
 import Menu from "src/react/shared/menu";
 import Padding from "src/react/shared/padding";
 import Stack from "src/react/shared/stack";
@@ -28,6 +28,7 @@ import {
 	DateFilterOption,
 	Column,
 	SourceFileCondition,
+	FilterGroup,
 } from "src/shared/loom-state/types/loom-state";
 import { isSmallScreenSize } from "src/shared/render/utils";
 import { LoomMenuPosition } from "src/react/shared/menu/types";
@@ -50,6 +51,9 @@ import {
 import DateFilterSelect from "../../../shared/date-filter-select";
 import Tag from "src/react/shared/tag";
 import CheckboxFilterSelect from "src/react/shared/checkbox-filter-select";
+import Divider from "src/react/shared/divider";
+
+import "./styles.css";
 
 interface Props {
 	id: string;
@@ -57,9 +61,13 @@ interface Props {
 	position: LoomMenuPosition;
 	columns: Column[];
 	filters: Filter[];
+	filterGroups: FilterGroup[];
 	onAddClick: () => void;
 	onUpdate: (id: string, data: Partial<Filter>, isPartial?: boolean) => void;
 	onDeleteClick: (id: string) => void;
+	onGroupSave: (name: string) => void;
+	onGroupApply: (groupId: string) => void;
+	onGroupDelete: (groupId: string) => void;
 }
 
 export default function FilterMenu({
@@ -68,10 +76,22 @@ export default function FilterMenu({
 	position,
 	columns,
 	filters,
+	filterGroups,
 	onAddClick,
 	onUpdate,
 	onDeleteClick,
+	onGroupSave,
+	onGroupApply,
+	onGroupDelete,
 }: Props) {
+	const [groupName, setGroupName] = React.useState("");
+
+	function handleGroupSave() {
+		const name = groupName.trim();
+		if (name === "" || filters.length === 0) return;
+		onGroupSave(name);
+		setGroupName("");
+	}
 	function onColumnChange(id: string, columnId: string) {
 		const filter = filters.find((filter) => filter.id === id);
 		if (!filter) throw new Error("Filter not found");
@@ -619,6 +639,58 @@ export default function FilterMenu({
 							ariaLabel="Add filter"
 							onClick={() => onAddClick()}
 						/>
+						<Divider />
+						<Stack spacing="sm">
+							<div className="dataloom-filter-menu__groups-title">
+								Saved filter groups
+							</div>
+							{filterGroups.length === 0 && (
+								<div className="dataloom-filter-menu__groups-empty">
+									No saved groups yet
+								</div>
+							)}
+							{filterGroups.map((group) => (
+								<Stack
+									key={group.id}
+									isHorizontal
+									justify="space-between"
+									align="center"
+									spacing="sm"
+								>
+									<Button
+										variant="link"
+										ariaLabel={`Apply filter group ${group.name}`}
+										onClick={() => onGroupApply(group.id)}
+									>
+										{group.name}
+									</Button>
+									<Button
+										icon={<Icon lucideId="trash-2" />}
+										ariaLabel="Delete filter group"
+										onClick={() => onGroupDelete(group.id)}
+									/>
+								</Stack>
+							))}
+							<Stack isHorizontal spacing="sm" align="center">
+								<Input
+									autoFocus={false}
+									value={groupName}
+									placeholder="Filter group name"
+									onChange={setGroupName}
+								/>
+								<Button
+									variant="default"
+									isDisabled={
+										groupName.trim() === "" ||
+										filters.length === 0
+									}
+									ariaLabel="Save current filters as a group"
+									onClick={handleGroupSave}
+								>
+									Save
+								</Button>
+							</Stack>
+						</Stack>
 					</Stack>
 				</Padding>
 			</div>
