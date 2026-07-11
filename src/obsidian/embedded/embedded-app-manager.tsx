@@ -85,11 +85,27 @@ export const loadEmbeddedLoomApps = (
  * @param leaves - The open markdown leaves
  */
 export const purgeEmbeddedLoomApps = (leaves: WorkspaceLeaf[]) => {
-	embeddedApps = embeddedApps.filter((app) =>
-		leaves.find(
+	const isOpen = (app: EmbeddedApp) =>
+		leaves.some(
 			(l) => (l.view as MarkdownView).file?.path === app.leafFilePath
-		)
-	);
+		);
+
+	//Unmount the React apps of closed leaves. Without this the component
+	//trees and their event subscriptions are retained forever, slowing
+	//Obsidian down as looms are opened and closed (legacy #809)
+	embeddedApps.forEach((app) => {
+		if (!isOpen(app)) app.root?.unmount();
+	});
+	embeddedApps = embeddedApps.filter(isOpen);
+};
+
+/**
+ * Unmounts every embedded app. Called when the plugin unloads so that
+ * embedded looms don't outlive the plugin in open markdown views
+ */
+export const unmountAllEmbeddedApps = () => {
+	embeddedApps.forEach((app) => app.root?.unmount());
+	embeddedApps = [];
 };
 
 /**
