@@ -87,6 +87,30 @@ See our [project roadmap](https://github.com/users/aykutkardas/projects) for det
 - What will be worked on next
 - What is waiting to be released
 
+## Customization with CSS
+
+The following CSS variables are supported for use in [CSS snippets](https://help.obsidian.md/Extending+Obsidian/CSS+snippets). They are considered a stable API and are the recommended way to adjust table density instead of targeting internal selectors.
+
+```css
+:root {
+	/* Minimum height of a table cell */
+	--dataloom-cell-min-height: 1.9rem;
+
+	/* Horizontal and vertical padding inside a table cell */
+	--dataloom-cell-spacing-x: 12px;
+	--dataloom-cell-spacing-y: 4px;
+}
+```
+
+For example, to make rows more compact:
+
+```css
+:root {
+	--dataloom-cell-min-height: 1.4rem;
+	--dataloom-cell-spacing-y: 2px;
+}
+```
+
 ## Issues
 
 Please see [issues](https://github.com/aykutkardas/obsidian-dataloom/issues) for feature requests and bug reports.

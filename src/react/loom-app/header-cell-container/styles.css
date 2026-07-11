@@ -13,6 +13,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     user-select: none;
-    padding: var(--dataloom-cell-spacing-x) var(--dataloom-cell-spacing-y);
+    padding: var(--dataloom-cell-spacing-y) var(--dataloom-cell-spacing-x);
     color: var(--text-normal); /* Stop dimming of text when mouse leaves embedded loom */
 }
