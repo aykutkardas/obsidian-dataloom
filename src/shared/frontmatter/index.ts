@@ -41,7 +41,14 @@ export const deserializeFrontmatterForCell = (
 		| boolean
 		| string[]
 		| undefined;
-	if (!frontmatterValue) return null;
+	//Only treat missing values as absent. Falsy values such as `false` and `0`
+	//are valid frontmatter values and must still be deserialized
+	if (
+		frontmatterValue === undefined ||
+		frontmatterValue === null ||
+		frontmatterValue === ""
+	)
+		return null;
 
 	const assignedType =
 		getAssignedPropertyType(app, frontmatterKey) ??
@@ -136,7 +143,7 @@ export const deserializeFrontmatterForCell = (
 			if (typeof frontmatterValue !== "boolean")
 				return {
 					newCell: createCheckboxCell(id, {
-						hasValidFrontmatter: true,
+						hasValidFrontmatter: false,
 					}),
 				};
 
@@ -213,7 +220,17 @@ export const deserializeFrontmatterForCell = (
 			};
 		}
 		case CellType.MULTI_TAG: {
-			if (typeof frontmatterValue !== "object") {
+			let frontmatterValues: string[];
+			if (typeof frontmatterValue === "string") {
+				//Obsidian stores a list property with a single value as a scalar,
+				//so treat a plain string as a one-item list
+				frontmatterValues = [frontmatterValue];
+			} else if (Array.isArray(frontmatterValue)) {
+				//List items may be parsed as numbers or booleans
+				frontmatterValues = frontmatterValue.map((value) =>
+					String(value)
+				);
+			} else {
 				return {
 					newCell: createMultiTagCell(id, {
 						hasValidFrontmatter: false,
@@ -225,7 +242,7 @@ export const deserializeFrontmatterForCell = (
 			const newTags: Tag[] = [];
 			const cellTagIds: string[] = [];
 
-			frontmatterValue.forEach((tagContent) => {
+			frontmatterValues.forEach((tagContent) => {
 				if (tagContent !== "") {
 					const existingTag = tags.find(
 						(tag) => tag.content === tagContent
