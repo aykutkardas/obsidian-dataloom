@@ -26,20 +26,26 @@ export default function FrontmatterKeySubmenu({
 		<Submenu title={title} onBackClick={onBackClick}>
 			<Padding pt="md">
 				<Stack spacing="sm">
-					{frontmatterKeys.map((key) => {
-						const { value, isSelectable } = key;
-						const isSelected = selectedKey === value;
+					<div className="dataloom-frontmatter-key-menu">
+						<Stack spacing="sm">
+							{frontmatterKeys.map((key) => {
+								const { value, isSelectable } = key;
+								const isSelected = selectedKey === value;
 
-						return (
-							<MenuItem
-								key={value}
-								isDisabled={!isSelectable}
-								isSelected={isSelected}
-								name={value}
-								onClick={() => onFrontmatterKeyChange(value)}
-							/>
-						);
-					})}
+								return (
+									<MenuItem
+										key={value}
+										isDisabled={!isSelectable}
+										isSelected={isSelected}
+										name={value}
+										onClick={() =>
+											onFrontmatterKeyChange(value)
+										}
+									/>
+								);
+							})}
+						</Stack>
+					</div>
 					<Divider />
 					<MenuItem
 						name="Clear"

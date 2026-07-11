@@ -1,3 +1,10 @@
 .dataloom-header-menu {
     color: var(--text-normal);
 }
+
+/* Vaults can have many frontmatter properties. Bound the key list so the
+menu never grows past the viewport and becomes scrollable instead. */
+.dataloom-frontmatter-key-menu {
+    max-height: min(300px, 50vh);
+    overflow-y: auto;
+}
