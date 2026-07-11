@@ -7,6 +7,7 @@ import SourceDeleteCommand from "src/shared/loom-state/commands/source-delete-co
 import updateStateFromSources, {
 	preserveSourceRowOrder,
 } from "src/shared/loom-state/update-state-from-sources";
+import { sortRows } from "src/shared/loom-state/sort-rows";
 import { useAppMount } from "src/react/loom-app/app-mount-provider";
 import EventManager from "src/shared/event/event-manager";
 import SourceUpdateCommand from "src/shared/loom-state/commands/source-update-command";
@@ -57,19 +58,22 @@ export const useSource = () => {
 					newRows,
 					nextColumns
 				);
-				const nextRows = [...internalRows, ...mergedSourceRows]
-					.sort((a, b) => a.index - b.index)
-					.map((row, i) => ({ ...row, index: i }));
+				const nextRows = [...internalRows, ...mergedSourceRows];
+
+				//Re-apply the saved sort after refreshing rows from sources.
+				//This restores an active column sort on open (legacy #913) and
+				//otherwise orders rows by their saved index (legacy #952)
+				const nextState = sortRows({
+					...prevState.state,
+					model: {
+						...prevState.state.model,
+						rows: nextRows,
+						columns: nextColumns,
+					},
+				});
 
 				return {
-					state: {
-						...prevState.state,
-						model: {
-							...prevState.state.model,
-							rows: nextRows,
-							columns: nextColumns,
-						},
-					},
+					state: nextState,
 					shouldSaveToDisk: false,
 					shouldSaveFrontmatter: true,
 					time: Date.now(),
