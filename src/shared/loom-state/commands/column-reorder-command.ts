@@ -50,7 +50,9 @@ export default class ColumnReorderCommand extends LoomStateCommand {
 	private sortCellsByColumns(prevRows: Row[], columns: Column[]): Row[] {
 		return prevRows.map((row) => {
 			const { cells } = row;
-			const nextCells = cells.sort((a, b) => {
+			//Copy the array so that we do not mutate the previous state.
+			//Mutating the previous state breaks the undo/redo patch created in finishExecute()
+			const nextCells = [...cells].sort((a, b) => {
 				const aIndex = columns.findIndex(
 					(column) => column.id === a.columnId
 				);
