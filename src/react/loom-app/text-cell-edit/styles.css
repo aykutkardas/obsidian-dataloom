@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    padding: var(--dataloom-cell-spacing-x) var(--dataloom-cell-spacing-y);
+    padding: var(--dataloom-cell-spacing-y) var(--dataloom-cell-spacing-x);
     resize: none;
     border: 0; /* Clear default Obsidian style */
     border-radius: 0; /* Clear default Obsidian style */
