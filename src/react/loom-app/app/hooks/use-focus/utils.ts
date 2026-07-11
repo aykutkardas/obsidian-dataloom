@@ -1,5 +1,8 @@
 import type React from "react";
-import { LoomMenu } from "src/react/shared/menu-provider/types";
+import {
+	LoomMenu,
+	LoomMenuLevel,
+} from "src/react/shared/menu-provider/types";
 import { findMenuTriggerEl } from "src/react/shared/menu-provider/utils";
 
 /**
@@ -88,6 +91,24 @@ export const isArrowKeyPressed = (
 		e.key === "ArrowUp" ||
 		e.key === "ArrowLeft" ||
 		e.key === "ArrowRight"
+	);
+};
+
+export const shouldUseNativeArrowKeyBehavior = (
+	target: EventTarget | null,
+	menuLevel: LoomMenuLevel | null
+) => {
+	if (
+		(menuLevel !== null && menuLevel > LoomMenuLevel.ONE) ||
+		!(target instanceof HTMLElement)
+	)
+		return false;
+
+	if (target.matches("input, textarea")) return true;
+
+	return (
+		target.hasAttribute("contenteditable") &&
+		target.getAttribute("contenteditable") !== "false"
 	);
 };
 

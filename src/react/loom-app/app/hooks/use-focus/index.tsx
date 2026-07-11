@@ -6,6 +6,7 @@ import {
 	isArrowKeyPressed,
 	getFocusLayerEl,
 	getFocusableEls,
+	shouldUseNativeArrowKeyBehavior,
 } from "src/react/loom-app/app/hooks/use-focus/utils";
 
 import {
@@ -41,7 +42,13 @@ export default function useFocus() {
 			if (focusableEls.length === 0) return;
 
 			focusNextElement(layerEl, focusableEls);
-		} else if (isArrowKeyPressed(e, topMenu !== null)) {
+		} else if (
+			!shouldUseNativeArrowKeyBehavior(
+				e.target,
+				topMenu?.level ?? null
+			) &&
+			isArrowKeyPressed(e, topMenu !== null)
+		) {
 			const layerEl = getFocusLayerEl(topMenu, reactAppId);
 
 			const focusableEls = getFocusableEls(layerEl);
