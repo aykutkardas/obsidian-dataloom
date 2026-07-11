@@ -262,18 +262,17 @@ export default function DateCellEdit({
 				<Stack>
 					<Padding p="md">
 						<Stack spacing="sm">
-							<input
-								className="dataloom-date-cell-edit__picker dataloom-focusable"
+							<Input
 								type="date"
-								aria-label="Pick date"
+								ariaLabel="Pick date"
+								showBorder
+								autoFocus={false}
 								value={getDatePickerValue(
 									dateString,
 									dateFormat,
 									dateFormatSeparator
 								)}
-								onChange={(event) =>
-									handleDatePickerChange(event.target.value)
-								}
+								onChange={handleDatePickerChange}
 							/>
 							{includeTime && (
 								<Input
