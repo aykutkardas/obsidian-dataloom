@@ -7,6 +7,7 @@ import { getAcceptForDataType } from "../../utils";
 
 import "./styles.css";
 import Switch from "src/react/shared/switch";
+import { decodeFileBuffer } from "../../decode-file";
 
 interface Props {
 	hasHeadersRow: boolean;
@@ -30,11 +31,14 @@ export default function FileInput({
 		const reader = new FileReader();
 
 		reader.onload = (e) => {
-			const rawData = (e.target?.result as string) ?? "";
+			const buffer = e.target?.result as ArrayBuffer | null;
+			const rawData = buffer ? decodeFileBuffer(buffer) : "";
 			onDataChange(rawData, file.name);
 		};
 
-		reader.readAsText(file);
+		//Read as a buffer so the encoding can be detected from the byte
+		//order mark instead of assuming BOM-less UTF-8 (legacy #862)
+		reader.readAsArrayBuffer(file);
 	}
 	const accept = getAcceptForDataType(dataType);
 	return (
