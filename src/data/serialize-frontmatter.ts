@@ -27,6 +27,8 @@ export const serializeFrontmatter = async (app: App, state: LoomState) => {
 	);
 	if (!sourceFileColumn) throw new Error("Source file column not found");
 
+	const datePropertyTypes = new Map<string, ObsidianPropertyType>();
+
 	for (const row of rows) {
 		const { sourceId, cells } = row;
 		//Skip rows that don't have a source since these are stored in the loom file
@@ -41,6 +43,12 @@ export const serializeFrontmatter = async (app: App, state: LoomState) => {
 		const file = app.vault.getAbstractFileByPath(sourceFileCell.path);
 		if (!file) throw new Error("Source file not found");
 		if (!(file instanceof TFile)) throw new Error("Expected TFile");
+
+		//Collect every column value first so the file is processed once per
+		//row instead of once per cell. Saving previously wrote the file
+		//O(columns) times per row, which made edits on large source-backed
+		//tables sluggish (legacy #947)
+		const updates: { frontmatterKey: string; saveValue: unknown }[] = [];
 
 		for (const column of columns) {
 			const {
@@ -107,24 +115,12 @@ export const serializeFrontmatter = async (app: App, state: LoomState) => {
 				}
 			}
 
-			await app.fileManager.processFrontMatter(
-				file,
-				(frontmatter: Record<string, unknown>) => {
-					if (!frontmatter[frontmatterKey]) {
-						//If the content is empty, skip
-						//because we don't want to create an empty frontmatter key
-						if (!saveValue) return;
-					}
-
-					frontmatter[frontmatterKey] = saveValue;
-				}
-			);
+			updates.push({ frontmatterKey, saveValue });
 
 			//Consider the situation where you have a date property and you have a date time column
 			//If you save a datetime value, the date property will need to be converted to a date time value
 			if (type === CellType.DATE) {
-				await updateObsidianPropertyType(
-					app,
+				datePropertyTypes.set(
 					frontmatterKey,
 					includeTime
 						? ObsidianPropertyType.DATETIME
@@ -132,5 +128,28 @@ export const serializeFrontmatter = async (app: App, state: LoomState) => {
 				);
 			}
 		}
+
+		if (updates.length === 0) continue;
+
+		await app.fileManager.processFrontMatter(
+			file,
+			(frontmatter: Record<string, unknown>) => {
+				for (const { frontmatterKey, saveValue } of updates) {
+					if (!frontmatter[frontmatterKey]) {
+						//If the content is empty, skip
+						//because we don't want to create an empty frontmatter key
+						if (!saveValue) continue;
+					}
+
+					frontmatter[frontmatterKey] = saveValue;
+				}
+			}
+		);
+	}
+
+	//The property type is vault-wide, so it only needs to be updated once
+	//per key rather than once per row
+	for (const [frontmatterKey, propertyType] of datePropertyTypes) {
+		await updateObsidianPropertyType(app, frontmatterKey, propertyType);
 	}
 };
