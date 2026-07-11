@@ -469,6 +469,53 @@ describe("addImportData", () => {
 			prevState.model.columns[0].tags[1].id,
 		]);
 	});
+	it("does not create empty tags for an unmatched multi-tag column", () => {
+		//Arrange
+		const initialState = () => {
+			const columns = [
+				createColumn({ type: CellType.TEXT }),
+				createColumn({ type: CellType.MULTI_TAG }),
+			];
+			const rows = [
+				createRow(0, {
+					cells: [
+						createTextCell(columns[0].id),
+						createMultiTagCell(columns[1].id),
+					],
+				}),
+			];
+			const state = createGenericLoomState({
+				columns,
+				rows,
+			});
+			return state;
+		};
+		const prevState = initialState();
+
+		//Only the text column has a match; the multi-tag column is unmatched
+		const data: ImportData = [["header 1"], ["text value"]];
+		const columnMatches: ColumnMatch[] = [
+			{
+				importColumnIndex: 0,
+				columnId: prevState.model.columns[0].id,
+			},
+		];
+
+		//Act
+		const nextState = addImportData(
+			prevState,
+			data,
+			columnMatches,
+			null,
+			null
+		);
+
+		//Assert
+		expect(nextState.model.columns[1].tags).toEqual([]);
+		expect(
+			(nextState.model.rows[1].cells[1] as MultiTagCell).tagIds
+		).toEqual([]);
+	});
 });
 
 //TODO add tests for spacing

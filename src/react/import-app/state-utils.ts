@@ -125,8 +125,9 @@ export const addImportData = (
 						value: content.toLowerCase() === "true" ? true : false,
 					});
 				} else if (type === CellType.NUMBER) {
+					const parsedValue = parseFloat(content);
 					newCell = createNumberCell(columnId, {
-						value: parseFloat(content),
+						value: isNaN(parsedValue) ? null : parsedValue,
 					});
 				} else if (type === CellType.EMBED) {
 					newCell = createEmbedCell(columnId, {
@@ -180,21 +181,24 @@ const findMultiTagCell = (
 	const newTags: Tag[] = [];
 	const tagIds: string[] = [];
 
-	const parsedTags = content.split(",").map((tag) => tag.trim());
-	if (parsedTags.length !== 0) {
-		parsedTags.forEach((tag) => {
-			const existingTag = columnTags.find((t) => {
-				return t.content === tag;
-			});
-			if (existingTag) {
-				tagIds.push(existingTag.id);
-			} else {
-				const newTag = createTag(tag);
-				newTags.push(newTag);
-				tagIds.push(newTag.id);
-			}
+	//Filter out empty values so that an unmatched or empty column
+	//doesn't create tags with empty content (legacy #892)
+	const parsedTags = content
+		.split(",")
+		.map((tag) => tag.trim())
+		.filter((tag) => tag !== "");
+	parsedTags.forEach((tag) => {
+		const existingTag = columnTags.find((t) => {
+			return t.content === tag;
 		});
-	}
+		if (existingTag) {
+			tagIds.push(existingTag.id);
+		} else {
+			const newTag = createTag(tag);
+			newTags.push(newTag);
+			tagIds.push(newTag.id);
+		}
+	});
 
 	const cell = createMultiTagCell(columnId, {
 		tagIds,
@@ -209,23 +213,26 @@ const findTagCell = (columnTags: Tag[], columnId: string, content: string) => {
 	const newTags: Tag[] = [];
 	let tagId: string | null = null;
 
-	const parsedTags = content.split(",").map((tag) => tag.trim());
-	if (parsedTags.length !== 0) {
-		parsedTags.forEach((tag) => {
-			const existingTag = columnTags.find((t) => t.content === tag);
-			if (existingTag) {
-				if (tagId === null) {
-					tagId = existingTag.id;
-				}
-			} else {
-				const newTag = createTag(tag);
-				newTags.push(newTag);
-				if (tagId === null) {
-					tagId = newTag.id;
-				}
+	//Filter out empty values so that an unmatched or empty column
+	//doesn't create tags with empty content (legacy #892)
+	const parsedTags = content
+		.split(",")
+		.map((tag) => tag.trim())
+		.filter((tag) => tag !== "");
+	parsedTags.forEach((tag) => {
+		const existingTag = columnTags.find((t) => t.content === tag);
+		if (existingTag) {
+			if (tagId === null) {
+				tagId = existingTag.id;
 			}
-		});
-	}
+		} else {
+			const newTag = createTag(tag);
+			newTags.push(newTag);
+			if (tagId === null) {
+				tagId = newTag.id;
+			}
+		}
+	});
 
 	const cell = createTagCell(columnId, {
 		tagId,
