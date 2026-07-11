@@ -4,7 +4,9 @@ import { Source } from "src/shared/loom-state/types/loom-state";
 import { useLoomState } from "src/react/loom-app/loom-state-provider";
 import SourceAddCommand from "src/shared/loom-state/commands/source-add-command";
 import SourceDeleteCommand from "src/shared/loom-state/commands/source-delete-command";
-import updateStateFromSources from "src/shared/loom-state/update-state-from-sources";
+import updateStateFromSources, {
+	preserveSourceRowOrder,
+} from "src/shared/loom-state/update-state-from-sources";
 import { useAppMount } from "src/react/loom-app/app-mount-provider";
 import EventManager from "src/shared/event/event-manager";
 import SourceUpdateCommand from "src/shared/loom-state/commands/source-update-command";
@@ -48,7 +50,16 @@ export const useSource = () => {
 				const internalRows = rows.filter(
 					(row) => row.sourceId === null
 				);
-				const nextRows = [...internalRows, ...newRows];
+				//Keep the saved id and index of source rows that still exist so that
+				//user reordering persists across refreshes and reopens (legacy #952)
+				const mergedSourceRows = preserveSourceRowOrder(
+					rows,
+					newRows,
+					nextColumns
+				);
+				const nextRows = [...internalRows, ...mergedSourceRows]
+					.sort((a, b) => a.index - b.index)
+					.map((row, i) => ({ ...row, index: i }));
 
 				return {
 					state: {

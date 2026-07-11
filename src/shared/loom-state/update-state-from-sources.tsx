@@ -14,6 +14,7 @@ import {
 	ObsidianFrontmatterSource,
 	Row,
 	Source,
+	SourceFileCell,
 	SourceType,
 	TextFilterCondition,
 } from "./types/loom-state";
@@ -111,6 +112,48 @@ export default function updateStateFromSources(
 		newRows,
 		nextColumns,
 	};
+}
+
+const getSourceFilePath = (row: Row, columns: Column[]): string | null => {
+	const sourceFileColumn = columns.find(
+		(column) => column.type === CellType.SOURCE_FILE
+	);
+	if (!sourceFileColumn) return null;
+
+	const cell = row.cells.find(
+		(cell) => cell.columnId === sourceFileColumn.id
+	);
+	if (!cell) return null;
+	return (cell as SourceFileCell).path ?? null;
+};
+
+/**
+ * Restores the identity and position of source rows that were rebuilt from their sources.
+ * Rebuilt rows get a fresh id and are appended to the end, so without this any
+ * user reordering of source rows would be lost every time the sources are refreshed.
+ */
+export function preserveSourceRowOrder(
+	prevRows: Row[],
+	newRows: Row[],
+	columns: Column[]
+): Row[] {
+	const prevRowsByPath = new Map<string, Row>();
+	prevRows.forEach((row) => {
+		if (row.sourceId === null) return;
+		const path = getSourceFilePath(row, columns);
+		if (path !== null) prevRowsByPath.set(path, row);
+	});
+
+	return newRows.map((row) => {
+		const path = getSourceFilePath(row, columns);
+		const prevRow = path !== null ? prevRowsByPath.get(path) : undefined;
+		if (prevRow === undefined) return row;
+		return {
+			...row,
+			id: prevRow.id,
+			index: prevRow.index,
+		};
+	});
 }
 
 const findRowsFromFolderSource = (
