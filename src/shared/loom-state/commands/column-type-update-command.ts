@@ -97,10 +97,21 @@ export default class ColumnTypeUpdateCommand extends LoomStateCommand {
 					} else if (this.nextType === CellType.NUMBER) {
 						if (previousType === CellType.TEXT) {
 							return this.fromTextToNumber(cell as TextCell);
+						} else if (previousType === CellType.TAG) {
+							const textCell = this.fromTagToText(
+								column.tags,
+								cell as TagCell
+							);
+							return this.fromTextToNumber(textCell);
 						}
 					} else if (this.nextType === CellType.TAG) {
 						if (previousType === CellType.TEXT) {
 							return this.fromTextToTag(column, cell as TextCell);
+						} else if (previousType === CellType.NUMBER) {
+							const textCell = this.fromNumberToText(
+								cell as NumberCell
+							);
+							return this.fromTextToTag(column, textCell);
 						} else if (previousType === CellType.MULTI_TAG) {
 							return this.fromMultiTagToTag(cell as MultiTagCell);
 						}
