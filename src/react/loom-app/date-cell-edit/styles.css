@@ -1,3 +1,10 @@
 .dataloom-date-cell-edit input[type="text"] {
 	width: 105px;
 }
+
+.dataloom-date-cell-edit__picker {
+	width: 100%;
+	border: 1px solid var(--table-border-color);
+	background-color: var(--background-secondary);
+	color: var(--text-normal);
+}
