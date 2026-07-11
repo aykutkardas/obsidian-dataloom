@@ -46,3 +46,38 @@ export const randomColor = () => {
 	const index = Math.floor(Math.random() * Object.values(Color).length);
 	return Object.values(Color)[index];
 };
+
+/**
+ * Picks a random color for a new tag, preferring colors that are not
+ * already in use. When every color is in use, picks among the least-used
+ * colors, avoiding the most recently used one when possible. This prevents
+ * several new tags in a row from getting the same color (issue #3).
+ *
+ * @param usedColors - Colors already in use, in creation order
+ */
+export const randomUnusedColor = (usedColors: Color[]): Color => {
+	const allColors = Object.values(Color);
+
+	const unused = allColors.filter((color) => !usedColors.includes(color));
+	if (unused.length > 0) {
+		return unused[Math.floor(Math.random() * unused.length)];
+	}
+
+	//All colors are in use - pick among the least-used ones
+	const counts = new Map<Color, number>();
+	allColors.forEach((color) => counts.set(color, 0));
+	usedColors.forEach((color) =>
+		counts.set(color, (counts.get(color) ?? 0) + 1)
+	);
+	const minCount = Math.min(...counts.values());
+	let candidates = allColors.filter(
+		(color) => counts.get(color) === minCount
+	);
+
+	//Avoid repeating the most recently used color when there is a choice
+	const mostRecent = usedColors[usedColors.length - 1];
+	if (candidates.length > 1) {
+		candidates = candidates.filter((color) => color !== mostRecent);
+	}
+	return candidates[Math.floor(Math.random() * candidates.length)];
+};

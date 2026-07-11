@@ -35,7 +35,7 @@ import { useMenuEvents } from "./hooks/use-menu-events";
 import Logger from "js-logger";
 
 export default function App() {
-	const { reactAppId, isMarkdownView } = useAppMount();
+	const { app, reactAppId, isMarkdownView } = useAppMount();
 
 	const { loomState, resizingColumnId, searchText, onRedo, onUndo } =
 		useLoomState();
@@ -83,9 +83,11 @@ export default function App() {
 		onTagCellMultipleRemove,
 		onTagDeleteClick,
 		onTagChange,
+		onTagReorder,
 	} = useTag();
 
 	const { columns, filters, settings, sources } = loomState.model;
+	const sourceRows = loomState.model.rows;
 	const { numFrozenColumns, showCalculationRow } = settings;
 
 	function handleScrollToTopClick() {
@@ -148,7 +150,9 @@ export default function App() {
 			/>
 			<Table
 				ref={tableRef}
+				app={app}
 				sources={sources}
+				sourceRows={sourceRows}
 				rows={filteredRows}
 				columns={columns}
 				numFrozenColumns={numFrozenColumns}
@@ -170,6 +174,7 @@ export default function App() {
 				onTagCellMultipleRemove={onTagCellMultipleRemove}
 				onTagChange={onTagChange}
 				onTagDeleteClick={onTagDeleteClick}
+				onTagReorder={onTagReorder}
 				onRowReorder={onRowReorder}
 			/>
 			<BottomBar

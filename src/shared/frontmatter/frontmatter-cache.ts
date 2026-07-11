@@ -1,6 +1,9 @@
 import { App } from "obsidian";
 import { ObsidianPropertyType } from "./types";
-import { getAllObsidianProperties } from "./obsidian-utils";
+import {
+	getAllObsidianProperties,
+	toObsidianPropertyType,
+} from "./obsidian-utils";
 
 export default class FrontmatterCache {
 	static instance: FrontmatterCache;
@@ -15,11 +18,14 @@ export default class FrontmatterCache {
 
 		const properties = getAllObsidianProperties(app);
 		Object.values(properties).forEach((value) => {
-			const { name, type } = value as unknown as {
-				name: string;
-				type: ObsidianPropertyType;
-			};
-			this.cache.set(name, type ?? ObsidianPropertyType.TEXT);
+			//Obsidian 1.9+ exposes the property type as `widget`,
+			//older versions expose it as `type`
+			const { name, type, widget } = value;
+			this.cache.set(
+				name,
+				toObsidianPropertyType(widget ?? type) ??
+					ObsidianPropertyType.TEXT
+			);
 		});
 	}
 

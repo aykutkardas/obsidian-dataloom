@@ -5,3 +5,24 @@
     padding: var(--dataloom-spacing--sm) var(--dataloom-spacing--md);
     overflow: hidden;
 }
+
+.dataloom-selectable-tag__drag-handle {
+    display: flex;
+    align-items: center;
+    color: var(--text-faint);
+    cursor: grab;
+}
+
+.dataloom-selectable-tag__drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Insertion indicator while dragging a tag over this row.
+   Inset box-shadow so the row doesn't shift. */
+.dataloom-selectable-tag--drag-over-top {
+    box-shadow: inset 0 2px 0 0 var(--interactive-accent);
+}
+
+.dataloom-selectable-tag--drag-over-bottom {
+    box-shadow: inset 0 -2px 0 0 var(--interactive-accent);
+}
