@@ -1,5 +1,7 @@
 ![](/readme/cover.png)
 
+[![CI](https://github.com/aykutkardas/obsidian-dataloom/actions/workflows/ci.yml/badge.svg)](https://github.com/aykutkardas/obsidian-dataloom/actions/workflows/ci.yml)
+
 > **Note:** This is a fork of `decaf-dev/obsidian-dataloom`. The original plugin is no longer maintained. This fork continues development and maintenance.
 
 DataLoom is an [Obsidian.md](https://obsidian.md/) plugin for desktop and mobile. It allows you to create databases similar to [Notion.so](https://notion.so).
@@ -78,14 +80,6 @@ With DataLoom, you can weave together data from diverse sources and display them
 - [x] Embed loom files into an Obsidian note
 
 - [x] Mobile support
-
-## Roadmap
-
-See our [project roadmap](https://github.com/users/aykutkardas/projects) for details on
-
-- What is currently in progress
-- What will be worked on next
-- What is waiting to be released
 
 ## Customization with CSS
 
