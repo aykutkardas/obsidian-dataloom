@@ -25,6 +25,7 @@ import { hasDarkTheme } from "./shared/render/utils";
 import {
 	loadPreviewModeApps,
 	purgeEmbeddedLoomApps,
+	unmountAllEmbeddedApps,
 } from "./obsidian/embedded/embedded-app-manager";
 import FrontmatterCache from "./shared/frontmatter/frontmatter-cache";
 import EventManager from "./shared/event/event-manager";
@@ -640,5 +641,7 @@ export default class DataLoomPlugin extends Plugin {
 	 * Called on plugin unload.
 	 * This can be when the plugin is disabled or Obsidian is closed.
 	 */
-	onunload() {}
+	onunload() {
+		unmountAllEmbeddedApps();
+	}
 }
