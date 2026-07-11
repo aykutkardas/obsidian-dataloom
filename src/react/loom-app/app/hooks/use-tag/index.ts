@@ -6,6 +6,7 @@ import TagAddCommand from "src/shared/loom-state/commands/tag-add-command";
 import TagCellRemoveCommand from "src/shared/loom-state/commands/tag-cell-remove-command";
 import TagCellAddCommand from "src/shared/loom-state/commands/tag-cell-add-command";
 import TagCellMultipleRemoveCommand from "src/shared/loom-state/commands/tag-cell-multiple-remove-command";
+import TagReorderCommand from "src/shared/loom-state/commands/tag-reorder-command";
 import React from "react";
 import Logger from "js-logger";
 
@@ -86,6 +87,18 @@ export const useTag = () => {
 		[doCommand]
 	);
 
+	const handleTagReorder = React.useCallback(
+		(columnId: string, dragId: string, targetId: string) => {
+			Logger.trace("handleTagReorder", {
+				columnId,
+				dragId,
+				targetId,
+			});
+			doCommand(new TagReorderCommand(columnId, dragId, targetId));
+		},
+		[doCommand]
+	);
+
 	return {
 		onTagCellAdd: handleTagCellAdd,
 		onTagAdd: handleTagAdd,
@@ -93,5 +106,6 @@ export const useTag = () => {
 		onTagChange: handleTagChange,
 		onTagCellMultipleRemove: handleTagCellMultipleRemove,
 		onTagDeleteClick: handleTagDeleteClick,
+		onTagReorder: handleTagReorder,
 	};
 };

@@ -5,7 +5,7 @@ import MenuBody from "./menu-body";
 
 import { Tag as TagType } from "src/shared/loom-state/types/loom-state";
 import { Color } from "src/shared/loom-state/types/loom-state";
-import { randomColor } from "src/shared/color";
+import { randomUnusedColor } from "src/shared/color";
 import { LoomMenuCloseRequest } from "src/react/shared/menu-provider/types";
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
 	onTagColorChange: (tagId: string, color: Color) => void;
 	onTagDelete: (tagId: string) => void;
 	onTagContentChange: (tagId: string, value: string) => void;
+	onTagReorder: (dragId: string, targetId: string) => void;
 	onClose: () => void;
 }
 
@@ -33,19 +34,28 @@ export default function TagCellEdit({
 	onTagDelete,
 	onRemoveTag,
 	onTagContentChange,
+	onTagReorder,
 	onClose,
 }: Props) {
 	const [inputValue, setInputValue] = React.useState("");
-	const [newTagColor, setNewTagColor] = React.useState(randomColor());
+	const [newTagColor, setNewTagColor] = React.useState(() =>
+		randomUnusedColor(columnTags.map((tag) => tag.color))
+	);
 
 	const handleTagAdd = React.useCallback(
 		(markdown: string, color: Color) => {
 			onTagAdd(markdown, color);
 			setInputValue("");
-			setNewTagColor(randomColor());
+			//Include the just-added color since columnTags hasn't updated yet
+			setNewTagColor(
+				randomUnusedColor([
+					...columnTags.map((tag) => tag.color),
+					color,
+				])
+			);
 			if (!isMulti) onClose();
 		},
-		[isMulti, onTagAdd, onClose]
+		[isMulti, columnTags, onTagAdd, onClose]
 	);
 
 	React.useEffect(() => {
@@ -94,6 +104,7 @@ export default function TagCellEdit({
 				onTagDelete={onTagDelete}
 				onTagColorChange={onTagColorChange}
 				onTagContentChange={onTagContentChange}
+				onTagReorder={onTagReorder}
 			/>
 		</div>
 	);

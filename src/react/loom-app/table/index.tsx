@@ -1,4 +1,5 @@
 import React from "react";
+import { App } from "obsidian";
 
 import { TableComponents, TableVirtuoso, VirtuosoHandle } from "react-virtuoso";
 import { isEqual } from "es-toolkit";
@@ -48,19 +49,23 @@ import {
 	TagCellMultipleRemoveHandler,
 	TagChangeHandler,
 	TagDeleteHandler,
+	TagReorderHandler,
 } from "../app/hooks/use-tag/types";
 
 import "./styles.css";
 import { getAcceptedFrontmatterTypes } from "src/shared/frontmatter/utils";
 import FrontmatterCache from "src/shared/frontmatter/frontmatter-cache";
+import { getSourcePropertyNames } from "src/shared/frontmatter/get-source-property-names";
 
 interface Props {
+	app: App;
 	showCalculationRow: boolean;
 	numFrozenColumns: number;
 	columns: Column[];
 	resizingColumnId: string | null;
 	sources: Source[];
 	rows: Row[];
+	sourceRows: Row[];
 	onColumnDeleteClick: ColumnDeleteClickHandler;
 	onColumnAddClick: ColumnAddClickHandler;
 	onColumnTypeChange: ColumnTypeClickHandler;
@@ -77,13 +82,16 @@ interface Props {
 	onTagCellMultipleRemove: TagCellMultipleRemoveHandler;
 	onTagChange: TagChangeHandler;
 	onTagDeleteClick: TagDeleteHandler;
+	onTagReorder: TagReorderHandler;
 	onRowReorder: RowReorderHandler;
 }
 
 const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 	{
+		app,
 		sources,
 		rows,
+		sourceRows,
 		columns,
 		numFrozenColumns,
 		resizingColumnId,
@@ -104,11 +112,20 @@ const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 		onTagCellMultipleRemove,
 		onTagChange,
 		onTagDeleteClick,
+		onTagReorder,
 		onRowReorder,
 	},
 	ref
 ) {
 	const previousRowLength = usePrevious(rows.length);
+	const sourcePropertyNames = getSourcePropertyNames(
+		app,
+		columns,
+		sourceRows
+	);
+	const normalizedSourcePropertyNames = new Set(
+		Array.from(sourcePropertyNames, (key) => key.toLowerCase())
+	);
 
 	/**
 	 * Scrolls to the bottom of the page when the "New Row" button is pressed
@@ -172,9 +189,19 @@ const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 										...frontmatterKeys,
 										...FrontmatterCache.getInstance().getPropertyNames(
 											frontmatterType
+										).filter((key) =>
+											normalizedSourcePropertyNames.has(
+												key.toLowerCase()
+											)
 										),
 									];
 								});
+								if (
+									column.frontmatterKey !== null &&
+									!frontmatterKeys.includes(column.frontmatterKey)
+								) {
+									frontmatterKeys.push(column.frontmatterKey);
+								}
 
 								const isKeySelectable = (key: string) => {
 									const columnWithKey = columns.find(
@@ -446,6 +473,7 @@ const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 										}
 										onTagChange={onTagChange}
 										onTagDeleteClick={onTagDeleteClick}
+										onTagReorder={onTagReorder}
 									/>
 								);
 								break;
@@ -468,6 +496,7 @@ const Table = React.forwardRef<VirtuosoHandle, Props>(function Table(
 										}
 										onTagChange={onTagChange}
 										onTagDeleteClick={onTagDeleteClick}
+										onTagReorder={onTagReorder}
 									/>
 								);
 								break;

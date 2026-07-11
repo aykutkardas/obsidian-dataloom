@@ -24,3 +24,9 @@ export type TagChangeHandler = (
 	data: Partial<Tag>,
 	isPartial?: boolean
 ) => void;
+
+export type TagReorderHandler = (
+	columnId: string,
+	dragId: string,
+	targetId: string
+) => void;

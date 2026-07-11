@@ -1,3 +1,5 @@
+import React from "react";
+
 import Padding from "src/react/shared/padding";
 import Text from "src/react/shared/text";
 import { Color } from "src/shared/loom-state/types/loom-state";
@@ -16,6 +18,7 @@ interface MenuBodyProps {
 	onTagColorChange: (tagId: string, color: Color) => void;
 	onTagDelete: (tagId: string) => void;
 	onTagContentChange: (tagId: string, value: string) => void;
+	onTagReorder: (dragId: string, targetId: string) => void;
 }
 
 export default function MenuBody({
@@ -27,7 +30,27 @@ export default function MenuBody({
 	onTagColorChange,
 	onTagDelete,
 	onTagContentChange,
+	onTagReorder,
 }: MenuBodyProps) {
+	//Drag state used to render an insertion indicator on the row that is
+	//being dragged over. dataTransfer can't be read during dragover, so the
+	//dragged tag id is tracked here instead.
+	const [dragId, setDragId] = React.useState<string | null>(null);
+	const [dragOverId, setDragOverId] = React.useState<string | null>(null);
+
+	function handleTagDragStart(id: string) {
+		setDragId(id);
+	}
+
+	function handleTagDragOver(id: string) {
+		setDragOverId((prev) => (prev === id ? prev : id));
+	}
+
+	function handleTagDragEnd() {
+		setDragId(null);
+		setDragOverId(null);
+	}
+
 	const hasTagWithSameCase =
 		columnTags.find((tag) => tag.content === inputValue) !== undefined;
 	const filteredTags = columnTags.filter((tag) =>
@@ -47,18 +70,44 @@ export default function MenuBody({
 						onTagAdd={onTagAdd}
 					/>
 				)}
-				{filteredTags.map((tag) => (
-					<SelectableTag
-						key={tag.id}
-						id={tag.id}
-						color={tag.color}
-						content={tag.content}
-						onColorChange={onTagColorChange}
-						onClick={onTagClick}
-						onDeleteClick={onTagDelete}
-						onTagContentChange={onTagContentChange}
-					/>
-				))}
+				{filteredTags.map((tag) => {
+					//Show where the dragged tag will land: below the target
+					//when dragging down, above it when dragging up. This
+					//matches the insertion behavior of TagReorderCommand.
+					let dragIndicator: "top" | "bottom" | null = null;
+					if (
+						dragId !== null &&
+						dragOverId === tag.id &&
+						dragId !== tag.id
+					) {
+						const dragIndex = columnTags.findIndex(
+							(t) => t.id === dragId
+						);
+						const overIndex = columnTags.findIndex(
+							(t) => t.id === tag.id
+						);
+						dragIndicator =
+							dragIndex < overIndex ? "bottom" : "top";
+					}
+
+					return (
+						<SelectableTag
+							key={tag.id}
+							id={tag.id}
+							color={tag.color}
+							content={tag.content}
+							dragIndicator={dragIndicator}
+							onColorChange={onTagColorChange}
+							onClick={onTagClick}
+							onDeleteClick={onTagDelete}
+							onTagContentChange={onTagContentChange}
+							onDrop={onTagReorder}
+							onDragStart={handleTagDragStart}
+							onDragOver={handleTagDragOver}
+							onDragEnd={handleTagDragEnd}
+						/>
+					);
+				})}
 			</div>
 		</div>
 	);

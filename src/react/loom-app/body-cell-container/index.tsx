@@ -57,6 +57,7 @@ import {
 	TagAddHandler,
 	TagCellAddHandler,
 	TagChangeHandler,
+	TagReorderHandler,
 } from "../app/hooks/use-tag/types";
 import { LoomMenuLevel } from "src/react/shared/menu-provider/types";
 import { useMenu } from "src/react/shared/menu-provider/hooks";
@@ -121,6 +122,7 @@ type TagCellProps = BaseCellProps &
 		onTagAdd: TagAddHandler;
 		onTagDeleteClick: (columnId: string, tagId: string) => void;
 		onTagChange: TagChangeHandler;
+		onTagReorder: TagReorderHandler;
 	};
 
 type MultiTagCellProps = BaseCellProps &
@@ -132,6 +134,7 @@ type MultiTagCellProps = BaseCellProps &
 		onTagAdd: TagAddHandler;
 		onTagDeleteClick: (columnId: string, tagId: string) => void;
 		onTagChange: TagChangeHandler;
+		onTagReorder: TagReorderHandler;
 	};
 
 type NumberCellProps = BaseCellProps &
@@ -429,6 +432,7 @@ export default function BodyCellContainer(props: Props) {
 				onTagCellAdd,
 				onTagDeleteClick,
 				onTagCellMultipleRemove,
+				onTagReorder,
 			} = props;
 
 			let cellTags: Tag[] = [];
@@ -484,6 +488,10 @@ export default function BodyCellContainer(props: Props) {
 				onTagCellAdd(id, tagId);
 			};
 
+			const handleTagReorder = (dragId: string, targetId: string) => {
+				onTagReorder(columnId, dragId, targetId);
+			};
+
 			if (type === CellType.TAG) {
 				if (cellTags.length > 0) {
 					contentNode = (
@@ -509,6 +517,7 @@ export default function BodyCellContainer(props: Props) {
 					onTagClick={handleTagClick}
 					onTagDelete={handleTagDeleteClick}
 					onTagContentChange={handleTagContentChange}
+					onTagReorder={handleTagReorder}
 					onClose={menu.onClose}
 				/>
 			);
