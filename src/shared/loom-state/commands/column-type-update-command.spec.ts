@@ -4,6 +4,7 @@ import {
 	createGenericLoomState,
 	createLoomState,
 	createMultiTagCell,
+	createNumberCell,
 	createRow,
 	createTag,
 	createTagCell,
@@ -17,6 +18,7 @@ import {
 	Column,
 	Filter,
 	MultiTagCell,
+	NumberCell,
 	Row,
 	TagCell,
 	TextCell,
@@ -237,6 +239,62 @@ describe("column-type-update-command", () => {
 			(executeState.model.rows[0].cells[0] as MultiTagCell).tagIds
 		).toHaveLength(2);
 		expect(executeState.model.columns[0].tags).toHaveLength(2);
+	});
+
+	it("should preserve row values when converting tag -> number", () => {
+		const tags = [createTag("10"), createTag("20")];
+		const column = createColumn({
+			type: CellType.TAG,
+			tags,
+		});
+		const prevState = createGenericLoomState({
+			columns: [column],
+			rows: tags.map((tag, index) =>
+				createRow(index, {
+					cells: [
+						createTagCell(column.id, {
+							tagId: tag.id,
+						}),
+					],
+				})
+			),
+		});
+
+		const executeState = new ColumnTypeUpdateCommand(
+			column.id,
+			CellType.NUMBER
+		).execute(prevState);
+
+		expect(
+			executeState.model.rows.map(
+				(row) => (row.cells[0] as NumberCell).value
+			)
+		).toEqual([10, 20]);
+	});
+
+	it("should preserve row values when converting number -> tag", () => {
+		const column = createColumn({ type: CellType.NUMBER });
+		const values = [10, 20];
+		const prevState = createGenericLoomState({
+			columns: [column],
+			rows: values.map((value, index) =>
+				createRow(index, {
+					cells: [createNumberCell(column.id, { value })],
+				})
+			),
+		});
+
+		const executeState = new ColumnTypeUpdateCommand(
+			column.id,
+			CellType.TAG
+		).execute(prevState);
+		const nextColumn = executeState.model.columns[0];
+		const rowValues = executeState.model.rows.map((row) => {
+			const tagId = (row.cells[0] as TagCell).tagId;
+			return nextColumn.tags.find((tag) => tag.id === tagId)?.content;
+		});
+
+		expect(rowValues).toEqual(["10", "20"]);
 	});
 
 	it("should handle multi-tag -> tag when execute() is called", () => {
