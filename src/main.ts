@@ -236,8 +236,21 @@ export default class DataLoomPlugin extends Plugin {
 	}
 
 	private registerDOMEvents() {
+		this.registerDOMEventsForDocument(activeDocument);
+
+		//Pop-out windows have their own document, so the global click and
+		//keydown events must be registered on each new window as well.
+		//Without this, looms in pop-out windows cannot be edited (legacy #671)
+		this.registerEvent(
+			this.app.workspace.on("window-open", (win) => {
+				this.registerDOMEventsForDocument(win.doc);
+			})
+		);
+	}
+
+	private registerDOMEventsForDocument(doc: Document) {
 		//This event is guaranteed to fire after our React synthetic event handlers
-		this.registerDomEvent(activeDocument, "click", () => {
+		this.registerDomEvent(doc, "click", () => {
 			Logger.trace(FILE_NAME, "registerDomEvent", "click event called");
 
 			EventManager.getInstance().emit("clear-menu-trigger-focus");
@@ -245,7 +258,7 @@ export default class DataLoomPlugin extends Plugin {
 		});
 
 		//This event is guaranteed to fire after our React synthetic event handlers
-		this.registerDomEvent(activeDocument, "keydown", (e) => {
+		this.registerDomEvent(doc, "keydown", (e) => {
 			Logger.trace(FILE_NAME, "registerDomEvent", "keydown event called");
 			EventManager.getInstance().emit("global-keydown", e);
 		});
