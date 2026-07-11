@@ -36,6 +36,10 @@ import TimeFormatMenu from "./time-format.menu";
 import "./styles.css";
 import { dateStringToDateTime } from "src/shared/date/date-string-conversion";
 import { getCurrentDateTime } from "src/shared/date/utils";
+import {
+	getDatePickerValue,
+	getDateStringFromPickerValue,
+} from "./utils";
 
 interface Props {
 	cellId: string;
@@ -100,9 +104,7 @@ export default function DateCellEdit({
 	}
 	const [timeString, setTimeString] = React.useState(initialTimeString);
 
-	const [isDateInputInvalid, setDateInputInvalid] = React.useState(false);
 	const [isTimeInputInvalid, setTimeInputInvalid] = React.useState(false);
-	const dateInputRef = React.useRef<HTMLInputElement>(null);
 	const timeInputRef = React.useRef<HTMLInputElement>(null);
 
 	React.useEffect(() => {
@@ -141,7 +143,6 @@ export default function DateCellEdit({
 				return false;
 			}
 
-			setDateInputInvalid(true);
 			onCloseRequestClear();
 			return false;
 		}
@@ -202,7 +203,6 @@ export default function DateCellEdit({
 		const newValue = getCurrentDateTime();
 
 		if (newValue !== value) {
-			setDateInputInvalid(false);
 			setTimeInputInvalid(false);
 			onDateTimeChange(newValue);
 		}
@@ -246,23 +246,33 @@ export default function DateCellEdit({
 		onClose();
 	}
 
+	function handleDatePickerChange(value: string) {
+		setDateString(
+			getDateStringFromPickerValue(
+				value,
+				dateFormat,
+				dateFormatSeparator
+			)
+		);
+	}
+
 	return (
 		<>
 			<div className="dataloom-date-cell-edit">
 				<Stack>
 					<Padding p="md">
-						<Stack isHorizontal spacing="sm">
+						<Stack spacing="sm">
 							<Input
-								ref={dateInputRef}
+								type="date"
+								ariaLabel="Pick date"
 								showBorder
-								placeholder={dateTimeToDateString(
-									getCurrentDateTime(),
+								autoFocus={false}
+								value={getDatePickerValue(
+									dateString,
 									dateFormat,
 									dateFormatSeparator
 								)}
-								hasError={isDateInputInvalid}
-								value={dateString}
-								onChange={setDateString}
+								onChange={handleDatePickerChange}
 							/>
 							{includeTime && (
 								<Input

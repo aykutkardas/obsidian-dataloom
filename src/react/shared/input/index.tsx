@@ -5,6 +5,8 @@ import { isNumberInput } from "src/shared/match";
 
 interface Props {
 	id?: string;
+	type?: React.HTMLInputTypeAttribute;
+	ariaLabel?: string;
 	isTransparent?: boolean;
 	isDisabled?: boolean;
 	showBorder?: boolean;
@@ -23,6 +25,8 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 	(
 		{
 			id,
+			type = "text",
+			ariaLabel,
 			isTransparent,
 			showBorder,
 			hasError,
@@ -65,11 +69,12 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 		return (
 			<input
 				id={id}
+				type={type}
+				aria-label={ariaLabel}
 				ref={ref}
 				className={className}
 				placeholder={placeholder}
 				disabled={isDisabled}
-				type="text"
 				inputMode={isNumeric ? "numeric" : undefined}
 				autoFocus={autoFocus}
 				value={value}
