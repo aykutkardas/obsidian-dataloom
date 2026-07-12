@@ -86,9 +86,14 @@ export const loadEmbeddedLoomApps = (
  */
 export const purgeEmbeddedLoomApps = (leaves: WorkspaceLeaf[]) => {
 	const isOpen = (app: EmbeddedApp) =>
-		leaves.some(
-			(l) => (l.view as MarkdownView).file?.path === app.leafFilePath
-		);
+		leaves.some((leaf) => {
+			if (leaf !== app.leaf) return false;
+			const view = leaf.view as MarkdownView;
+			return (
+				view.file?.path === app.leafFilePath &&
+				view.getMode() === app.mode
+			);
+		});
 
 	//Unmount the React apps of closed leaves. Without this the component
 	//trees and their event subscriptions are retained forever, slowing

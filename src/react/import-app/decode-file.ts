@@ -5,27 +5,49 @@
  * kept the BOM character in the output, which garbled the first header of
  * BOM-prefixed files and turned UTF-16 files into mojibake (legacy #862).
  */
-export const decodeFileBuffer = (buffer: ArrayBuffer): string => {
-	const bytes = new Uint8Array(buffer);
+export type FileEncoding =
+	| "auto"
+	| "utf-8"
+	| "utf-16le"
+	| "utf-16be"
+	| "gb18030"
+	| "windows-1252";
 
-	let encoding = "utf-8";
+const decode = (
+	buffer: ArrayBuffer,
+	encoding: Exclude<FileEncoding, "auto">,
+	fatal = false
+) =>
+	new TextDecoder(encoding, {
+		fatal,
+	}).decode(buffer);
+
+export const decodeFileBuffer = (
+	buffer: ArrayBuffer,
+	selectedEncoding: FileEncoding = "auto"
+): string => {
+	const bytes = new Uint8Array(buffer);
+	if (selectedEncoding !== "auto") {
+		return decode(buffer, selectedEncoding);
+	}
+
 	if (bytes.length >= 2) {
 		if (bytes[0] === 0xff && bytes[1] === 0xfe) {
-			encoding = "utf-16le";
+			return decode(buffer, "utf-16le");
 		} else if (bytes[0] === 0xfe && bytes[1] === 0xff) {
-			encoding = "utf-16be";
+			return decode(buffer, "utf-16be");
 		}
 	}
 
 	try {
-		//The default ignoreBOM: false strips a leading BOM while decoding.
-		//fatal: true makes invalid UTF-8 throw so we can fall back below
-		return new TextDecoder(encoding, {
-			fatal: encoding === "utf-8",
-		}).decode(buffer);
+		return decode(buffer, "utf-8", true);
 	} catch {
-		//Not valid UTF-8 - assume a Windows-1252-style legacy encoding
-		//instead of producing replacement characters
-		return new TextDecoder("windows-1252").decode(buffer);
+		try {
+			//Chinese versions of Excel commonly export legacy CSV files as
+			//GBK/GB18030 rather than UTF-8 (legacy #862).
+			return decode(buffer, "gb18030", true);
+		} catch {
+			return decode(buffer, "windows-1252");
+		}
 	}
 };

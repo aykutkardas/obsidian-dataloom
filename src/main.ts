@@ -76,6 +76,7 @@ const FILE_NAME = "main.ts";
 export default class DataLoomPlugin extends Plugin {
 	settings: DataLoomSettings;
 	displayModalsOnLoomOpen: boolean;
+	private registeredDOMDocuments = new WeakSet<Document>();
 
 	/**
 	 * Called on plugin load.
@@ -236,7 +237,11 @@ export default class DataLoomPlugin extends Plugin {
 	}
 
 	private registerDOMEvents() {
-		this.registerDOMEventsForDocument(activeDocument);
+		const documents = new Set<Document>([activeDocument]);
+		this.app.workspace.iterateAllLeaves((leaf) => {
+			documents.add(leaf.view.containerEl.ownerDocument);
+		});
+		documents.forEach((doc) => this.registerDOMEventsForDocument(doc));
 
 		//Pop-out windows have their own document, so the global click and
 		//keydown events must be registered on each new window as well.
@@ -249,6 +254,9 @@ export default class DataLoomPlugin extends Plugin {
 	}
 
 	private registerDOMEventsForDocument(doc: Document) {
+		if (this.registeredDOMDocuments.has(doc)) return;
+		this.registeredDOMDocuments.add(doc);
+
 		//This event is guaranteed to fire after our React synthetic event handlers
 		this.registerDomEvent(doc, "click", () => {
 			Logger.trace(FILE_NAME, "registerDomEvent", "click event called");
