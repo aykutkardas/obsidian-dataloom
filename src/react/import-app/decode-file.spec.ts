@@ -49,4 +49,15 @@ describe("decodeFileBuffer", () => {
 		const buffer = toBuffer([0x63, 0x61, 0x66, 0xe9]);
 		expect(decodeFileBuffer(buffer)).toEqual("café");
 	});
+
+	it("auto-detects Chinese Excel content encoded as GB18030", () => {
+		//"中文" encoded as GBK, which is a subset of GB18030
+		const buffer = toBuffer([0xd6, 0xd0, 0xce, 0xc4]);
+		expect(decodeFileBuffer(buffer)).toEqual("中文");
+	});
+
+	it("supports an explicit encoding override", () => {
+		const buffer = toBuffer([0xd6, 0xd0, 0xce, 0xc4]);
+		expect(decodeFileBuffer(buffer, "gb18030")).toEqual("中文");
+	});
 });
