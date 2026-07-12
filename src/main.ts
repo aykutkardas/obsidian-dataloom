@@ -40,10 +40,6 @@ import { formatMessageForLogger, stringToLogLevel } from "./shared/logger";
 import { LOG_LEVEL_OFF } from "./shared/logger/constants";
 import LastSavedManager from "./shared/last-saved-manager";
 import { LoomState } from "./shared/loom-state/types";
-import {
-	hasSettingsData,
-	loadLegacyPluginSettings,
-} from "./obsidian/plugin-settings-migration";
 
 interface VaultWithConfig {
 	getConfig: (key: string) => unknown;
@@ -648,28 +644,10 @@ export default class DataLoomPlugin extends Plugin {
 
 	async loadSettings() {
 		Logger.trace(FILE_NAME, "loadSettings", "called");
-		let savedSettings = (await this.loadData()) as unknown;
-
-		if (!hasSettingsData(savedSettings)) {
-			const legacy = await loadLegacyPluginSettings(
-				this.app.vault.adapter,
-				this.app.vault.configDir
-			);
-			if (legacy !== null) {
-				savedSettings = legacy.settings;
-				//Write a copy for the corrected plugin id. The legacy settings
-				//file is intentionally left untouched as a backup.
-				await this.saveData(legacy.settings);
-				new Notice(
-					`DataLoom imported settings from ${legacy.pluginId}. The legacy settings were kept as a backup.`
-				);
-			}
-		}
-
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			hasSettingsData(savedSettings) ? savedSettings : {}
+			(await this.loadData()) as DataLoomSettings
 		);
 		store.dispatch(setSettings({ ...this.settings }));
 	}
