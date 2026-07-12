@@ -8,6 +8,24 @@ DataLoom is an [Obsidian.md](https://obsidian.md/) plugin for desktop and mobile
 
 With DataLoom, you can weave together data from diverse sources and display them in different views. Use this plugin if you want a straightforward way to create and manage databases and enhance the organization of your Obsidian vault.
 
+## Plugin ID migration
+
+The maintained fork now uses the corrected plugin ID `obsidian-dataloom`.
+Earlier fork builds used the misspelled ID `obisidian-dataloom`, while the
+archived original plugin used `notion-like-tables`.
+
+Your `.loom` files are vault files and are not affected by this change. On its
+first load, the corrected plugin copies existing settings from either legacy
+installation when it has no settings of its own. Legacy `data.json` files are
+left untouched as backups.
+
+Existing users need to perform a one-time transition:
+
+1. Disable the legacy DataLoom plugin.
+2. Install and enable the plugin with ID `obsidian-dataloom`.
+3. Confirm that DataLoom settings and existing `.loom` files load correctly.
+4. Remove the old plugin folder only after confirming the migration.
+
 ## About
 
 - [Screenshots](#screenshots)
