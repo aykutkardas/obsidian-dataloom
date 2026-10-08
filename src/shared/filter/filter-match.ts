@@ -1,3 +1,4 @@
+import { parseFilterDate } from "./parse-filter-date";
 import {
 	getDateFromDateFilterOption,
 	getDateAtMidnight,
@@ -111,21 +112,34 @@ export const doesDateMatchFilter = (
 	condition: FilterCondition,
 	option: DateFilterOption,
 	filterDateTime: string | null,
-	shouldMatchIfNull: boolean
+	shouldMatchIfNull: boolean,
+	endDateTime: string | null = null
 ) => {
 	let cellDate: Date | null = null;
 	if (valueDateTime !== null) {
-		cellDate = new Date(valueDateTime);
+		cellDate = parseFilterDate(valueDateTime);
 	}
 
 	let compareDate = getDateFromDateFilterOption(option);
 	if (compareDate === null) {
 		if (filterDateTime !== null) {
-			compareDate = new Date(filterDateTime);
+			compareDate = parseFilterDate(filterDateTime);
 		}
 	}
 
 	switch (condition) {
+		case DateFilterCondition.IS_IN_YEAR: {
+			if (filterDateTime === null || filterDateTime === "") return shouldMatchIfNull;
+			if (!/^\d{4}$/.test(filterDateTime) || Number(filterDateTime) < 1) return false;
+			return cellDate !== null && cellDate.getFullYear() === Number(filterDateTime);
+		}
+		case DateFilterCondition.IS_BETWEEN: {
+			if (compareDate === null || endDateTime === null) return shouldMatchIfNull;
+			if (cellDate === null) return false;
+			const start = getDateAtMidnight(compareDate).getTime();
+			const end = getDateJustBeforeMidnight(parseFilterDate(endDateTime)).getTime();
+			return cellDate.getTime() >= start && cellDate.getTime() <= end;
+		}
 		case DateFilterCondition.IS: {
 			if (compareDate === null) return shouldMatchIfNull;
 			if (cellDate === null) return false;

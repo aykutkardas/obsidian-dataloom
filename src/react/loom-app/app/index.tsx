@@ -55,7 +55,7 @@ export default function App() {
 	const { onFrozenColumnsChange, onCalculationRowToggle } =
 		useTableSettings();
 
-	const { onFilterAdd, onFilterUpdate, onFilterDelete, filterByFilters } =
+	const { onFilterAdd, onFilterUpdate, onFilterDelete, onFilterDisableAll, filterByFilters } =
 		useFilter();
 
 	const {
@@ -143,6 +143,7 @@ export default function App() {
 				onFilterAddClick={onFilterAdd}
 				onFilterDeleteClick={onFilterDelete}
 				onFilterUpdate={onFilterUpdate}
+				onFilterDisableAll={onFilterDisableAll}
 				onCalculationRowToggle={onCalculationRowToggle}
 				onSourceAdd={onSourceAdd}
 				onSourceDelete={onSourceDelete}

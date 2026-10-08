@@ -46,6 +46,8 @@ export default function FilterInput({
 			{showDateInput && (
 				<DateFilterSelect
 					value={filterText as DateFilterOption}
+					dateTime={filterText}
+					onDateChange={({ dateTime }) => onFilterTextChange(dateTime ?? "")}
 					onChange={(value) => onFilterTextChange(value)}
 				/>
 			)}

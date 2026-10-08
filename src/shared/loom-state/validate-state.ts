@@ -53,6 +53,8 @@ const NumberFilterConditionUnion = Union(
 
 const DateFilterConditionUnion = Union(
 	Literal(DateFilterCondition.IS),
+	Literal(DateFilterCondition.IS_BETWEEN),
+	Literal(DateFilterCondition.IS_IN_YEAR),
 	Literal(DateFilterCondition.IS_BEFORE),
 	Literal(DateFilterCondition.IS_AFTER),
 	Literal(DateFilterCondition.IS_EMPTY),
@@ -274,12 +276,15 @@ const DateFilter = BaseFilter.extend({
 	condition: DateFilterConditionUnion,
 	option: DateFilterOptionUnion,
 	dateTime: Union(String, Literal(null)),
+	endDateTime: Union(String, Literal(null)).optional(),
 });
 
 const CreationTimeConditionUnion = Union(
 	Literal(DateFilterCondition.IS),
 	Literal(DateFilterCondition.IS_AFTER),
-	Literal(DateFilterCondition.IS_BEFORE)
+	Literal(DateFilterCondition.IS_BEFORE),
+	Literal(DateFilterCondition.IS_BETWEEN),
+	Literal(DateFilterCondition.IS_IN_YEAR)
 );
 
 const CreationTimeFilter = BaseFilter.extend({
@@ -287,12 +292,15 @@ const CreationTimeFilter = BaseFilter.extend({
 	condition: CreationTimeConditionUnion,
 	option: DateFilterOptionUnion,
 	dateTime: Union(String, Literal(null)),
+	endDateTime: Union(String, Literal(null)).optional(),
 });
 
 const LastEditedTimeConditionUnion = Union(
 	Literal(DateFilterCondition.IS),
 	Literal(DateFilterCondition.IS_AFTER),
-	Literal(DateFilterCondition.IS_BEFORE)
+	Literal(DateFilterCondition.IS_BEFORE),
+	Literal(DateFilterCondition.IS_BETWEEN),
+	Literal(DateFilterCondition.IS_IN_YEAR)
 );
 
 const LastEditedTimeFilter = BaseFilter.extend({
@@ -300,6 +308,7 @@ const LastEditedTimeFilter = BaseFilter.extend({
 	condition: LastEditedTimeConditionUnion,
 	option: DateFilterOptionUnion,
 	dateTime: Union(String, Literal(null)),
+	endDateTime: Union(String, Literal(null)).optional(),
 });
 
 const Filter = Union(

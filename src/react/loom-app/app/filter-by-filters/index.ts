@@ -172,35 +172,38 @@ const doesCellMatchFilter = (
 		}
 		case CellType.DATE: {
 			const { dateTime: cellDateTime } = cell as DateCell;
-			const { dateTime: filterDateTime, option } = filter as DateFilter;
+			const { dateTime: filterDateTime, option, endDateTime } = filter as DateFilter;
 			return doesDateMatchFilter(
 				cellDateTime,
 				condition,
 				option,
 				filterDateTime,
-				true
+				true,
+				endDateTime
 			);
 		}
 		case CellType.CREATION_TIME: {
 			const { creationDateTime } = row;
-			const { dateTime, option } = filter as CreationTimeFilter;
+			const { dateTime, option, endDateTime } = filter as CreationTimeFilter;
 			return doesDateMatchFilter(
 				creationDateTime,
 				condition,
 				option,
 				dateTime,
-				true
+				true,
+				endDateTime
 			);
 		}
 		case CellType.LAST_EDITED_TIME: {
 			const { lastEditedDateTime } = row;
-			const { dateTime, option } = filter as LastEditedTimeFilter;
+			const { dateTime, option, endDateTime } = filter as LastEditedTimeFilter;
 			return doesDateMatchFilter(
 				lastEditedDateTime,
 				condition,
 				option,
 				dateTime,
-				true
+				true,
+				endDateTime
 			);
 		}
 

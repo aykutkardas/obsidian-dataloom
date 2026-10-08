@@ -1,0 +1,13 @@
+.dataloom-date-filter-input {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    gap: 6px;
+}
+
+.dataloom-date-filter-input > input.dataloom-input {
+    box-sizing: border-box;
+    width: 150px;
+    min-width: 0;
+    height: var(--input-height, 30px);
+}

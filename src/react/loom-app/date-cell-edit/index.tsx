@@ -1,4 +1,5 @@
 import React from "react";
+import FormattedDatePicker from "src/react/shared/formatted-date-picker";
 
 import MenuItem from "src/react/shared/menu-item";
 import Stack from "src/react/shared/stack";
@@ -262,11 +263,10 @@ export default function DateCellEdit({
 				<Stack>
 					<Padding p="md">
 						<Stack spacing="sm">
-							<Input
-								type="date"
+							<FormattedDatePicker
 								ariaLabel="Pick date"
-								showBorder
-								autoFocus={false}
+								dateFormat={dateFormat}
+								dateFormatSeparator={dateFormatSeparator}
 								value={getDatePickerValue(
 									dateString,
 									dateFormat,

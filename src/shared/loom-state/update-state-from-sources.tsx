@@ -8,7 +8,6 @@ import {
 	Cell,
 	CellType,
 	Column,
-	DateFilterOption,
 	FilterCondition,
 	ObsidianFolderSource,
 	ObsidianFrontmatterSource,
@@ -22,10 +21,10 @@ import {
 import { deserializeFrontmatterForCell } from "../frontmatter";
 import { cloneDeep } from "es-toolkit";
 import { getDateTimeFromUnixTime } from "../date/utils";
+import { doesSourceDateMatchFilter } from "../filter/source-date-filter";
 import { ObsidianPropertyType } from "../frontmatter/types";
 import {
 	doesBooleanMatchFilter,
-	doesDateMatchFilter,
 	doesNumberMatchFilter,
 	doesTextMatchFilter,
 } from "../filter/filter-match";
@@ -248,13 +247,7 @@ const doesMatchFilterCondition = (
 		case ObsidianPropertyType.DATE:
 		case ObsidianPropertyType.DATETIME: {
 			const value = propertyValue as string;
-			return doesDateMatchFilter(
-				value,
-				filterCondition,
-				filterText as DateFilterOption,
-				null,
-				false
-			);
+			return doesSourceDateMatchFilter(value, filterCondition, filterText);
 		}
 		case ObsidianPropertyType.ALIASES:
 		case ObsidianPropertyType.TAGS:
