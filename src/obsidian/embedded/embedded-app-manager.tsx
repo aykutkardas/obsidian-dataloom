@@ -99,7 +99,13 @@ export const purgeEmbeddedLoomApps = (leaves: WorkspaceLeaf[]) => {
 	//trees and their event subscriptions are retained forever, slowing
 	//Obsidian down as looms are opened and closed (legacy #809)
 	embeddedApps.forEach((app) => {
-		if (!isOpen(app)) app.root?.unmount();
+		if (!isOpen(app)) {
+			app.root?.unmount();
+			//Remove the now-empty container from the DOM too. Otherwise
+			//the stale div is left behind and hasLoadedEmbeddedLoom would
+			//need to special-case it on re-render (legacy #10 Bug 3)
+			app.containerEl.remove();
+		}
 	});
 	embeddedApps = embeddedApps.filter(isOpen);
 };
