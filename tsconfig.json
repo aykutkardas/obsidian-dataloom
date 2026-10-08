@@ -1,25 +1,37 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./",
 		"target": "ES6",
-		"lib": ["ES2021", "DOM", "DOM.Iterable"],
+		"lib": [
+			"ES2021",
+			"DOM",
+			"DOM.Iterable"
+		],
 		"module": "ESNext",
 		"skipLibCheck": true,
-
 		"inlineSourceMap": true,
 		"inlineSources": true,
-
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"jsx": "react-jsx",
-
 		"strict": true,
 		"strictPropertyInitialization": false,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"types": [
+			"vitest/globals",
+			"node"
+		],
+		"paths": {
+			"src/*": [
+				"./src/*"
+			]
+		}
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx"]
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx"
+	]
 }

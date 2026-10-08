@@ -3,7 +3,7 @@ import {
 	LoomMenu,
 	LoomMenuLevel,
 } from "src/react/shared/menu-provider/types";
-import { findMenuTriggerEl } from "src/react/shared/menu-provider/utils";
+import { findMenuTriggerEl } from "src/shared/dom-utils";
 
 /**
  * Gets the top menu element.

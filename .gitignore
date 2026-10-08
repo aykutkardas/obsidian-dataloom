@@ -5,7 +5,7 @@
 *.iml
 .idea
 
-# npm
+# Dependencies
 node_modules
 
 # Don't include the compiled main.js file in the repo.
@@ -20,17 +20,9 @@ main.js
 
 # Ignore build files
 main.css
-main.css.map
-main.js
-main.js.map
 
 # obsidian
 data.json
-
-# pnpm lock yaml
-pnpm-lock.yaml
-
 *.log
-.DS_Store
 
 dist/

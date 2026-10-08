@@ -1,14 +1,15 @@
-/** @jest-environment jsdom */
+import { vi } from "vitest";
+/** @vitest-environment jsdom */
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { Simulate } from "react-dom/test-utils";
 import FormattedDatePicker from "./index";
 import { DateFormat, DateFormatSeparator } from "src/shared/loom-state/types/loom-state";
-jest.mock("./styles.css", () => ({}));
+vi.mock("./styles.css", () => ({}));
 it("rejects invalid dates without changing the stored filter", () => {
  const container = document.createElement("div");
  const root = createRoot(container);
- const onChange = jest.fn();
+ const onChange = vi.fn();
  (globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
  act(() => root.render(<FormattedDatePicker value="2024-03-12" dateFormat={DateFormat.DD_MM_YYYY}
  dateFormatSeparator={DateFormatSeparator.DOT} ariaLabel="Pick date" onChange={onChange} />));
@@ -30,7 +31,7 @@ it.each([
 ])("uses the table format %s %s", (dateFormat, dateFormatSeparator, expected) => {
  const container = document.createElement("div");
  const root = createRoot(container);
- const onChange = jest.fn();
+ const onChange = vi.fn();
  (globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
  act(() => root.render(<FormattedDatePicker value="2024-03-12" dateFormat={dateFormat}
  dateFormatSeparator={dateFormatSeparator} ariaLabel="Pick date" onChange={onChange} />));

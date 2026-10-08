@@ -7,7 +7,7 @@ import {
 	LOG_LEVEL_TRACE,
 	LOG_LEVEL_WARN,
 } from "src/shared/logger/constants";
-import type { DataLoomSettings } from "../main";
+import type { DataLoomSettings } from "src/obsidian/settings";
 
 /**
  * Declarative settings (Obsidian 1.13.0+).

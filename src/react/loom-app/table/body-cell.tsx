@@ -1,5 +1,5 @@
 import React from "react";
-import { useStickyOffset } from "./hooks";
+import { useStickyOffset } from "src/react/loom-app/table/hooks";
 import { numToPx } from "src/shared/conversion";
 
 interface Props {

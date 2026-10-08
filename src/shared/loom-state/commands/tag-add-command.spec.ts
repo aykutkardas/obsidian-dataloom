@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
 	createColumn,
 	createGenericLoomState,
@@ -13,10 +14,11 @@ import {
 	MultiTagCell,
 	Row,
 } from "../types/loom-state";
-import { advanceBy, clear } from "jest-date-mock";
 
 //TODO add tests for single tag
 describe("tag-add-command", () => {
+	beforeEach(() => vi.useFakeTimers({ toFake: ["Date"] }));
+	afterEach(() => vi.useRealTimers());
 	const initialState = () => {
 		const columns: Column[] = [
 			createColumn({
@@ -52,9 +54,9 @@ describe("tag-add-command", () => {
 		);
 
 		//Act
-		advanceBy(100);
+		vi.setSystemTime(Date.now() + 100);
 		const executeState = command.execute(prevState);
-		clear();
+		vi.useRealTimers();
 
 		//Assert
 		expect(executeState.model.columns[0].tags.length).toEqual(3);

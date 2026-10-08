@@ -2,7 +2,7 @@ import React from "react";
 
 import { numToPx } from "src/shared/conversion";
 import { LoomMenuOpenDirection, LoomMenuPosition } from "../menu/types";
-import { isOnMobile } from "src/shared/render-utils";
+import { isOnMobile } from "src/obsidian/platform-utils";
 
 export const useShiftMenu = (
 	isModalMenu: boolean,

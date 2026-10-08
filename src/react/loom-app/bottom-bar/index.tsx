@@ -10,7 +10,7 @@ import Padding from "src/react/shared/padding";
 import Icon from "src/react/shared/icon";
 
 import { numToPx } from "src/shared/conversion";
-import { isOnMobile } from "src/shared/render-utils";
+import { isOnMobile } from "src/obsidian/platform-utils";
 
 import "./styles.css";
 
@@ -89,7 +89,7 @@ export default function BottomBar({
 			>
 				<Padding pt="md" width="100%">
 					<Stack spacing="sm">
-						<Flex justify="space-between">
+						<Stack className="dataloom-bottom-bar__row-actions" isHorizontal spacing="lg">
 							<NewRowButton onClick={onRowAddClick} />
 							<Stack isHorizontal spacing="sm">
 								<Button
@@ -103,7 +103,7 @@ export default function BottomBar({
 									icon={<Icon lucideId="chevron-down" />}
 								/>
 							</Stack>
-						</Flex>
+						</Stack>
 						{isMobile && (
 							<Flex justify="space-between">
 								<Button

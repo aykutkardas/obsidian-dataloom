@@ -1,8 +1,8 @@
 import { PluginValue, ViewPlugin, ViewUpdate } from "@codemirror/view";
 
-import { loadEmbeddedLoomApps } from "./embedded/embedded-app-manager";
+import { loadEmbeddedLoomApps } from "src/obsidian/embedded/embedded-app-manager";
 import { App } from "obsidian";
-import { findActiveLeafForUpdate } from "./editing-view-plugin-utils";
+import { findActiveLeafForUpdate } from "src/obsidian/editing-view-plugin-utils";
 
 export default function EditingViewPlugin(app: App, pluginVersion: string) {
 	return ViewPlugin.fromClass(

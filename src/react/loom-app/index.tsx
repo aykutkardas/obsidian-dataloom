@@ -11,6 +11,7 @@ import DragProvider from "src/shared/dragging/drag-context";
 import { LoomState } from "src/shared/loom-state/types/loom-state";
 import MenuProvider from "../shared/menu-provider";
 import ErrorBoundary from "../shared/error-boundary";
+import { LoomViewState } from "src/shared/loom-state/view-state";
 
 interface Props {
 	app: ObsidianApp;
@@ -20,6 +21,8 @@ interface Props {
 	loomFile: TFile;
 	store: Store;
 	loomState: LoomState;
+	initialViewState?: LoomViewState;
+	onSaveViewState?: (view: LoomViewState) => void;
 	onSaveState: (
 		appId: string,
 		state: LoomState,
@@ -35,6 +38,8 @@ export default function LoomApp({
 	store,
 	loomFile,
 	loomState,
+	initialViewState,
+	onSaveViewState,
 	onSaveState,
 }: Props) {
 	return (
@@ -49,6 +54,8 @@ export default function LoomApp({
 				<Provider store={store}>
 					<LoomStateProvider
 						initialState={loomState}
+						initialViewState={initialViewState}
+						onSaveViewState={onSaveViewState}
 						onSaveState={onSaveState}
 					>
 						<DragProvider>

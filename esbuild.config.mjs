@@ -12,16 +12,29 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = process.argv[2] === "production";
 const tools = process.argv[2] === "tools";
+const analyze = process.argv.includes("--analyze");
 
 const rebuildPlugin = {
 	name: "rebuild-handler",
 	setup(build) {
-		build.onEnd(async () => {
+		build.onEnd(async (result) => {
+			if (result.errors.length > 0) return;
+
 			await fs.promises.rename("dist/main.css", "dist/styles.css");
 			await fs.promises.copyFile(
 				path.join(path.resolve(), "manifest.json"),
 				path.join(path.resolve(), "dist", "manifest.json")
 			);
+			if (analyze) {
+				await fs.promises.writeFile(
+					"dist/metafile.json",
+					JSON.stringify(result.metafile, null, 2)
+				);
+				await fs.promises.writeFile(
+					"dist/bundle-analysis.txt",
+					await esbuild.analyzeMetafile(result.metafile, { verbose: true })
+				);
+			}
 		});
 	},
 };
@@ -62,7 +75,12 @@ const context = await esbuild.context({
 	target: "es2018",
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
+	minify: prod,
+	// Preserve names used in diagnostics and by dependencies.
+	keepNames: true,
+	metafile: analyze,
 	define: {
+		"process.env.NODE_ENV": JSON.stringify(prod ? "production" : "development"),
 		"process.env.ENABLE_REACT_DEVTOOLS": tools
 			? JSON.stringify("true")
 			: JSON.stringify("false"),
@@ -73,8 +91,11 @@ const context = await esbuild.context({
 });
 
 if (prod) {
-	await context.rebuild();
-	process.exit(0);
+	try {
+		await context.rebuild();
+	} finally {
+		await context.dispose();
+	}
 } else {
 	await context.watch();
 }

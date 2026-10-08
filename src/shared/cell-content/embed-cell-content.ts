@@ -1,4 +1,4 @@
-import { getResourcePath } from "src/shared/render-utils";
+import { getResourcePath } from "src/obsidian/platform-utils";
 import { App } from "obsidian";
 import { isObsidianLink } from "../link-and-path/link-predicates";
 import { isTwitterLink, isYouTubeLink } from "../match";

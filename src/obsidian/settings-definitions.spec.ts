@@ -1,5 +1,5 @@
 import { getDataLoomSettingDefinitions } from "./settings-definitions";
-import type { DataLoomSettings } from "../main";
+import type { DataLoomSettings } from "src/obsidian/settings";
 const DEFAULT_SETTINGS: DataLoomSettings = {
  logLevel: "off", createAtObsidianAttachmentFolder: false, customFolderForNewFiles: "",
  removeMarkdownOnExport: true, defaultEmbedWidth: "100%", defaultEmbedHeight: "340px",

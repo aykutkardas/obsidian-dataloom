@@ -1,4 +1,4 @@
-import { addThousandsSeparator } from "src/react/loom-app/number-cell/utils";
+import { addThousandsSeparator } from "src/shared/number-utils";
 import { NumberFormat, CurrencyType } from "../loom-state/types/loom-state";
 
 export const getNumberCellContent = (

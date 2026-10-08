@@ -3,7 +3,7 @@ import {
 	createCellForType,
 	createRow,
 	createSourceFileCell,
-} from "./loom-state-factory";
+} from "src/shared/loom-state/loom-state-factory";
 import {
 	Cell,
 	CellType,
@@ -16,18 +16,18 @@ import {
 	SourceFileCell,
 	SourceType,
 	TextFilterCondition,
-} from "./types/loom-state";
+} from "src/shared/loom-state/types/loom-state";
 
-import { deserializeFrontmatterForCell } from "../frontmatter";
+import { deserializeFrontmatterForCell } from "src/shared/frontmatter";
 import { cloneDeep } from "es-toolkit";
-import { getDateTimeFromUnixTime } from "../date/utils";
-import { doesSourceDateMatchFilter } from "../filter/source-date-filter";
-import { ObsidianPropertyType } from "../frontmatter/types";
+import { getDateTimeFromUnixTime } from "src/shared/date/utils";
+import { doesSourceDateMatchFilter } from "src/shared/filter/source-date-filter";
+import { ObsidianPropertyType } from "src/shared/frontmatter/types";
 import {
 	doesBooleanMatchFilter,
 	doesNumberMatchFilter,
 	doesTextMatchFilter,
-} from "../filter/filter-match";
+} from "src/shared/filter/filter-match";
 
 export default function updateStateFromSources(
 	app: App,
