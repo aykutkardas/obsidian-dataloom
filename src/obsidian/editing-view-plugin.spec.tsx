@@ -1,4 +1,4 @@
-/** @jest-environment jsdom */
+/** @vitest-environment jsdom */
 import { App } from "obsidian";
 import { findActiveLeafForUpdate } from "./editing-view-plugin-utils";
 

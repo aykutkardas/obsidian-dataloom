@@ -1,4 +1,4 @@
-/** @jest-environment jsdom */
+/** @vitest-environment jsdom */
 import { hasLoadedEmbeddedLoom } from "./embed-utils";
 
 describe("hasLoadedEmbeddedLoom", () => {

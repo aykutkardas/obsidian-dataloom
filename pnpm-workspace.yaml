@@ -1,0 +1,9 @@
+overrides:
+  'obsidian>moment': '^2.31.0'
+  # Keep Vitest's Vite peer reproducible and outside the release-age quarantine.
+  vite: '8.3.3'
+
+minimumReleaseAge: 1440
+
+allowBuilds:
+  esbuild: true

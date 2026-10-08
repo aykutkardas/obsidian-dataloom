@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
 	createColumn,
 	createGenericLoomState,
@@ -6,11 +7,12 @@ import {
 	createTag,
 } from "src/shared/loom-state/loom-state-factory";
 
-import { advanceBy, clear } from "jest-date-mock";
 import TagCellMultipleRemoveCommand from "./tag-cell-multiple-remove-command";
 import { CellType, Column, MultiTagCell, Row } from "../types/loom-state";
 
 describe("tag-cell-multiple-remove-command", () => {
+	beforeEach(() => vi.useFakeTimers({ toFake: ["Date"] }));
+	afterEach(() => vi.useRealTimers());
 	const initialState = () => {
 		const columns: Column[] = [
 			createColumn({
@@ -51,9 +53,9 @@ describe("tag-cell-multiple-remove-command", () => {
 		);
 
 		//Act
-		advanceBy(100);
+		vi.setSystemTime(Date.now() + 100);
 		const executeState = command.execute(prevState);
-		clear();
+		vi.useRealTimers();
 
 		//Assert
 		expect(executeState.model.columns).toEqual(prevState.model.columns);

@@ -1,9 +1,10 @@
-/** @jest-environment jsdom */
+import { vi } from "vitest";
+/** @vitest-environment jsdom */
 import { createElement, setStyle } from "./dom-utils";
 
 // Obsidian's Node.createEl appends to its receiver, including Document.
 const originalCreateEl = Object.getOwnPropertyDescriptor(Node.prototype, "createEl");
-const createFragment = jest.fn(() => activeDocument.createDocumentFragment());
+const createFragment = vi.fn(() => activeDocument.createDocumentFragment());
 beforeAll(() => {
 	(globalThis as Record<string, unknown>).activeDocument = document;
 	(globalThis as Record<string, unknown>).activeWindow = { createFragment };

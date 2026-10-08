@@ -18,10 +18,10 @@ Start by cloning the repository
 git clone https://github.com/aykutkardas/obsidian-dataloom.git
 ```
 
-We use [Bun](https://bun.sh/) for dependency management instead of npm. Please make sure that you have installed Bun.
+Use Node.js 24 and [pnpm](https://pnpm.io/) for dependency management. The pnpm version is pinned in package.json.
 
 ```shell
-curl -fsSL https://bun.sh/install | bash
+npm install --global pnpm@12.10.1
 ```
 
 Change directories to the cloned repository
@@ -33,13 +33,13 @@ cd obsidian-dataloom
 Install dependencies
 
 ```shell
-bun install
+pnpm install --frozen-lockfile
 ```
 
 Build the project. This will create a `dist` folder
 
 ```shell
-bun run build
+pnpm run build
 ```
 
 Create a symbolic link from the cloned repository to your Obsidan vault. Be sure to link the `dist` folder
@@ -74,14 +74,24 @@ Enable DataLoom
 Run esbuild in development mode
 
 ```shell
-bun run dev
+pnpm run dev
 ```
 
 Restart Obsidian to see your code changes
 
+Production builds (`pnpm run build`) minify JavaScript and CSS and use React's production mode. Function and class names are preserved for diagnostics. Development builds remain unminified with inline source maps.
+
+To inspect bundle size by source file, run:
+
+```shell
+pnpm run build:analyze
+```
+
+This writes `dist/metafile.json` and `dist/bundle-analysis.txt` alongside the production assets. The metafile records esbuild's original `main.css` output name, which is renamed to `styles.css` for Obsidian after a successful build.
+
 ## Tests
 
-Please make [jest](https://jestjs.io/) tests for the code that you create. Please note that some Obsidian functionality is very hard to test due to the library being an external dependency and closed source. If tests cannot be written, your code can be still be accepted. If you need help with writing tests, please DM @decaf_dev on discord.
+Please make [Vitest](https://vitest.dev/) tests for the code that you create. Please note that some Obsidian functionality is very hard to test due to the library being an external dependency and closed source. If tests cannot be written, your code can be still be accepted. If you need help with writing tests, please DM @decaf_dev on discord.
 
 ## Pull requests
 

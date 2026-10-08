@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { decodeFileBuffer } from "./decode-file";
 
@@ -10,7 +10,7 @@ const toBuffer = (bytes: number[]): ArrayBuffer => {
 describe("decodeFileBuffer", () => {
 	it("decodes plain UTF-8", () => {
 		const buffer = new TextEncoder().encode("col1,col2\na,b").buffer;
-		expect(decodeFileBuffer(buffer as ArrayBuffer)).toEqual(
+		expect(decodeFileBuffer(buffer)).toEqual(
 			"col1,col2\na,b"
 		);
 	});
@@ -41,7 +41,7 @@ describe("decodeFileBuffer", () => {
 
 	it("decodes CJK content encoded as UTF-8", () => {
 		const buffer = new TextEncoder().encode("名前,説明").buffer;
-		expect(decodeFileBuffer(buffer as ArrayBuffer)).toEqual("名前,説明");
+		expect(decodeFileBuffer(buffer)).toEqual("名前,説明");
 	});
 
 	it("falls back to windows-1252 for non-UTF-8 content", () => {

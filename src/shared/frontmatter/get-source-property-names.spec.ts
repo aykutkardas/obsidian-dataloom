@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { App } from "obsidian";
 
 import { getSourcePropertyNames } from "./get-source-property-names";
@@ -28,7 +29,7 @@ describe("getSourcePropertyNames", () => {
 		});
 		const app = {
 			metadataCache: {
-				getCache: jest.fn((path: string) => ({
+				getCache: vi.fn((path: string) => ({
 					frontmatter:
 						path === "LoomTest/Alpha.md"
 							? { status: "active", priority: 3, position: {} }
