@@ -1,11 +1,11 @@
-import { LoomState } from "../loom-state/types/loom-state";
+import { LoomState } from "src/shared/loom-state/types/loom-state";
 import { markdownTable } from "markdown-table";
-import { loomStateToArray } from "./loom-state-to-array";
+import { loomStateToArray } from "src/shared/export/loom-state-to-array";
 import { App } from "obsidian";
 import {
 	escapePipeCharacters,
 	replaceNewLinesWithBreaks,
-} from "./export-utils";
+} from "src/shared/export/export-utils";
 
 export const exportToMarkdown = (
 	app: App,

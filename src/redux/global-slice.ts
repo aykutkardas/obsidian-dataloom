@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DEFAULT_SETTINGS, DataLoomSettings } from "src/main";
+import { DEFAULT_SETTINGS, DataLoomSettings } from "src/obsidian/settings";
 
 interface GlobalState {
 	settings: DataLoomSettings;

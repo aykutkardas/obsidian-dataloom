@@ -1,4 +1,4 @@
-import { useRenderMarkdown } from "src/shared/render-utils";
+import { useRenderMarkdown } from "src/react/shared/use-render-markdown";
 import { getSpacing } from "src/shared/spacing";
 import {
 	AspectRatio,

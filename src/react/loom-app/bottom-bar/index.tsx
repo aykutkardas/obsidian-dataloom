@@ -10,7 +10,7 @@ import Padding from "src/react/shared/padding";
 import Icon from "src/react/shared/icon";
 
 import { numToPx } from "src/shared/conversion";
-import { isOnMobile } from "src/shared/render-utils";
+import { isOnMobile } from "src/obsidian/platform-utils";
 
 import "./styles.css";
 

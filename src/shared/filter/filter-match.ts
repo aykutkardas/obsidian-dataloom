@@ -3,7 +3,7 @@ import {
 	getDateFromDateFilterOption,
 	getDateAtMidnight,
 	getDateJustBeforeMidnight,
-} from "src/react/loom-app/app/filter-by-filters/utils";
+} from "src/shared/filter/date-filter-utils";
 import {
 	DateFilterCondition,
 	DateFilterOption,

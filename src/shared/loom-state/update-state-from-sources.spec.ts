@@ -1,4 +1,4 @@
-import { preserveSourceRowOrder } from "./update-state-from-sources";
+import { preserveSourceRowOrder } from "src/shared/loom-state/update-state-from-sources";
 import {
 	createColumn,
 	createRow,

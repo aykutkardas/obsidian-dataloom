@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { App } from "obsidian";
-import { findActiveLeafForUpdate } from "./editing-view-plugin-utils";
+import { findActiveLeafForUpdate } from "src/obsidian/editing-view-plugin-utils";
 
 describe("findActiveLeafForUpdate", () => {
 	const createLeaf = (editor: unknown) => ({ view: { editor } });

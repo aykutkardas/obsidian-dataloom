@@ -32,7 +32,7 @@ import {
 	isValidDateString,
 	isValidTimeString,
 } from "src/shared/date/date-validation";
-import TimeFormatMenu from "./time-format.menu";
+import TimeFormatMenu from "src/react/loom-app/date-cell-edit/time-format-menu";
 
 import "./styles.css";
 import { dateStringToDateTime } from "src/shared/date/date-string-conversion";

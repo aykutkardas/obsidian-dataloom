@@ -1,4 +1,4 @@
-import { useRenderMarkdown } from "src/shared/render-utils";
+import { useRenderMarkdown } from "src/react/shared/use-render-markdown";
 import { appendOrReplaceFirstChild } from "src/shared/render/utils";
 
 import "./styles.css";

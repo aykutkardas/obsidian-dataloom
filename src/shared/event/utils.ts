@@ -1,4 +1,4 @@
-import { findMenuTriggerEl } from "src/react/shared/menu-provider/utils";
+import { findMenuTriggerEl } from "src/shared/dom-utils";
 
 export const isEventForThisApp = (
 	appId: string,

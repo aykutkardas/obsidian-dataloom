@@ -1,4 +1,4 @@
-import ModalMenu from "src/react/shared/model-menu";
+import ModalMenu from "src/react/shared/modal-menu";
 import { LoomMenuPosition } from "src/react/shared/menu/types";
 
 import MenuItem from "src/react/shared/menu-item";

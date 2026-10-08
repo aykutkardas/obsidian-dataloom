@@ -8,7 +8,7 @@ import Stack from "src/react/shared/stack";
 import "./styles.css";
 import Button from "src/react/shared/button";
 import Icon from "src/react/shared/icon";
-import { getFilterConditionsForPropertyType } from "../add-source-submenu/utils";
+import { getFilterConditionsForPropertyType } from "src/shared/filter/property-filter-conditions";
 import FolderSourceItem from "../folder-source-item";
 import FrontmatterSourceItem from "../frontmatter-source-item";
 
