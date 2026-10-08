@@ -1,5 +1,6 @@
 import { PluginSettingTab, App } from "obsidian";
 import { Setting } from "obsidian";
+import type { SettingDefinitionItem } from "obsidian";
 import DataLoomPlugin from "../main";
 import Logger from "js-logger";
 import {
@@ -11,6 +12,7 @@ import {
 	LOG_LEVEL_WARN,
 } from "src/shared/logger/constants";
 import { stringToLogLevel } from "src/shared/logger";
+import { getDataLoomSettingDefinitions } from "./settings-definitions";
 
 export default class DataLoomSettingsTab extends PluginSettingTab {
 	plugin: DataLoomPlugin;
@@ -20,7 +22,36 @@ export default class DataLoomSettingsTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
+	/**
+	 * Declarative settings (Obsidian 1.13.0+).
+	 *
+	 * On 1.13.0+, Obsidian calls this and skips display(); settings also
+	 * become searchable in the global settings search. On older versions
+	 * display() runs as before. The definitions live in settings-definitions.ts
+	 * so they stay unit-testable and the two implementations stay in sync.
+	 */
+	getSettingDefinitions(): SettingDefinitionItem[] {
+		return getDataLoomSettingDefinitions(this.plugin.settings);
+	}
+
+	async setControlValue(key: string, value: unknown): Promise<void> {
+		const editableKeys = ["createAtObsidianAttachmentFolder", "customFolderForNewFiles",
+			"defaultFrozenColumnCount", "removeMarkdownOnExport", "defaultEmbedWidth", "defaultEmbedHeight", "logLevel"];
+		if (!editableKeys.includes(key)) return;
+		const settings = this.plugin.settings;
+		if (typeof value !== typeof settings[key as keyof typeof settings]) return;
+		if (key === "defaultFrozenColumnCount" &&
+			(typeof value !== "number" || !Number.isInteger(value) || value < 0 || value > 3)) return;
+		Object.assign(settings, { [key]: value });
+		await this.plugin.saveSettings();
+		if (key === "logLevel" && typeof value === "string") Logger.setLevel(stringToLogLevel(value));
+	}
+
 	display(): void {
+		this.renderLegacySettings();
+	}
+
+	private renderLegacySettings(): void {
 		const { containerEl } = this;
 
 		containerEl.empty();
@@ -63,7 +94,7 @@ export default class DataLoomSettingsTab extends PluginSettingTab {
 					this.plugin.settings.createAtObsidianAttachmentFolder =
 						value;
 					await this.plugin.saveSettings();
-					this.display();
+					this.renderLegacySettings();
 				});
 			});
 

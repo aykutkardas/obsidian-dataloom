@@ -1,0 +1,26 @@
+import DataLoomSettingsTab from "./dataloom-settings-tab";
+import type DataLoomPlugin from "../main";
+import type { App } from "obsidian";
+import Logger from "js-logger";
+import { stringToLogLevel } from "src/shared/logger";
+jest.mock("obsidian", () => ({ PluginSettingTab: class {}, Setting: class {} }), { virtual: true });
+it("persists declarative setting changes through saveSettings and applies logging", async () => {
+ const settings = { logLevel: "off", defaultFrozenColumnCount: 1 };
+ const saveSettings = jest.fn().mockResolvedValue(undefined);
+ const plugin = { settings, saveSettings } as unknown as DataLoomPlugin;
+ const tab = new DataLoomSettingsTab({} as App, plugin);
+ const setLevel = jest.spyOn(Logger, "setLevel");
+ await tab.setControlValue("logLevel", "trace");
+ expect(settings.logLevel).toBe("trace");
+ expect(saveSettings).toHaveBeenCalledTimes(1);
+ expect(setLevel).toHaveBeenCalledWith(stringToLogLevel("trace"));
+ await tab.setControlValue("defaultFrozenColumnCount", 2);
+ expect(settings.defaultFrozenColumnCount).toBe(2);
+ expect(saveSettings).toHaveBeenCalledTimes(2);
+ await tab.setControlValue("defaultFrozenColumnCount", 99);
+ await tab.setControlValue("defaultFrozenColumnCount", "2");
+ await tab.setControlValue("pluginVersion", "unexpected");
+ expect(settings.defaultFrozenColumnCount).toBe(2);
+ expect(saveSettings).toHaveBeenCalledTimes(2);
+ setLevel.mockRestore();
+});

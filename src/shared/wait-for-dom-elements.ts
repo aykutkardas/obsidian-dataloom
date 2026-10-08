@@ -36,15 +36,15 @@ export const waitForDomElements = (
 			onReady(els);
 		}
 	});
-	observer.observe(root as Node, { childList: true, subtree: true });
+	observer.observe(root, { childList: true, subtree: true });
 
-	const timeout = setTimeout(cleanup, maxWaitMs);
+	const timeout = window.setTimeout(cleanup, maxWaitMs);
 
 	function cleanup() {
 		if (settled) return;
 		settled = true;
 		observer.disconnect();
-		clearTimeout(timeout);
+		window.clearTimeout(timeout);
 	}
 
 	return cleanup;

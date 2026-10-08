@@ -2,6 +2,7 @@ import { setIcon } from "obsidian";
 
 import React from "react";
 
+import { createElement } from "src/shared/dom-utils";
 import { appendOrReplaceFirstChild } from "src/shared/render/utils";
 
 import "./styles.css";
@@ -40,7 +41,7 @@ export default function Icon({
 				ref.current = node;
 
 				//Create an empty div
-				const div = activeDocument.createElement("div");
+				const div = createElement("div");
 
 				if (color) {
 					div.style.color = color;

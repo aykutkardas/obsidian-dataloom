@@ -1,85 +1,34 @@
-![](/readme/cover.png)
+![DataLoom — database-style tables inside Obsidian, with a preview of the table editor](https://raw.githubusercontent.com/aykutkardas/obsidian-dataloom/main/readme/hero.png)
 
-[![CI](https://github.com/aykutkardas/obsidian-dataloom/actions/workflows/ci.yml/badge.svg)](https://github.com/aykutkardas/obsidian-dataloom/actions/workflows/ci.yml)
+## Better Obsidian tables, without the hassle.
 
-> **Note:** This is a fork of `decaf-dev/obsidian-dataloom`. The original plugin is no longer maintained. This fork continues development and maintenance.
+DataLoom is an [Obsidian](https://obsidian.md/) plugin for desktop and mobile. Create and manage database-style tables, connect notes through folders and frontmatter, and embed tables directly into your notes.
 
-DataLoom is an [Obsidian.md](https://obsidian.md/) plugin for desktop and mobile. It allows you to create databases similar to [Notion.so](https://notion.so).
+Weave together data from diverse sources to organize projects, track reading, or manage your own collections — all inside your Obsidian vault.
 
-With DataLoom, you can weave together data from diverse sources and display them in different views. Use this plugin if you want a straightforward way to create and manage databases and enhance the organization of your Obsidian vault.
+[Install in Obsidian](obsidian://show-plugin?id=obisidian-dataloom) · [Report an issue](https://github.com/aykutkardas/obsidian-dataloom/issues) · [Contribute](https://github.com/aykutkardas/obsidian-dataloom/blob/main/CONTRIBUTING.md)
 
-## About
+## What you can do
 
-- [Screenshots](#screenshots)
-- [Features](#features)
-- [Issues](#issues)
-- [Contributing](#contributing)
-- [Network Usage](#network-usage)
-- [License](#license)
-- [Disclaimer](#disclaimer)
+- **Build structured tables** with text, numbers, currencies, dates, checkboxes, tags, multi-tags, files, and embeds. Keep track of creation and last edited times.
+- **Connect your notes** using folder sources and frontmatter properties.
+- **Find what matters** with filters, text search, and ascending or descending sorting.
+- **Make tables your own** by renaming, reordering, and hiding columns, changing cell types, and inserting or reordering rows.
+- **Keep tables in context** by embedding loom files directly into your notes.
+- **Move your data** with CSV and Markdown import and export.
+- **Work across devices** with desktop and mobile support, light and dark themes, and undo/redo.
 
-## Screenshots
+## Get started
 
-![](/readme/app.png)
+1. Open **Settings → Community plugins → Browse** in Obsidian.
+2. Search for **DataLoom**, then install and enable it.
+3. Open the command palette and run **DataLoom: Create loom**.
 
-## Features
+To create a table inside a note, run **DataLoom: Create loom and embed it into current file**.
 
-- View types
-    - [x] Table
+## Project background
 
-- Cell types
-    - [x] Text
-    - [x] Number
-        - [x] Currency
-    - [x] Checkbox
-    - [x] Embed
-    - [x] File
-    - [x] Date
-    - [x] Tag
-    - [x] Multi-tag
-    - [x] Last edited time
-    - [x] Creation time
-    - [x] Source
-    - [x] Source file
-
-- Columns
-    - [x] Toggle visibility
-    - [x] Change name
-    - [x] Change type
-    - [x] Sort ascending or descending
-    - [x] Reorder columns
-    - [ ] Insert left
-    - [ ] Insert right
-
-- Rows
-    - [x] Filter by conditions
-    - [x] Search by text
-    - [x] Insert above
-    - [x] Insert below
-    - [x] Reorder rows
-
-- Import
-    - [x] CSV
-    - [x] Markdown
-
-- Export
-    - [x] CSV
-    - [x] Markdown
-    - [ ] PDF
-
-- Color scheme
-    - [x] Light
-    - [x] Dark
-
-- Sources
-    - [x] Folder
-    - [x] Frontmatter
-
-- [x] Undo/redo
-
-- [x] Embed loom files into an Obsidian note
-
-- [x] Mobile support
+DataLoom was originally created by **decaf-dev**. The original plugin is no longer maintained; this fork continues its development and maintenance.
 
 ## Customization with CSS
 
@@ -105,17 +54,13 @@ For example, to make rows more compact:
 }
 ```
 
-## Issues
+## Support & contributing
 
-Please see [issues](https://github.com/aykutkardas/obsidian-dataloom/issues) for feature requests and bug reports.
+For bug reports and feature requests, please visit [issues](https://github.com/aykutkardas/obsidian-dataloom/issues). If you are experiencing a problem, search for an existing report before opening a new issue.
 
-If you are experiencing a problem with the plugin, please search the issues for any open bug reports related to your problem before opening a new issue.
+Contributions are welcome. Please see the [contribution guide](https://github.com/aykutkardas/obsidian-dataloom/blob/main/CONTRIBUTING.md) for details on how to contribute.
 
-## Contributing
-
-Please see our [contribution guide](https://github.com/aykutkardas/obsidian-dataloom/blob/main/CONTRIBUTING.md) for details on how to contribute
-
-## Network Usage
+## Network usage
 
 According to [Obsidian developer policies](https://docs.obsidian.md/Developer+policies), an Obsidian plugin must explain which network services are used and why.
 
