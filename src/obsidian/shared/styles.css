@@ -15,5 +15,14 @@
 }
 
 .dataloom-view-container {
+	padding-bottom: 0;
+}
+
+.dataloom-view-container > .view-content {
+	padding-bottom: 0;
+}
+
+/* Reserve space for Obsidian's bottom action bar only on mobile. */
+.is-mobile .dataloom-view-container {
 	padding-bottom: 48px;
 }
