@@ -9,12 +9,13 @@ export const setStyle = (
 
 
 /**
- * Creates an element via Obsidian's `activeDocument.createEl` helper.
+ * Creates a detached element in the active document. Node.createEl appends
+ * to its receiver, so use a fragment instead of the Document itself.
  */
 export const createElement = <K extends keyof HTMLElementTagNameMap>(
 	tag: K
 ): HTMLElementTagNameMap[K] => {
-	return activeDocument.createEl(tag);
+	return activeDocument.createDocumentFragment().createEl(tag);
 };
 
 export const findAncestorsUntilClassName = (
