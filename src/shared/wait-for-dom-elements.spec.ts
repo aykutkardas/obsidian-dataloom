@@ -1,6 +1,7 @@
 /** @jest-environment jsdom */
 import { waitForDomElements } from "./wait-for-dom-elements";
 
+
 const appendTarget = (root: HTMLElement) => {
 	const el = document.createElement("span");
 	el.classList.add("target");
@@ -9,6 +10,20 @@ const appendTarget = (root: HTMLElement) => {
 };
 
 describe("waitForDomElements", () => {
+	it("uses window timers and clears the observer timeout on cleanup", () => {
+		const root = document.createElement("div");
+		const setTimer = jest.spyOn(window, "setTimeout");
+		const clearTimer = jest.spyOn(window, "clearTimeout");
+		try {
+			const cleanup = waitForDomElements(root, ".target", jest.fn(), { maxWaitMs: 123 });
+			expect(setTimer).toHaveBeenCalledWith(expect.any(Function), 123);
+			cleanup();
+			expect(clearTimer).toHaveBeenCalledWith(setTimer.mock.results[0].value);
+		} finally {
+			setTimer.mockRestore();
+			clearTimer.mockRestore();
+		}
+	});
 	beforeEach(() => jest.useFakeTimers());
 	afterEach(() => jest.useRealTimers());
 
