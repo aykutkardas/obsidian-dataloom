@@ -12,6 +12,7 @@ interface Props {
 	canRemove?: boolean;
 	value: string;
 	onRemoveClick?: () => void;
+	removeAriaLabel?: string;
 }
 
 export default function Bubble({
@@ -20,6 +21,7 @@ export default function Bubble({
 	icon,
 	value,
 	onRemoveClick,
+	removeAriaLabel = "Remove sort",
 }: Props) {
 	let className = "dataloom-bubble";
 	if (variant === "no-fill") {
@@ -40,7 +42,7 @@ export default function Bubble({
 						icon={
 							<Icon lucideId="x" color="var(--text-on-accent)" />
 						}
-						ariaLabel="Remove sort"
+						ariaLabel={removeAriaLabel}
 						onClick={onRemoveClick}
 					/>
 				)}

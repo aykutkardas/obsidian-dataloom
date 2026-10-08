@@ -5,6 +5,7 @@ import FilterUpdateCommand from "src/shared/loom-state/commands/filter-update-co
 import FilterAddCommand from "src/shared/loom-state/commands/filter-add-command";
 import FilterDeleteCommand from "src/shared/loom-state/commands/filter-delete-command";
 import Logger from "js-logger";
+import FilterDisableAllCommand from "src/shared/loom-state/commands/filter-disable-all-command";
 
 export const useFilter = () => {
 	const { doCommand } = useLoomState();
@@ -28,7 +29,12 @@ export const useFilter = () => {
 		doCommand(new FilterDeleteCommand(id));
 	}
 
+	function handleFilterDisableAll() {
+		doCommand(new FilterDisableAllCommand());
+	}
+
 	return {
+		onFilterDisableAll: handleFilterDisableAll,
 		onFilterAdd: handleFilterAdd,
 		onFilterUpdate: handleFilterUpdate,
 		onFilterDelete: handleFilterDelete,

@@ -292,6 +292,8 @@ export enum NumberFilterCondition {
 //TODO add support for more date types
 export enum DateFilterCondition {
 	IS = "is",
+	IS_BETWEEN = "is-between",
+	IS_IN_YEAR = "is-in-year",
 	IS_BEFORE = "is-before",
 	IS_AFTER = "is-after",
 	IS_EMPTY = "is-empty",
@@ -404,32 +406,39 @@ export interface DateFilter extends BaseFilter {
 	condition: DateCondition;
 	option: DateFilterOption;
 	dateTime: string | null;
+	endDateTime?: string | null;
 }
 
 /* Creation time filter  */
 export type CreationTimeCondition =
 	| DateFilterCondition.IS
 	| DateFilterCondition.IS_AFTER
-	| DateFilterCondition.IS_BEFORE;
+	| DateFilterCondition.IS_BEFORE
+	| DateFilterCondition.IS_BETWEEN
+	| DateFilterCondition.IS_IN_YEAR;
 
 export interface CreationTimeFilter extends BaseFilter {
 	type: CellType.CREATION_TIME;
 	condition: CreationTimeCondition;
 	option: DateFilterOption;
 	dateTime: string | null;
+	endDateTime?: string | null;
 }
 
 /* Last edited filter  */
 export type LastEditedTimeCondition =
 	| DateFilterCondition.IS
 	| DateFilterCondition.IS_AFTER
-	| DateFilterCondition.IS_BEFORE;
+	| DateFilterCondition.IS_BEFORE
+	| DateFilterCondition.IS_BETWEEN
+	| DateFilterCondition.IS_IN_YEAR;
 
 export interface LastEditedTimeFilter extends BaseFilter {
 	type: CellType.LAST_EDITED_TIME;
 	condition: LastEditedTimeCondition;
 	option: DateFilterOption;
 	dateTime: string | null;
+	endDateTime?: string | null;
 }
 
 /* Source File condition */

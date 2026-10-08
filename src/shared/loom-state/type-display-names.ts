@@ -288,6 +288,10 @@ export const getDisplayNameForFilterCondition = (type: FilterCondition) => {
 			return "<";
 		case NumberFilterCondition.IS_LESS_OR_EQUAL:
 			return "<=";
+		case DateFilterCondition.IS_BETWEEN:
+			return "Is between";
+		case DateFilterCondition.IS_IN_YEAR:
+			return "Is in year";
 		case DateFilterCondition.IS_AFTER:
 			return "Is after";
 		case DateFilterCondition.IS_BEFORE:

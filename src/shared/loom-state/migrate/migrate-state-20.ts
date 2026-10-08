@@ -1,6 +1,6 @@
 import MigrateState from "./migrate-state";
 import { LoomState20 } from "../types";
-import { LoomState19, SourceType } from "../types/loom-state-19";
+import { FilterCondition, LoomState19, SourceType } from "../types/loom-state-19";
 import { getFilterConditionsForPropertyType } from "src/react/loom-app/option-bar/sources-menu/add-source-submenu/utils";
 
 /**
@@ -17,7 +17,7 @@ export default class MigrateState20 implements MigrateState {
 				return {
 					...source,
 					filterCondition:
-						getFilterConditionsForPropertyType(propertyType)[0],
+						getFilterConditionsForPropertyType(propertyType)[0] as FilterCondition,
 				};
 			}
 			return source;

@@ -36,6 +36,7 @@ interface Props {
 	) => void;
 	onFilterDeleteClick: (filterId: string) => void;
 	onFilterAddClick: () => void;
+	onFilterDisableAll: () => void;
 	onCalculationRowToggle: (value: boolean) => void;
 	onSourceAdd: SourceAddHandler;
 	onSourceDelete: (id: string) => void;
@@ -50,6 +51,7 @@ export default function OptionBar({
 	onFilterUpdate,
 	onFilterDeleteClick,
 	onFilterAddClick,
+	onFilterDisableAll,
 	onCalculationRowToggle,
 	onSourceAdd,
 	onSourceDelete,
@@ -159,6 +161,7 @@ export default function OptionBar({
 							/>
 							<ActiveFilterBubble
 								numActive={activeFilters.length}
+								onDisableClick={onFilterDisableAll}
 							/>
 						</Stack>
 						<Stack

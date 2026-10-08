@@ -288,6 +288,17 @@ export default function FilterMenu({
 	}
 
 	function onConditionChange(id: string, condition: FilterCondition) {
+		const filter = filters.find((filter) => filter.id === id);
+		if (filter && (filter.type === CellType.DATE || filter.type === CellType.CREATION_TIME || filter.type === CellType.LAST_EDITED_TIME)) {
+			const wasYear = filter.condition === DateFilterCondition.IS_IN_YEAR;
+			const isYear = condition === DateFilterCondition.IS_IN_YEAR;
+			onUpdate(id, {
+				condition,
+				...(wasYear !== isYear ? { dateTime: null, endDateTime: null } : {}),
+				...(isYear || condition === DateFilterCondition.IS_BETWEEN ? { option: DateFilterOption.UNSELECTED } : {}),
+			});
+			return;
+		}
 		onUpdate(id, { condition });
 	}
 
@@ -528,10 +539,16 @@ export default function FilterMenu({
 									break;
 								}
 								case CellType.DATE: {
-									const { option } = filter;
+									const { option, dateTime, endDateTime } = filter;
 									inputNode = (
 										<DateFilterSelect
 											value={option}
+											condition={condition}
+											dateTime={dateTime}
+											endDateTime={endDateTime}
+											dateFormat={column.dateFormat}
+											dateFormatSeparator={column.dateFormatSeparator}
+											onDateChange={(data) => onUpdate(id, data)}
 											onChange={(newValue) =>
 												onDateFilterOptionChange(
 													id,
@@ -544,16 +561,24 @@ export default function FilterMenu({
 										DateFilterCondition.IS,
 										DateFilterCondition.IS_AFTER,
 										DateFilterCondition.IS_BEFORE,
+										DateFilterCondition.IS_BETWEEN,
+										DateFilterCondition.IS_IN_YEAR,
 										DateFilterCondition.IS_EMPTY,
 										DateFilterCondition.IS_NOT_EMPTY,
 									];
 									break;
 								}
 								case CellType.CREATION_TIME: {
-								const { option } = filter;
+								const { option, dateTime, endDateTime } = filter;
 									inputNode = (
 										<DateFilterSelect
 											value={option}
+											condition={condition}
+											dateTime={dateTime}
+											endDateTime={endDateTime}
+											dateFormat={column.dateFormat}
+											dateFormatSeparator={column.dateFormatSeparator}
+											onDateChange={(data) => onUpdate(id, data)}
 											onChange={(newValue) =>
 												onDateFilterOptionChange(
 													id,
@@ -566,14 +591,22 @@ export default function FilterMenu({
 										DateFilterCondition.IS,
 										DateFilterCondition.IS_AFTER,
 										DateFilterCondition.IS_BEFORE,
+										DateFilterCondition.IS_BETWEEN,
+										DateFilterCondition.IS_IN_YEAR,
 									];
 									break;
 								}
 								case CellType.LAST_EDITED_TIME: {
-								const { option } = filter;
+								const { option, dateTime, endDateTime } = filter;
 									inputNode = (
 										<DateFilterSelect
 											value={option}
+											condition={condition}
+											dateTime={dateTime}
+											endDateTime={endDateTime}
+											dateFormat={column.dateFormat}
+											dateFormatSeparator={column.dateFormatSeparator}
+											onDateChange={(data) => onUpdate(id, data)}
 											onChange={(newValue) =>
 												onDateFilterOptionChange(
 													id,
@@ -586,6 +619,8 @@ export default function FilterMenu({
 										DateFilterCondition.IS,
 										DateFilterCondition.IS_AFTER,
 										DateFilterCondition.IS_BEFORE,
+										DateFilterCondition.IS_BETWEEN,
+										DateFilterCondition.IS_IN_YEAR,
 									];
 									break;
 								}
