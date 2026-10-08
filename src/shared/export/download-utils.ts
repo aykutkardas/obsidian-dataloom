@@ -1,6 +1,6 @@
 import { ExportType } from "./types";
 import { LOOM_EXTENSION } from "src/data/constants";
-import { setStyle } from "src/shared/dom-utils";
+import { createElement, setStyle } from "src/shared/dom-utils";
 
 export const getBlobTypeForExportType = (type: ExportType) => {
 	switch (type) {
@@ -41,7 +41,7 @@ export const downloadFile = (
 	const url = window.URL.createObjectURL(blob);
 
 	//Create a link element
-	const el = activeDocument.createElement("a");
+	const el = createElement("a");
 	el.setAttribute("href", url);
 	el.setAttribute("download", fileName);
 	setStyle(el, "display", "none");

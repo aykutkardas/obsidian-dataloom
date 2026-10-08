@@ -6,6 +6,30 @@ export const setStyle = (
 	el.style.setProperty(property, value);
 };
 
+/**
+ * Creates a div via Obsidian's `activeDocument.createEl` helper.
+ * Centralized so pop-out-window documents stay consistent and there is a
+ * single point that satisfies the `obsidianmd/prefer-create-el` rule.
+ */
+export const createDiv = (options?: {
+	cls?: string;
+	text?: string;
+}): HTMLDivElement => {
+	const div = activeDocument.createEl("div");
+	if (options?.cls) div.addClass(options.cls);
+	if (options?.text) div.setText(options.text);
+	return div;
+};
+
+/**
+ * Creates an element via Obsidian's `activeDocument.createEl` helper.
+ */
+export const createElement = <K extends keyof HTMLElementTagNameMap>(
+	tag: K
+): HTMLElementTagNameMap[K] => {
+	return activeDocument.createEl(tag);
+};
+
 export const findAncestorsUntilClassName = (
 	currentEl: HTMLElement,
 	className: string

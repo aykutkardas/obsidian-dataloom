@@ -15,14 +15,14 @@ import {
 import DataLoomView, { DATA_LOOM_VIEW } from "src/obsidian/dataloom-view";
 import { handleLinkClick } from "src/shared/render/embed";
 import { renderEmbed } from "./render-embed";
-import { setStyle } from "src/shared/dom-utils";
+import { createDiv, setStyle } from "src/shared/dom-utils";
 
 export const renderMarkdown = async (
 	app: App,
 	leaf: WorkspaceLeaf,
 	markdown: string
 ) => {
-	const div = activeDocument.createElement("div");
+	const div = createDiv();
 	setStyle(div, "height", "100%");
 	setStyle(div, "width", "100%");
 
