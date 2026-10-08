@@ -3,8 +3,10 @@ import { createElement, setStyle } from "./dom-utils";
 
 // Obsidian's Node.createEl appends to its receiver, including Document.
 const originalCreateEl = Object.getOwnPropertyDescriptor(Node.prototype, "createEl");
+const createFragment = jest.fn(() => activeDocument.createDocumentFragment());
 beforeAll(() => {
 	(globalThis as Record<string, unknown>).activeDocument = document;
+	(globalThis as Record<string, unknown>).activeWindow = { createFragment };
 	Object.defineProperty(Node.prototype, "createEl", {
 		configurable: true,
 		value: function (this: Node, tag: string) {
@@ -21,6 +23,13 @@ afterAll(() => {
 	if (originalCreateEl) Object.defineProperty(Node.prototype, "createEl", originalCreateEl);
 	else delete (Node.prototype as unknown as Record<string, unknown>).createEl;
 	delete (globalThis as Record<string, unknown>).activeDocument;
+	delete (globalThis as Record<string, unknown>).activeWindow;
+});
+
+it("creates its fragment through the active window's Obsidian helper", () => {
+	createFragment.mockClear();
+	createElement("div");
+	expect(createFragment).toHaveBeenCalledTimes(1);
 });
 
 it.each(["div", "a"] as const)("creates %s without appending to Document", tag => {

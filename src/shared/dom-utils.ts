@@ -11,11 +11,13 @@ export const setStyle = (
 /**
  * Creates a detached element in the active document. Node.createEl appends
  * to its receiver, so use a fragment instead of the Document itself.
+ * Obsidian declares createFragment globally but omits it from Window typings.
  */
 export const createElement = <K extends keyof HTMLElementTagNameMap>(
 	tag: K
 ): HTMLElementTagNameMap[K] => {
-	return activeDocument.createDocumentFragment().createEl(tag);
+	return (activeWindow as Window & { createFragment: typeof createFragment })
+		.createFragment().createEl(tag);
 };
 
 export const findAncestorsUntilClassName = (

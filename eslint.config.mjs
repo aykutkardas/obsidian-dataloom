@@ -30,6 +30,14 @@ export default tseslint.config(
 			"tests/**/*.{js,ts,tsx}",
 			"__tests__/**/*.{js,ts,tsx}",
 		],
+		// jsdom has no Obsidian DOM globals; tests implement native shims.
+		// API fixtures deliberately exercise modern and legacy host behavior.
+		rules: {
+			"obsidianmd/prefer-create-el": "off",
+			"obsidianmd/no-global-this": "off",
+			"obsidianmd/prefer-window-timers": "off",
+			"obsidianmd/no-unsupported-api": "off",
+		},
 		languageOptions: {
 			globals: {
 				...globals.jest,
