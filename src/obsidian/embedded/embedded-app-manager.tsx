@@ -20,6 +20,8 @@ import { serializeFrontmatter } from "src/data/serialize-frontmatter";
 import EventManager from "src/shared/event/event-manager";
 import LastSavedManager from "src/shared/last-saved-manager";
 import { setStyle } from "src/shared/dom-utils";
+import { createEmbedViewWriter } from "./save-embed-view";
+import { readEmbedView } from "./embed-view-state";
 
 interface EmbeddedApp {
 	id: string;
@@ -29,10 +31,12 @@ interface EmbeddedApp {
 	root?: Root;
 	file: TFile;
 	mode: "source" | "preview";
+	viewWriter: ReturnType<typeof createEmbedViewWriter>;
 }
 
 //Stores all embedded apps
 let embeddedApps: EmbeddedApp[] = [];
+const loadingLinks = new WeakSet<HTMLElement>();
 
 /**
  * Iterates through all open markdown leaves and then iterates through all embedded loom links
@@ -78,6 +82,12 @@ export const loadEmbeddedLoomApps = (
 	for (const linkEl of linkEls) {
 		void processLinkEl(app, pluginVersion, markdownLeaf, linkEl, mode);
 	}
+	// Reused roots have already been moved above. Dispose only genuinely removed embeds.
+	embeddedApps = embeddedApps.filter(embedded => {
+		if (embedded.containerEl.isConnected) return true;
+		embedded.root?.unmount();
+		return false;
+	});
 };
 
 /**
@@ -86,7 +96,7 @@ export const loadEmbeddedLoomApps = (
  */
 export const purgeEmbeddedLoomApps = (leaves: WorkspaceLeaf[]) => {
 	const isOpen = (app: EmbeddedApp) =>
-		leaves.some((leaf) => {
+		app.containerEl.isConnected && leaves.some((leaf) => {
 			if (leaf !== app.leaf) return false;
 			const view = leaf.view as MarkdownView;
 			return (
@@ -137,12 +147,39 @@ const processLinkEl = async (
 	//the width and height of the embed to update if the user changes it
 	setLinkSize(linkEl);
 
-	//If the loom has already been loaded, we don't need to do anything else
-	if (hasLoadedEmbeddedLoom(linkEl)) return;
-
+	if (loadingLinks.has(linkEl)) return;
 	const sourcePath = (leaf.view as MarkdownView).file?.path ?? "";
 	const file = findEmbeddedLoomFile(app, linkEl, sourcePath);
 	if (!file) return;
+	const mounted = embeddedApps.find(embedded => embedded.containerEl.parentElement === linkEl);
+	if (hasLoadedEmbeddedLoom(linkEl) && mounted?.viewWriter.source === linkEl.getAttribute("src") && mounted.file.path === file.path) return;
+	const savedView = readEmbedView(linkEl.getAttribute("src") ?? "");
+	if (savedView) {
+		const existing = embeddedApps.find(embedded =>
+			embedded.leaf === leaf && embedded.mode === mode &&
+			embedded.file.path === file.path && embedded.leafFilePath === sourcePath &&
+			(!embedded.containerEl.isConnected || embedded.containerEl.parentElement === linkEl) &&
+			embedded.viewWriter.id === savedView.id &&
+			JSON.stringify(readEmbedView(embedded.viewWriter.source)) === JSON.stringify(savedView)
+		);
+		if (existing) {
+			// Saving preferences changes the Markdown link, not the running React app.
+			// Keep menus, input focus, and undo history alive through that re-render.
+			if (existing.containerEl.parentElement !== linkEl) {
+				resetLinkStyles(linkEl);
+				linkEl.appendChild(existing.containerEl);
+			}
+			existing.viewWriter.rebind(linkEl);
+			return;
+		}
+	}
+
+	if (mounted) {
+		mounted.root?.unmount();
+		embeddedApps = embeddedApps.filter(embedded => embedded !== mounted);
+	}
+	const viewWriter = createEmbedViewWriter(app, leaf, linkEl, mode);
+	loadingLinks.add(linkEl);
 
 	resetLinkStyles(linkEl);
 
@@ -150,7 +187,20 @@ const processLinkEl = async (
 	const containerEl = renderContainerEl(linkEl);
 
 	//Get the loom state
-	const data = await app.vault.read(file);
+	let data: string;
+	try {
+		data = await app.vault.read(file);
+	} catch (error) {
+		loadingLinks.delete(linkEl);
+		containerEl.remove();
+		console.error("DataLoom: could not read embedded loom", error);
+		return;
+	}
+	if (!containerEl.isConnected || (leaf.view as MarkdownView).file?.path !== sourcePath) {
+		loadingLinks.delete(linkEl);
+		containerEl.remove();
+		return;
+	}
 
 	//Store the embed in memory
 	const appId = createAppId();
@@ -161,6 +211,7 @@ const processLinkEl = async (
 		containerEl,
 		file,
 		mode,
+		viewWriter,
 	};
 	embeddedApps.push(embeddedApp);
 
@@ -170,10 +221,11 @@ const processLinkEl = async (
 
 	try {
 		const state = deserializeState(data, pluginVersion);
-		renderApp(app, appId, leaf, file, root, state);
+		renderApp(app, appId, leaf, file, root, state, viewWriter);
 	} catch (err: unknown) {
 		renderErrorApp(root, err as DeserializationError);
 	}
+	loadingLinks.delete(linkEl);
 };
 
 /**
@@ -190,7 +242,8 @@ const renderApp = (
 	leaf: WorkspaceLeaf,
 	file: TFile,
 	root: Root,
-	state: LoomState
+	state: LoomState,
+	viewWriter: ReturnType<typeof createEmbedViewWriter>
 ) => {
 	//Throttle the save function so we don't save too often
 	const THROTTLE_TIME_MILLIS = 2000;
@@ -205,6 +258,8 @@ const renderApp = (
 			mountLeaf={leaf}
 			store={store}
 			loomState={state}
+			initialViewState={viewWriter.initialView}
+			onSaveViewState={settings => { void viewWriter.save(settings); }}
 			onSaveState={(appId, state, shouldSaveFrontmatter) => {
 				void throttleHandleSave(
 					app,

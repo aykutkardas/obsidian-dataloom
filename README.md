@@ -26,6 +26,15 @@ Weave together data from diverse sources to organize projects, track reading, or
 
 To create a table inside a note, run **DataLoom: Create loom and embed it into current file**.
 
+Each open tab and embed has its own filters and sorting. Editing table data still updates
+all views of the same loom. Existing looms keep their saved filters and sorting as the
+initial defaults for newly opened views.
+
+Changing an embed's filters or sorting saves its preferences in that Markdown embed's
+link automatically. Reopening the note restores them, including when the same loom is
+embedded more than once. Link sizes and aliases are preserved. These preferences travel
+with the note when it is copied or synced; no separate configuration file is required.
+
 ## Project background
 
 DataLoom was originally created by **decaf-dev**. The original plugin is no longer maintained; this fork continues its development and maintenance.

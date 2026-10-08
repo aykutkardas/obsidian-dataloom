@@ -1,6 +1,7 @@
 import { App, MarkdownView } from "obsidian";
 import { LOOM_EXTENSION } from "src/data/constants";
 import { numToPx } from "src/shared/conversion";
+import { getLoomLinkPath } from "./embed-view-state";
 
 export const getEmbeddedLoomLinkEls = (
 	view: MarkdownView,
@@ -19,7 +20,7 @@ export const getEmbeddedLoomLinkEls = (
 		for (let i = 0; i < embeddedLinkEls.length; i++) {
 			const linkEl = embeddedLinkEls[i];
 			const src = linkEl.getAttribute("src");
-			if (src?.endsWith(LOOM_EXTENSION))
+			if (src && getLoomLinkPath(src).endsWith(LOOM_EXTENSION))
 				linkEls.push(linkEl as HTMLElement);
 		}
 	}
@@ -52,7 +53,7 @@ export const findEmbeddedLoomFile = (
 
 	//We use the getFirstLinkpathDest to handle absolute links, relative links, and short links
 	//in Obsidian.
-	return app.metadataCache.getFirstLinkpathDest(src, sourcePath);
+	return app.metadataCache.getFirstLinkpathDest(getLoomLinkPath(src), sourcePath);
 };
 
 export const getLinkWidth = (linkEl: HTMLElement, defaultWidth: string) => {
