@@ -29,7 +29,14 @@ export const getEmbeddedLoomLinkEls = (
 export const hasLoadedEmbeddedLoom = (linkEl: HTMLElement) => {
 	if (linkEl.children.length > 0) {
 		const firstChildEl = linkEl.children[0];
-		if (firstChildEl.classList.contains("dataloom-embedded-container"))
+		if (
+			firstChildEl.classList.contains("dataloom-embedded-container") &&
+			//An empty container means the React root was unmounted but the
+			//container was left in the DOM. That is not a loaded loom —
+			//treating it as one leaves the embed permanently blank after a
+			//mode switch (legacy #10 Bug 3)
+			firstChildEl.childElementCount > 0
+		)
 			return true;
 	}
 	return false;

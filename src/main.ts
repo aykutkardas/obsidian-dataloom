@@ -6,6 +6,7 @@ import {
 	TAbstractFile,
 	TFile,
 	TFolder,
+	WorkspaceLeaf,
 } from "obsidian";
 
 import WelcomeModal from "./obsidian/modal/welcome-modal";
@@ -23,10 +24,11 @@ import { LOOM_EXTENSION } from "./data/constants";
 import { createLoomFile } from "src/data/loom-file";
 import { hasDarkTheme } from "./shared/render/utils";
 import {
-	loadPreviewModeApps,
+	loadEmbeddedLoomApps,
 	purgeEmbeddedLoomApps,
 	unmountAllEmbeddedApps,
 } from "./obsidian/embedded/embedded-app-manager";
+import { waitForDomElements } from "./shared/wait-for-dom-elements";
 import FrontmatterCache from "./shared/frontmatter/frontmatter-cache";
 import EventManager from "./shared/event/event-manager";
 import {
@@ -296,17 +298,7 @@ export default class DataLoomPlugin extends Plugin {
 				);
 				const leaves = this.app.workspace.getLeavesOfType("markdown");
 				purgeEmbeddedLoomApps(leaves);
-
-				//TODO find a better way to do this
-				//Wait for the DOM to update before loading the preview mode apps
-				//2ms should be enough time
-				window.setTimeout(() => {
-					loadPreviewModeApps(
-						this.app,
-						leaves,
-						this.manifest.version
-					);
-				}, 2);
+				this.loadPreviewModeAppsWhenReady(leaves);
 			})
 		);
 
@@ -415,6 +407,48 @@ export default class DataLoomPlugin extends Plugin {
 		);
 
 		this.registerSourceEvents();
+	}
+
+	/**
+	 * Loads the preview-mode loom apps once the reading view DOM has
+	 * rendered.
+	 *
+	 * The reading view is built asynchronously and the time it takes grows
+	 * with vault/plugin size. A fixed delay fires too early on heavier
+	 * setups and silently finds no `.loom` embed elements (legacy #10 Bug 2),
+	 * so we observe each preview leaf's DOM for the embed elements instead.
+	 *
+	 * A newer layout pass cancels the pending waits from the previous one
+	 * so that stale leaves never load.
+	 */
+	private previewLoadCleanups: (() => void)[] = [];
+
+	private loadPreviewModeAppsWhenReady(leaves: WorkspaceLeaf[]) {
+		this.previewLoadCleanups.forEach((cleanup) => cleanup());
+		this.previewLoadCleanups = [];
+
+		const previewLeaves = leaves.filter((leaf) => {
+			const view = leaf.view;
+			return view instanceof MarkdownView && view.getMode() === "preview";
+		});
+
+		previewLeaves.forEach((leaf) => {
+			const contentEl = leaf.view.containerEl;
+			const cleanup = waitForDomElements(
+				contentEl,
+				".internal-embed",
+				() => {
+					loadEmbeddedLoomApps(
+						this.app,
+						this.manifest.version,
+						leaf,
+						"preview"
+					);
+				},
+				{ maxWaitMs: 10000 }
+			);
+			this.previewLoadCleanups.push(cleanup);
+		});
 	}
 
 	/**
