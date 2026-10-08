@@ -9,19 +9,22 @@ import { findAncestorsUntilClassName } from "src/shared/dom-utils";
 export const useMenuPosition = (
 	isOpen: boolean,
 	isParentObsidianModal: boolean,
-	onPositionUpdate: PositionUpdateHandler
+	onPositionUpdate: PositionUpdateHandler,
+	anchorRef?: React.RefObject<HTMLDivElement>
 ) => {
 	const className = isParentObsidianModal ? "modal" : "view-content";
-	const ref = useBasePosition(className, isOpen, onPositionUpdate);
+	const ref = useBasePosition(className, isOpen, onPositionUpdate, anchorRef);
 	return ref;
 };
 
 const useBasePosition = (
 	className: string,
 	isOpen: boolean,
-	onPositionUpdate: PositionUpdateHandler
+	onPositionUpdate: PositionUpdateHandler,
+	anchorRef?: React.RefObject<HTMLDivElement>
 ) => {
-	const ref = React.useRef<HTMLDivElement>(null);
+	const ownRef = React.useRef<HTMLDivElement>(null);
+	const ref = anchorRef ?? ownRef;
 
 	React.useEffect(() => {
 		if (!ref.current) return;
@@ -57,7 +60,7 @@ const useBasePosition = (
 			});
 			window.removeEventListener("resize", throttleUpdatePosition);
 		};
-	}, [className, isOpen, onPositionUpdate]);
+	}, [className, isOpen, onPositionUpdate, ref]);
 
 	return ref;
 };

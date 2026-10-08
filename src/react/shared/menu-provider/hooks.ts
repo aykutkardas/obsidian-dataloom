@@ -9,9 +9,10 @@ export const useMenu = (
 	options?: {
 		name?: string;
 		isParentObsidianModal?: boolean;
+		anchorRef?: React.RefObject<HTMLDivElement>;
 	}
 ) => {
-	const { name, isParentObsidianModal = false } = options || {};
+	const { name, isParentObsidianModal = false, anchorRef } = options || {};
 	const { onOpen, getMenu, onClose, onCloseRequestClear, onPositionUpdate } =
 		useMenuContext();
 	const { id, isOpen, position, isTriggerFocused, closeRequest } = getMenu(
@@ -29,7 +30,8 @@ export const useMenu = (
 	const triggerRef = useMenuPosition(
 		isOpen,
 		isParentObsidianModal,
-		handlePositionUpdate
+		handlePositionUpdate,
+		anchorRef
 	);
 
 	React.useEffect(
@@ -47,14 +49,16 @@ export const useMenu = (
 		options?: {
 			shouldRequestOnClose?: boolean;
 			shouldFocusTriggerOnClose?: boolean;
+			replaceMenuId?: string;
 		}
 	) {
-		const { shouldRequestOnClose, shouldFocusTriggerOnClose } =
+		const { shouldRequestOnClose, shouldFocusTriggerOnClose, replaceMenuId } =
 			options || {};
 		onOpen(parentComponentId, level, triggerRef, {
 			name,
 			shouldRequestOnClose,
 			shouldFocusTriggerOnClose,
+			replaceMenuId,
 		});
 	}
 
