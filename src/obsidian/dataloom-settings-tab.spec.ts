@@ -1,15 +1,16 @@
+import { vi } from "vitest";
 import DataLoomSettingsTab from "./dataloom-settings-tab";
 import type DataLoomPlugin from "../main";
 import type { App } from "obsidian";
 import Logger from "js-logger";
 import { stringToLogLevel } from "src/shared/logger";
-jest.mock("obsidian", () => ({ PluginSettingTab: class {}, Setting: class {} }), { virtual: true });
+vi.mock("obsidian", () => ({ PluginSettingTab: class {}, Setting: class {} }));
 it("persists declarative setting changes through saveSettings and applies logging", async () => {
  const settings = { logLevel: "off", defaultFrozenColumnCount: 1 };
- const saveSettings = jest.fn().mockResolvedValue(undefined);
+ const saveSettings = vi.fn().mockResolvedValue(undefined);
  const plugin = { settings, saveSettings } as unknown as DataLoomPlugin;
  const tab = new DataLoomSettingsTab({} as App, plugin);
- const setLevel = jest.spyOn(Logger, "setLevel");
+ const setLevel = vi.spyOn(Logger, "setLevel");
  await tab.setControlValue("logLevel", "trace");
  expect(settings.logLevel).toBe("trace");
  expect(saveSettings).toHaveBeenCalledTimes(1);

@@ -1,4 +1,5 @@
-/** @jest-environment jsdom */
+import { vi } from "vitest";
+/** @vitest-environment jsdom */
 import { waitForDomElements } from "./wait-for-dom-elements";
 
 
@@ -12,10 +13,10 @@ const appendTarget = (root: HTMLElement) => {
 describe("waitForDomElements", () => {
 	it("uses window timers and clears the observer timeout on cleanup", () => {
 		const root = document.createElement("div");
-		const setTimer = jest.spyOn(window, "setTimeout");
-		const clearTimer = jest.spyOn(window, "clearTimeout");
+		const setTimer = vi.spyOn(window, "setTimeout");
+		const clearTimer = vi.spyOn(window, "clearTimeout");
 		try {
-			const cleanup = waitForDomElements(root, ".target", jest.fn(), { maxWaitMs: 123 });
+			const cleanup = waitForDomElements(root, ".target", vi.fn(), { maxWaitMs: 123 });
 			expect(setTimer).toHaveBeenCalledWith(expect.any(Function), 123);
 			cleanup();
 			expect(clearTimer).toHaveBeenCalledWith(setTimer.mock.results[0].value);
@@ -24,13 +25,13 @@ describe("waitForDomElements", () => {
 			clearTimer.mockRestore();
 		}
 	});
-	beforeEach(() => jest.useFakeTimers());
-	afterEach(() => jest.useRealTimers());
+	beforeEach(() => vi.useFakeTimers());
+	afterEach(() => vi.useRealTimers());
 
 	it("calls onReady immediately when elements already exist", () => {
 		const root = document.createElement("div");
 		appendTarget(root);
-		const onReady = jest.fn();
+		const onReady = vi.fn();
 		waitForDomElements(root, ".target", onReady);
 		expect(onReady).toHaveBeenCalledTimes(1);
 		const calls = onReady.mock.calls as unknown as unknown[][];
@@ -41,7 +42,7 @@ describe("waitForDomElements", () => {
 	it("calls onReady when elements appear after a delay", async () => {
 		const root = document.createElement("div");
 		document.body.appendChild(root);
-		const onReady = jest.fn();
+		const onReady = vi.fn();
 		waitForDomElements(root, ".target", onReady);
 		expect(onReady).not.toHaveBeenCalled();
 
@@ -49,7 +50,7 @@ describe("waitForDomElements", () => {
 		setTimeout(() => {
 			appendTarget(root);
 		}, 200);
-		jest.advanceTimersByTime(200);
+		vi.advanceTimersByTime(200);
 		//MutationObserver callbacks are queued as microtasks; flush them
 		await Promise.resolve();
 
@@ -60,11 +61,11 @@ describe("waitForDomElements", () => {
 	it("does not call onReady after the observer is cleaned up", () => {
 		const root = document.createElement("div");
 		document.body.appendChild(root);
-		const onReady = jest.fn();
+		const onReady = vi.fn();
 		const cleanup = waitForDomElements(root, ".target", onReady);
 		cleanup();
 		appendTarget(root);
-		jest.advanceTimersByTime(10000);
+		vi.advanceTimersByTime(10000);
 		expect(onReady).not.toHaveBeenCalled();
 		root.remove();
 	});

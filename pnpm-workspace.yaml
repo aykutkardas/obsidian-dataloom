@@ -1,0 +1,5 @@
+overrides:
+  'obsidian>moment': '^2.31.0'
+
+allowBuilds:
+  esbuild: true
