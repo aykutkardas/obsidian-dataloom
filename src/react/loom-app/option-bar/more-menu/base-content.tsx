@@ -29,7 +29,7 @@ export default function BaseContent({
 		<Padding p="sm">
 			{isSmallScreen && (
 				<MenuItem
-					lucideId="filter"
+					lucideId="database"
 					name="Sources"
 					onClick={onSourcesClick}
 				/>
@@ -47,7 +47,7 @@ export default function BaseContent({
 				onClick={onToggleColumnClick}
 			/>
 			<MenuItem
-				lucideId="import"
+				lucideId="upload"
 				name="Import"
 				onClick={() => {
 					onClose();

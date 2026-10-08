@@ -63,9 +63,12 @@ export default function OptionBar({
 	const MORE_MENU_ID = "more-menu";
 	const FILTER_MENU_ID = "filter-menu";
 
-	const sourcesMenu = useMenu(COMPONENT_ID, { name: SOURCE_MENU_ID });
+	const isSmallScreen = isSmallScreenSize();
 	const moreMenu = useMenu(COMPONENT_ID, { name: MORE_MENU_ID });
-	const filterMenu = useMenu(COMPONENT_ID, { name: FILTER_MENU_ID });
+	// Mobile actions share the visible More button as their positioning anchor.
+	const anchorRef = isSmallScreen ? moreMenu.triggerRef : undefined;
+	const sourcesMenu = useMenu(COMPONENT_ID, { name: SOURCE_MENU_ID, anchorRef });
+	const filterMenu = useMenu(COMPONENT_ID, { name: FILTER_MENU_ID, anchorRef });
 
 	// TODO re-enable
 	// const previousLength = usePrevious(filterRules.length);
@@ -107,11 +110,15 @@ export default function OptionBar({
 	}
 
 	function handleSourceMenuOpen() {
-		sourcesMenu.onOpen(LoomMenuLevel.ONE);
+		sourcesMenu.onOpen(LoomMenuLevel.ONE, {
+			replaceMenuId: isSmallScreen ? moreMenu.id : undefined,
+		});
 	}
 
 	function handleFilterMenuOpen() {
-		filterMenu.onOpen(LoomMenuLevel.ONE);
+		filterMenu.onOpen(LoomMenuLevel.ONE, {
+			replaceMenuId: isSmallScreen ? moreMenu.id : undefined,
+		});
 		if (filters.length === 0) {
 			onFilterAddClick();
 		}
@@ -136,7 +143,6 @@ export default function OptionBar({
 		(column) => column.sortDir !== SortDir.NONE
 	);
 
-	const isSmallScreen = isSmallScreenSize();
 	return (
 		<>
 			<div className="dataloom-option-bar">
@@ -237,9 +243,7 @@ export default function OptionBar({
 			<FilterMenu
 				id={filterMenu.id}
 				isOpen={filterMenu.isOpen}
-				position={
-					isSmallScreen ? moreMenu.position : filterMenu.position
-				}
+				position={filterMenu.position}
 				columns={columns}
 				filters={filters}
 				onUpdate={onFilterUpdate}

@@ -33,6 +33,7 @@ interface ContextProps {
 			name?: string;
 			shouldRequestOnClose?: boolean;
 			shouldFocusTriggerOnClose?: boolean;
+			replaceMenuId?: string;
 		}
 	) => void;
 	canOpen: (level: LoomMenuLevel) => boolean;
@@ -95,11 +96,12 @@ export default function MenuProvider({ children }: Props) {
 			name?: string;
 			shouldRequestOnClose?: boolean;
 			shouldFocusTriggerOnClose?: boolean;
+			replaceMenuId?: string;
 		}
 	) {
 		Logger.trace(CLASS_NAME, "handleOpenMenu", "called");
 
-		const { name, shouldRequestOnClose, shouldFocusTriggerOnClose } =
+		const { name, shouldRequestOnClose, shouldFocusTriggerOnClose, replaceMenuId } =
 			options ?? {};
 
 		if (!triggerRef.current) {
@@ -110,7 +112,15 @@ export default function MenuProvider({ children }: Props) {
 			);
 			return;
 		}
-		if (!canOpen(level)) {
+		// A menu may replace the current top menu at the same level.
+		const topMenu = getTopMenu();
+		const canReplace =
+			topMenu !== null &&
+			topMenu.id === replaceMenuId &&
+			topMenu.parentComponentId === parentComponentId &&
+			topMenu.level === level &&
+			!topMenu.shouldRequestOnClose;
+		if (!canOpen(level) && !canReplace) {
 			Logger.debug(
 				CLASS_NAME,
 				"handleOpenMenu",
@@ -133,7 +143,15 @@ export default function MenuProvider({ children }: Props) {
 		});
 
 		clearMenuTriggerFocus();
-		setOpenMenus((prevMenus) => [...prevMenus, menu]);
+		setOpenMenus((prevMenus) => [
+			...prevMenus.filter((existing) => !canReplace || existing.id !== replaceMenuId),
+			menu,
+		]);
+		if (canReplace) {
+			setCloseRequests((requests) =>
+				requests.filter((request) => request.menuId !== replaceMenuId)
+			);
+		}
 	}
 
 	const focusMenuTrigger = React.useCallback(
