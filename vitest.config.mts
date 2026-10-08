@@ -5,10 +5,20 @@ import { defineConfig } from "vitest/config";
 process.env.TZ = "UTC";
 
 export default defineConfig({
+	plugins: [{
+		name: "obsidian-test-mock",
+		resolveId(id) {
+			if (id === "obsidian") return "\0obsidian-test-mock";
+		},
+		load(id) {
+			if (id === "\0obsidian-test-mock") {
+				return "export const App = {}; export class TFile {}";
+			}
+		},
+	}],
 	resolve: {
 		alias: {
 			src: fileURLToPath(new URL("./src", import.meta.url)),
-			obsidian: fileURLToPath(new URL("./__mocks__/obsidian.ts", import.meta.url)),
 		},
 	},
 	test: {
