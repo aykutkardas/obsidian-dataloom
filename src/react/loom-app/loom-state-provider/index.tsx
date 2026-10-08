@@ -9,9 +9,12 @@ import { TFile } from "obsidian";
 import { deserializeState } from "src/data/serialize-state";
 import Logger from "js-logger";
 import { EventCallback } from "src/shared/event/types";
+import { applyViewState, getSharedState, getViewState, LoomViewState } from "src/shared/loom-state/view-state";
 
 interface Props {
 	initialState: LoomState;
+	initialViewState?: LoomViewState;
+	onSaveViewState?: (view: LoomViewState) => void;
 	children: React.ReactNode;
 	onSaveState: (
 		appId: string,
@@ -54,15 +57,21 @@ export const useLoomState = () => {
 
 export default function LoomStateProvider({
 	initialState,
+	initialViewState,
+	onSaveViewState,
 	onSaveState,
 	children,
 }: Props) {
-	const [loomState, setLoomState] = React.useState({
-		state: initialState,
+	const [loomState, setLoomState] = React.useState(() => ({
+		state: applyViewState(initialState, initialViewState ?? getViewState(initialState)),
 		shouldSaveToDisk: false,
 		shouldSaveFrontmatter: true,
 		time: Date.now(),
-	});
+	}));
+	const defaultsRef = React.useRef(getViewState(initialState));
+	const sharedStateRef = React.useRef<LoomState | null>(null);
+	if (sharedStateRef.current === null) sharedStateRef.current = getSharedState(initialState, defaultsRef.current);
+	const viewStateRef = React.useRef(JSON.stringify(getViewState(loomState.state)));
 
 	const [searchText, setSearchText] = React.useState("");
 	const [isSearchBarVisible, setSearchBarVisible] = React.useState(false);
@@ -88,11 +97,21 @@ export default function LoomStateProvider({
 		}
 
 		const { shouldSaveToDisk, state, shouldSaveFrontmatter } = loomState;
+		const sharedState = getSharedState(state, defaultsRef.current);
 		if (shouldSaveToDisk) {
-			Logger.info("LoomStateProvider saving state to disk!");
-			onSaveState(reactAppId, state, shouldSaveFrontmatter);
+			const view = getViewState(state);
+			const viewKey = JSON.stringify(view);
+			if (viewKey !== viewStateRef.current) {
+				viewStateRef.current = viewKey;
+				onSaveViewState?.(view);
+			}
+			if (JSON.stringify(sharedState) !== JSON.stringify(sharedStateRef.current)) {
+				Logger.info("LoomStateProvider saving shared data to disk!");
+				onSaveState(reactAppId, sharedState, shouldSaveFrontmatter);
+			}
 		}
-	}, [reactAppId, loomState, onSaveState]);
+		sharedStateRef.current = sharedState;
+	}, [reactAppId, loomState, onSaveState, onSaveViewState]);
 
 	React.useEffect(() => {
 		function handleRefreshEvent(
@@ -101,12 +120,16 @@ export default function LoomStateProvider({
 			state: LoomState
 		) {
 			if (reactAppId !== sourceAppId && filePath === loomFile.path) {
-				setLoomState({
-					state,
+				defaultsRef.current = getViewState(state);
+				// Array-based undo patches cannot safely be applied after another view edits data.
+				setHistory([null]);
+				setPosition(0);
+				setLoomState(previous => ({
+					state: applyViewState(state, getViewState(previous.state)),
 					shouldSaveToDisk: false,
 					shouldSaveFrontmatter: true,
 					time: Date.now(),
-				});
+				}));
 			}
 		}
 
@@ -131,12 +154,15 @@ export default function LoomStateProvider({
 
 				try {
 					const state = deserializeState(fileData, pluginVersion);
-					setLoomState({
-						state,
+					defaultsRef.current = getViewState(state);
+					setHistory([null]);
+					setPosition(0);
+					setLoomState(previous => ({
+						state: applyViewState(state, getViewState(previous.state)),
 						shouldSaveToDisk: false,
 						shouldSaveFrontmatter: false,
 						time: Date.now(),
-					});
+					}));
 				} catch (err) {
 					setError(err);
 				}

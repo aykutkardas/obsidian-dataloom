@@ -89,7 +89,7 @@ export default function BottomBar({
 			>
 				<Padding pt="md" width="100%">
 					<Stack spacing="sm">
-						<Flex justify="space-between">
+						<Stack className="dataloom-bottom-bar__row-actions" isHorizontal spacing="lg">
 							<NewRowButton onClick={onRowAddClick} />
 							<Stack isHorizontal spacing="sm">
 								<Button
@@ -103,7 +103,7 @@ export default function BottomBar({
 									icon={<Icon lucideId="chevron-down" />}
 								/>
 							</Stack>
-						</Flex>
+						</Stack>
 						{isMobile && (
 							<Flex justify="space-between">
 								<Button

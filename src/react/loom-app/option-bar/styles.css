@@ -2,3 +2,7 @@
     width: 100%;
     border-bottom: 1px solid var(--background-modifier-border);
 }
+
+.dataloom-option-bar .dataloom-bubble svg {
+    display: block;
+}

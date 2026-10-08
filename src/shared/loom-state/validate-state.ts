@@ -325,6 +325,8 @@ const Filter = Union(
 	SourceFileFilter
 );
 
+export const FilterObject = Filter;
+
 const Tag = Record({
 	id: String,
 	content: String,

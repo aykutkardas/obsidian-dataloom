@@ -1,6 +1,6 @@
 .dataloom-bottom-bar {
     position: relative;
-    height: 60px;
+    height: 50px;
 }
 
 .dataloom-bottom-bar--mobile {
@@ -11,4 +11,14 @@
     border-top: 1px solid var(--table-border-color);
     position: absolute;
     width: 100%;
+}
+
+.dataloom-bottom-bar .dataloom-button svg {
+    display: block;
+}
+
+.dataloom-bottom-bar__row-actions > .dataloom-button {
+    min-width: 96px;
+    padding-inline: 12px;
+    justify-content: center;
 }

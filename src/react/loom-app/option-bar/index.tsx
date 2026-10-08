@@ -140,7 +140,7 @@ export default function OptionBar({
 	return (
 		<>
 			<div className="dataloom-option-bar">
-				<Padding py="lg">
+				<Padding py="md">
 					<Stack
 						isHorizontal={!isSmallScreen}
 						spacing="sm"
