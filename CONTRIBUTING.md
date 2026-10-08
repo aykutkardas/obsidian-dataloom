@@ -6,10 +6,6 @@ Issues are prioritized in the [project roadmap](https://github.com/users/aykutka
 
 If the code you wish to contribute is related to an existing issue, please make a comment on the related issue and tag @aykutkardas.
 
-## Diagrams
-
-State machines and flowcharts can be found can be found in the `diagrams` folder
-
 ## Getting started
 
 Start by cloning the repository
@@ -42,28 +38,27 @@ Build the project. This will create a `dist` folder
 pnpm run build
 ```
 
-Create a symbolic link from the cloned repository to your Obsidan vault. Be sure to link the `dist` folder
+Create a symbolic link from the cloned repository to your Obsidian vault. Be sure to link the `dist` folder. The target directory must match the plugin ID in `manifest.json` (`obisidian-dataloom`).
 
 Note: I recommend making a new Obsidian vault just for development.
 
 ```shell
-ln -s <repository-path>/dist <development-vault-path>/.obsidian/plugins/obsidian-dataloom
+ln -s <repository-path>/dist <development-vault-path>/.obsidian/plugins/obisidian-dataloom
 ```
 
 e.g
 
 ```shell
-ln -s /users/decaf/desktop/obsidian-dataloom/dist /users/decaf/desktop/test-vault/.obsidian/plugins/obsidian-dataloom
+ln -s /users/decaf/desktop/obsidian-dataloom/dist /users/decaf/desktop/test-vault/.obsidian/plugins/obisidian-dataloom
 ```
 
-Checkout the `dev` branch and make a child branch off of it. The branching strategy is `<feature>` -> `dev` -> `master`.
+Start a new branch from the latest `main` and open your pull request against `main`.
 
 ```shell
-git checkout dev
-git checkout -b <your-branch-name>
+git switch main
+git pull --ff-only
+git switch -c <your-branch-name>
 ```
-
-**Please make sure to follow this step. Otherwise, you will need to move your commits to a child branch of dev at the time of pull request**
 
 Open your vault in Obsidian
 
@@ -95,6 +90,6 @@ Please make [Vitest](https://vitest.dev/) tests for the code that you create. Pl
 
 ## Pull requests
 
-Once you have made your changes, make a pull request. Please choose the `dev` branch as the branch that you would like to merge into.
+Once you have made your changes, make a pull request targeting `main`.
 
-The pull request will be reviewed. Once it is approved, it will be merged into `dev`.
+The pull request will be reviewed. Once it is approved, it will be merged into `main`.

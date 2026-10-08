@@ -1,6 +1,6 @@
-import { Row, Column, LoomState, Source } from "../loom-state/types/loom-state";
-import { getCellContent } from "../cell-content";
-import ColumnNotFoundError from "../error/column-not-found-error";
+import { Row, Column, LoomState, Source } from "src/shared/loom-state/types/loom-state";
+import { getCellContent } from "src/shared/cell-content";
+import ColumnNotFoundError from "src/shared/error/column-not-found-error";
 import { App } from "obsidian";
 
 const serializeColumns = (columns: Column[]): string[] => {

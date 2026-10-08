@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useDragContext } from "src/shared/dragging/drag-context";
-import { useStickyOffset } from "./hooks";
+import { useStickyOffset } from "src/react/loom-app/table/hooks";
 import { numToPx } from "src/shared/conversion";
 import { ColumnReorderHandler } from "../app/hooks/use-column/types";
 

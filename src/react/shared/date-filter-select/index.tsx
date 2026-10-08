@@ -2,7 +2,7 @@ import "./styles.css";
 import FormattedDatePicker from "../formatted-date-picker";
 import { getDisplayNameForDateFilterOption } from "src/shared/loom-state/type-display-names";
 import { DateFilterCondition, DateFilterOption, DateFormat, DateFormatSeparator } from "src/shared/loom-state/types/loom-state";
-import { getDateFromDateFilterOption } from "src/react/loom-app/app/filter-by-filters/utils";
+import { getDateFromDateFilterOption } from "src/shared/filter/date-filter-utils";
 
 interface Props {
 	value: DateFilterOption;

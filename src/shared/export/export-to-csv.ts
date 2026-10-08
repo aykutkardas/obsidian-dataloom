@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 
-import { loomStateToArray } from "./loom-state-to-array";
-import { LoomState } from "../loom-state/types/loom-state";
+import { loomStateToArray } from "src/shared/export/loom-state-to-array";
+import { LoomState } from "src/shared/loom-state/types/loom-state";
 import { App } from "obsidian";
 
 export const exportToCSV = (

@@ -48,3 +48,7 @@ export const findAncestorWithClassName = (
 	}
 	return null;
 };
+
+export const findMenuTriggerEl = (menuId: string) => {
+	return activeDocument.querySelector(`[data-menu-id="${menuId}"]`);
+};

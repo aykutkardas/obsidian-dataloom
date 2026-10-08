@@ -9,9 +9,9 @@ import {
 	WorkspaceLeaf,
 } from "obsidian";
 
-import WelcomeModal from "./obsidian/modal/welcome-modal";
+import WelcomeModal from "src/obsidian/modal/welcome-modal";
 import DataLoomSettingsTab from "./obsidian/dataloom-settings-tab";
-import EditingViewPlugin from "./obsidian/editing-view-plugin";
+import EditingViewPlugin from "src/obsidian/editing-view-plugin";
 import DataLoomView, { DATA_LOOM_VIEW } from "./obsidian/dataloom-view";
 
 import { store } from "./redux/store";
@@ -39,39 +39,13 @@ import { handleFileRename } from "./data/main-utils";
 import { getBasename } from "./shared/link-and-path/file-path-utils";
 import Logger from "js-logger";
 import { formatMessageForLogger, stringToLogLevel } from "./shared/logger";
-import { LOG_LEVEL_OFF } from "./shared/logger/constants";
+import { DEFAULT_SETTINGS, type DataLoomSettings } from "./obsidian/settings";
 import LastSavedManager from "./shared/last-saved-manager";
 import { LoomState } from "./shared/loom-state/types";
 
 interface VaultWithConfig {
 	getConfig: (key: string) => unknown;
 }
-
-export interface DataLoomSettings {
-	logLevel: string;
-	createAtObsidianAttachmentFolder: boolean;
-	customFolderForNewFiles: string;
-	removeMarkdownOnExport: boolean;
-	defaultEmbedWidth: string;
-	defaultEmbedHeight: string;
-	hasMigratedTo800: boolean;
-	showWelcomeModal: boolean;
-	defaultFrozenColumnCount: number;
-	pluginVersion: string;
-}
-
-export const DEFAULT_SETTINGS: DataLoomSettings = {
-	logLevel: LOG_LEVEL_OFF,
-	createAtObsidianAttachmentFolder: false,
-	customFolderForNewFiles: "",
-	removeMarkdownOnExport: true,
-	defaultEmbedWidth: "100%",
-	defaultEmbedHeight: "340px",
-	hasMigratedTo800: false,
-	showWelcomeModal: true,
-	defaultFrozenColumnCount: 1,
-	pluginVersion: "",
-};
 
 const FILE_NAME = "main.ts";
 

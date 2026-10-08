@@ -64,7 +64,7 @@ import { Color } from "src/shared/loom-state/types/loom-state";
 import { generateUuid } from "../uuid";
 import { getCurrentDateTime } from "../date/utils";
 import { ObsidianPropertyType } from "../frontmatter/types";
-import { getFilterConditionsForPropertyType } from "src/react/loom-app/option-bar/sources-menu/add-source-submenu/utils";
+import { getFilterConditionsForPropertyType } from "src/shared/filter/property-filter-conditions";
 
 export const createFolderSource = (
 	path: string,
